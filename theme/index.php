@@ -12,7 +12,7 @@ limitations under the License.
 -->
 <!doctype html>
 <?
-  // wp_head();
+  wp_head();
 ?>
 <?="hai";?>
 <button>Load styles</button>
@@ -25,5 +25,5 @@ limitations under the License.
   };
 </script>
 <?
-  // wp_footer();
+  wp_footer();
 ?>
