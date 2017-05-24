@@ -17,7 +17,7 @@ To run the local instance, spawn a MySQL server (with root password `lolz`) and 
 
 ```
 $ docker run --name pwp-mysql -e MYSQL_ROOT_PASSWORD=lolz -d mysql:8.0
-$ docker run --name pwp --link pwp-mysql:mysql -p 8080:80 -d pwp
+$ docker run --name pwp --link pwp-mysql:mysql -v $(PWD)/theme:/var/www/html/wp-content/themes/surmblog -p 8080:80 -d pwp
 ```
 
 Blog is now be available at `https://surmblog.dev:8080`.

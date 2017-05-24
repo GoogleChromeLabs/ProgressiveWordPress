@@ -21,4 +21,6 @@ COPY http2.conf /etc/apache2/conf-available/
 RUN ln -sf /etc/apache2/conf-available/http2.* /etc/apache2/conf-enabled/
 COPY certs /etc/apache2/certs
 COPY 000-default.conf /etc/apache2/sites-available/
+RUN mkdir -p /var/www/html/wp-content/themes/surmblog
+VOLUME /var/www/html/wp-content/themes/surmblog
 
