@@ -10,6 +10,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<?php
-  echo "Hai";
+<!doctype html>
+<?
+  // wp_head();
+?>
+<?="hai";?>
+<button>Load styles</button>
+<script>
+  document.querySelector('button').onclick = _ => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '<?=bloginfo('template_url');?>/style.css';
+    document.head.appendChild(link);
+  };
+</script>
+<?
+  // wp_footer();
 ?>
