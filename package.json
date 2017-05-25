@@ -4,7 +4,9 @@
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "mkdir dist; node build.js",
+    "copy-static": "cp -r src/*.php dist/",
+    "minify-css": "for file in src/*.css; do csso src/*.css dist/ -m file"
   },
   "repository": {
     "type": "git",
@@ -13,5 +15,8 @@
   "keywords": [],
   "author": "Surma <surma@surma.link>",
   "license": "Apache-2.0",
-  "dependencies": {}
+  "dependencies": {
+    "cssnano": "^3.10.0",
+    "mz": "^2.6.0"
+  }
 }
