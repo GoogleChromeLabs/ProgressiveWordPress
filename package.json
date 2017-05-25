@@ -8,7 +8,17 @@
     "copy-static": "cp -r src/*.php dist/",
     "copy-mustache.php": "cp -r node_modules/mustache.php/src dist/third_party/mustache.php",
     "minify-css": "for file in src/*.css; do csso src/*.css dist/ -m file",
-    "install": "napa"
+    "install": "napa",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src/*",
+        "build.js"
+      ],
+      "extensions": "php,js,html,css"
+    }
   },
   "repository": {
     "type": "git",
