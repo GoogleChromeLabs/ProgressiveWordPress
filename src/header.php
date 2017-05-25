@@ -12,6 +12,12 @@
    * limitations under the License.
    */
 ?>
+<?
+  require 'third_party/mustache.php/Mustache/Autoloader.php';
+  Mustache_Autoloader::register();
+  $m = new Mustache_Engine;
+  var_dump($m);
+?>
 <!doctype html>
 <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/style.css">
 <?
