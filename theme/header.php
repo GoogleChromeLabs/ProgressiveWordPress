@@ -12,10 +12,7 @@
    * limitations under the License.
    */
 ?>
+<!doctype html>
 <?
-  get_template_part('header');
-?>
-Ohai
-<?
-  get_template_part('footer');
+  wp_head();
 ?>

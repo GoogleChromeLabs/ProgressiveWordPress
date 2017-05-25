@@ -13,9 +13,5 @@
    */
 ?>
 <?
-  get_template_part('header');
-?>
-Ohai
-<?
-  get_template_part('footer');
+  wp_footer();
 ?>
