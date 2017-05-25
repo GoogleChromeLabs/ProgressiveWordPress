@@ -12,8 +12,21 @@
    * limitations under the License.
    */
 ?>
-<!doctype html>
-<link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/style.css">
 <?
-  wp_head();
+  include("third_party/mustache.php/Mustache/Autoloader.php");
+  Mustache_Autoloader::register();
+  $mustacheEngine = new Mustache_Engine(array(
+    "loader" => new Mustache_Loader_FilesystemLoader(dirname(__FILE__)),
+  ));
+
+  function render_json($data) {
+    echo json_encode($data);
+  }
+
+  function render_template($path, $data) {
+    global $mustacheEngine;
+    get_template_part("header");
+    echo $mustacheEngine->render($path, $data);
+    get_template_part("footer");
+  }
 ?>
