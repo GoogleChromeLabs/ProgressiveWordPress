@@ -13,6 +13,7 @@
    */
 ?>
 <!doctype html>
+<link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/style.css">
 <?
   wp_head();
 ?>

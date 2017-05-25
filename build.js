@@ -22,9 +22,9 @@ async function copyStatic() {
 async function minifyCss() {
   let files = await filesWithPattern(/\.css$/i);
   files = await readAll(files);
-  files.forEach(file => file.content = csso.minify(file.content, cssoConfig));
-  const cssFiles = files.map(file => fs.writeFile(`dist/${file.name}`, file.content.css));
-  const maps = files.map(file => fs.writeFile(`dist/${file.name}.map`, file.content.map.toString()));
+  files.forEach(file => file.csso = csso.minify(file.content, Object.assign({}, cssoConfig, {filename: file.name})));
+  const cssFiles = files.map(file => fs.writeFile(`dist/${file.name}`, `${file.csso.css}/*# sourceMappingURL=${file.name}.map */`));
+  const maps = files.map(file => fs.writeFile(`dist/${file.name}.map`, file.csso.map.toString()));
   await Promise.all([...cssFiles, ...maps]);
 }
 
