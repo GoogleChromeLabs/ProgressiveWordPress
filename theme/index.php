@@ -15,7 +15,28 @@
 <?
   get_template_part('header');
 ?>
-Ohai
+<p>
+Ohai! This is your landing page.
+</p>
+<div>
+  <h1>Here’s a couple of posts:</h1>
+  <? if (have_posts()): ?>
+    <ul>
+      <? while (have_posts()): the_post(); ?>
+        <li>
+          <h2><a href="<?=get_the_permalink();?>"><?=get_the_title();?></a></h2>
+          <small><?=get_the_excerpt();?></small>
+        </li>
+      <? endwhile; ?>
+    </ul>
+  <? else: ?>
+    No posts, lol.
+  <? endif; ?>
+</div>
+
+<div>
+<h1>Here’s a couple of pages:</h1>
+</div>
 <?
   get_template_part('footer');
 ?>
