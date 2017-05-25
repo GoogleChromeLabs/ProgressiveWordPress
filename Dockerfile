@@ -13,14 +13,14 @@ FROM wordpress:4.7-php7.0-apache
 RUN ln -sf /etc/apache2/mods-available/socache_shmcb.* /etc/apache2/mods-enabled/
 RUN ln -sf /etc/apache2/mods-available/ssl.* /etc/apache2/mods-enabled/
 RUN echo "deb http://http.debian.net/debian testing main" > /etc/apt/sources.list.d/testing.list
-COPY testing /etc/apt/preferences.d/
+COPY docker_assets/testing /etc/apt/preferences.d/
 RUN apt-get update
 RUN apt-get install -o Dpkg::Options::="--force-confdef" -y -t testing apache2
 RUN ln -sf /etc/apache2/mods-available/http2.* /etc/apache2/mods-enabled/
-COPY http2.conf /etc/apache2/conf-available/
+COPY docker_assets/http2.conf /etc/apache2/conf-available/
 RUN ln -sf /etc/apache2/conf-available/http2.* /etc/apache2/conf-enabled/
-COPY certs /etc/apache2/certs
-COPY 000-default.conf /etc/apache2/sites-available/
+COPY docker_assets/certs /etc/apache2/certs
+COPY docker_assets/000-default.conf /etc/apache2/sites-available/
 RUN mkdir -p /var/www/html/wp-content/themes/surmblog
 VOLUME /var/www/html/wp-content/themes/surmblog
 
