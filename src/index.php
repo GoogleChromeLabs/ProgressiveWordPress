@@ -14,16 +14,17 @@
 ?>
 <?
   $data = [
-    "posts" => get_posts()
+    'posts' => get_posts()
   ];
 
-  foreach($data["posts"] as $post) {
-    $post["permalink"] = get_permalink($post->ID);
+  foreach($data['posts'] as $post) {
+    $post->permalink = get_permalink($post->ID);
+    $post->post_excerpt = extract_excerpt($post);
   }
 
-  if($_GET["json"]) return render_json($data);
+  if($_GET['json']) return render_json($data);
 
-  get_template_part("header");
+  get_template_part('header');
   render_template('index.ssr.mustache', $data);
-  get_template_part("footer");
+  get_template_part('footer');
 ?>

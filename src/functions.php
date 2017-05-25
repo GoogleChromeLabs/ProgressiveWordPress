@@ -13,10 +13,10 @@
    */
 ?>
 <?
-  include("third_party/mustache.php/Mustache/Autoloader.php");
+  include('third_party/mustache.php/Mustache/Autoloader.php');
   Mustache_Autoloader::register();
   $mustacheEngine = new Mustache_Engine(array(
-    "loader" => new Mustache_Loader_FilesystemLoader(dirname(__FILE__)),
+    'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__)),
   ));
 
   function render_json($data) {
@@ -25,8 +25,23 @@
 
   function render_template($path, $data) {
     global $mustacheEngine;
-    get_template_part("header");
     echo $mustacheEngine->render($path, $data);
-    get_template_part("footer");
+  }
+
+  /**
+   * Extracts the excerpt from a post (the text before `<!-- more -->`).
+   * This is usually implemented in `get_the_content`, but since we are not
+   * using that, we gotta copy-paste.
+   *
+   * Source: https://core.trac.wordpress.org/browser/tags/4.7.3/src/wp-includes/post-template.php#L288
+   */
+  function extract_excerpt($post) {
+    if(!empty($post->post_excerpt))
+      return $post->post_excerpt;
+    if (preg_match('/<!--more(.*?)?-->/', $post->post_content)) {
+      $idx = strpos($post->post_content, '<!--more');
+      return substr($post->post_content, 0, $idx);
+    }
+    return substr($post->post_content, 0, 44) . "...";
   }
 ?>
