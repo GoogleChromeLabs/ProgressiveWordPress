@@ -1,3 +1,6 @@
+<?
+  header("Link: <".get_bloginfo('template_url')."/style.css>;rel=preload;as=style");
+?>
 <!--
 Copyright 2017 Google Inc. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +23,7 @@ limitations under the License.
   document.querySelector('button').onclick = _ => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '<?=bloginfo('template_url');?>/style.css';
+    link.href = '<?=get_bloginfo('template_url');?>/style.css';
     document.head.appendChild(link);
   };
 </script>
