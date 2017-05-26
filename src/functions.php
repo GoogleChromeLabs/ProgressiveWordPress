@@ -44,4 +44,64 @@
     }
     return substr($post->post_content, 0, 44) . "...";
   }
+
+  /**
+   * Default data for template context.
+   *
+   * See: https://developer.wordpress.org/reference/functions/get_bloginfo/
+   */
+  function get_default_data() {
+    $keys = [
+      'name',
+      'description',
+      'wpurl',
+      'url',
+      'admin_email',
+      'charset',
+      'version',
+      'html_type',
+      'text_direction',
+      'language',
+      'stylesheet_url',
+      'stylesheet_directory',
+      'template_url',
+      'pingback_url',
+      'atom_url',
+      'rdf_url',
+      'rss_url',
+      'rss2_url',
+      'comments_atom_url',
+      'comments_rss2_url',
+    ];
+
+    $data = array('bloginfo' => array(), 'functions' => array());
+    foreach($keys as $key)
+      $data['bloginfo'][$key] = get_bloginfo($key);
+    $data['functions']['home_url'] = home_url();
+    $data['functions']['site_url'] = site_url();
+    $data['functions']['admin_url'] = admin_url();
+    return $data;
+  }
+
+  /**
+   * Turns “the_loop” into a data structure for usage in templates.
+   */
+  function get_post_data() {
+    $data = get_default_data();
+    $data['posts'] = [];
+
+    if(have_posts()) {
+      while(have_posts()) {
+        the_post();
+        array_push($data['posts'], get_post(get_the_ID()));
+      }
+    }
+
+    foreach($data['posts'] as $post) {
+      $post->permalink = get_permalink($post->ID);
+      $post->post_excerpt = extract_excerpt($post);
+    }
+    return $data;
+  }
+
 ?>

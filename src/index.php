@@ -13,18 +13,13 @@
    */
 ?>
 <?
-  $data = [
-    'posts' => get_posts()
-  ];
-
-  foreach($data['posts'] as $post) {
-    $post->permalink = get_permalink($post->ID);
-    $post->post_excerpt = extract_excerpt($post);
-  }
-
+  $data = get_post_data();
   if($_GET['json']) return render_json($data);
 
   get_template_part('header');
-  render_template('index.ssr.mustache', $data);
+  if(is_single())
+    render_template('post', $data);
+  else
+    render_template('listing', $data);
   get_template_part('footer');
 ?>

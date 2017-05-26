@@ -10,6 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: sans-serif;
+}
 body {
-  background-color: red;
+  background-color: hsla(0, 10%, 95%, 1);
+}
+a {
+  text-decoration: none;
+  color: hsla(0, 40%, 30%, 1);
 }
