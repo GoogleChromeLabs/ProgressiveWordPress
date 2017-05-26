@@ -14,8 +14,15 @@
 ?>
 </pwp-view>
 <?
-  wp_footer();
+  // wp_footer();
 ?>
+<script>
+  window._wordpressConfig = {
+    templateUrl: '<?=get_bloginfo('template_url');?>',
+    baseUrl: '<?=home_url();?>',
+  };
+</script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-spinner.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>

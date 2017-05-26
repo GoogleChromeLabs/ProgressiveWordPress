@@ -13,5 +13,19 @@
    */
 ?>
 <?
+  $preloads = [];
 
+  function add_preload($asset, $type = 'style') {
+    global $preloads;
+    array_push($preloads, array('asset' => $asset, 'type' => $type));
+  }
+
+  function send_preload() {
+    global $preloads;
+    $payloads = [];
+    foreach($preloads as $preload) {
+      array_push($payloads, '<' . get_bloginfo('template_url') . $preload['asset'] . '>;rel=preload;as=' . $preload['type']);
+    }
+    header('Link: ' . join(',', $payloads));
+  }
 ?>
