@@ -15,3 +15,4 @@
 <?
   wp_footer();
 ?>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
