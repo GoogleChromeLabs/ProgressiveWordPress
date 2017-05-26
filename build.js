@@ -18,11 +18,11 @@ const cssoConfig = {
 };
 
 const babelConfig = {
-  presets: ["babili"],
-};
+    presets: ["babili"],
+  };
 
 async function copyStatic() {
-  let files = await filesWithPatterns([/\.php$/i, /\.mustache$/i]);
+  let files = await filesWithPatterns([/\.php$/i]);
   files = files.map(file => copy(`src/${file}`, `dist/${file}`))
   await Promise.all(files);
 }

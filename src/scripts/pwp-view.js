@@ -17,19 +17,16 @@ class PwpView extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['data-url'];
+    return ['fragment-url'];
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
     if(this.rendered) return;
-    const dataURL = new URL(newVal);
-    dataURL.searchParams.append('json', 'true');
+    const fragmentURL = new URL(newVal);
+    fragmentURL.searchParams.append('fragment', 'true');
     this._ready = (async _ => {
-      const [data, template] = await Promise.all([
-        fetch(dataURL.toString()).then(resp => resp.json()),
-        fetch(this.templateURL).then(resp => resp.text()),
-      ]);
-      this.textContent = JSON.stringify(data) + '\n' + template;
+      const fragment = await fetch(fragmentURL.toString()).then(resp => resp.text());
+      this.innerHTML = fragment;
     })();
   }
 
@@ -40,20 +37,12 @@ class PwpView extends HTMLElement {
     return Promise.resolve()
   }
 
-  get dataURL() {
-    return this.getAttribute('data-url');
+  get fragmentURL() {
+    return this.getAttribute('fragment-url');
   }
 
-  set dataURL(val) {
-    this.setAttribute('data-url', val);
-  }
-
-  get templateURL() {
-    return this.getAttribute('template-url');
-  }
-
-  set templateURL(val) {
-    this.setAttribute('template-url', val);
+  set fragmentURL(val) {
+    this.setAttribute('fragment-url', val);
   }
 
   get rendered() {

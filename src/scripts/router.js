@@ -16,10 +16,16 @@ class Router {
     this._bindHandlers();
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
+    window.addEventListener('popstate', this._onPopState);
   }
 
   _bindHandlers() {
     this._onLinkClick = this._onLinkClick.bind(this);
+    this._onPopState = this._onPopState.bind(this);
+  }
+
+  _onPopState(event) {
+    this.navigate(location.href, event.state.scrollTop);
   }
 
   _onLinkClick(event) {
@@ -43,13 +49,12 @@ class Router {
     return '0.3s';
   }
 
-  async navigate(link) {
+  async navigate(link, scrollTop = 0) {
     // console.log('internal link – navigate for now');
     // document.location.href = link.href;
     const oldView = document.querySelector('pwp-view');
     const newView = document.createElement('pwp-view');
-    newView.templateURL = 'https://surmblog.dev:8080/wp-content/themes/surmblog/post.mustache'; // FIXME
-    newView.dataURL = link.toString();
+    newView.fragmentURL = link.toString();
     newView.style.opacity = '0';
 
     oldView.style.transition = `opacity ${Router.TRANSITION_DURATION} linear`;
@@ -57,9 +62,10 @@ class Router {
     await transitionEndPromise(oldView);
     await newView.ready;
     oldView.parentNode.replaceChild(newView, oldView);
+    history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
+    document.scrollingElement.scrollTop = scrollTop;
+    history.pushState({scrollTop}, '', link);
     newView.style.transition = `opacity ${Router.TRANSITION_DURATION} linear`;
-    await requestAnimationFramePromise();
-    await requestAnimationFramePromise();
     newView.style.opacity = '1';
     await transitionEndPromise(newView);
     console.log('Transition done');

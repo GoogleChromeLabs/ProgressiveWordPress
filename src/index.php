@@ -13,13 +13,23 @@
    */
 ?>
 <?
-  $data = get_post_data();
-  if($_GET['json']) return render_json($data);
+  $fragment = $_GET['fragment'] == 'true';
 
-  get_template_part('header');
-  if(is_single())
-    render_template('post', $data);
-  else
-    render_template('listing', $data);
-  get_template_part('footer');
+  if(!$fragment) get_template_part('header');
+?>
+<? if(have_posts()): ?>
+    <ul>
+      <? while(have_posts()): the_post() ?>
+        <li>
+          <h2><a href="<? the_permalink(); ?>"><? the_title(); ?></a></h2>
+          <p><? the_date(); ?></p>
+          <p><? the_excerpt(); ?></p>
+        </li>
+      <? endwhile; ?>
+    </ul>
+<? else: ?>
+  Nothing here :(
+<? endif; ?>
+<?
+  if(!$fragment) get_template_part('footer');
 ?>

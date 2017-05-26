@@ -12,11 +12,21 @@
    * limitations under the License.
    */
 ?>
-<!doctype html>
-<title>SurmBlog</title>
-<link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/style.css">
 <?
-  wp_head();
-?>
-<pwp-view rendered>
+  $fragment = $_GET['fragment'] == 'true';
 
+  if(!$fragment) get_template_part('header');
+?>
+<a href="<?=home_url();?>">Back</a>
+<? if(have_posts()): ?>
+  <? while(have_posts()): the_post() ?>
+    <h2><a href="<? the_permalink(); ?>"><? the_title(); ?></a></h2>
+    <p><? the_date(); ?></p>
+    <? the_content(); ?>
+  <? endwhile; ?>
+<? else: ?>
+  Nothing here :(
+<? endif; ?>
+<?
+  if(!$fragment) get_template_part('footer');
+?>

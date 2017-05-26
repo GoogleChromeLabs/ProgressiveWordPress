@@ -4,11 +4,9 @@
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p dist; npm run copy-mustache.php && node build.js",
+    "build": "mkdir -p dist; node build.js",
     "copy-static": "cp -r src/*.php dist/",
-    "copy-mustache.php": "mkdir -p dist/third_party/mustache.php && cp -r node_modules/mustache.php/src/* dist/third_party/mustache.php",
     "minify-css": "for file in src/*.css; do csso src/*.css dist/ -m file",
-    "install": "napa",
     "watch": "npm-watch"
   },
   "watch": {
@@ -29,10 +27,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cssnano": "^3.10.0",
-    "mz": "^2.6.0",
-    "napa": "^2.3.0"
-  },
-  "napa": {
-    "mustache.php": "git+https://git@github.com/bobthecow/mustache.php.git#v2.11.1"
+    "mz": "^2.6.0"
   }
 }
