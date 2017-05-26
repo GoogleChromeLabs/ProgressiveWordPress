@@ -28,4 +28,11 @@
     }
     header('Link: ' . join(',', $payloads));
   }
+
+  // This just a 1K script, but it’s synchronous and will be injected before
+  // ours. We don’t need it, so just don’t load it at all.
+  function my_deregister_scripts(){
+    wp_deregister_script( 'wp-embed' );
+  }
+  add_action( 'wp_footer', 'my_deregister_scripts' );
 ?>

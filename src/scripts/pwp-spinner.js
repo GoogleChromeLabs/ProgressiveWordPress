@@ -17,9 +17,13 @@ class PwpSpinner extends HTMLElement {
   }
 
   connectedCallback() {
-    this.innerHTML = PwpSpinner.SVG_SOURCE;
-    this._svg = this.querySelector('svg');
-    this.hidden = true;
+    this.hide();
+    this.ready = new Promise(resolve => {
+      requestIdleCallback(_ => {
+        this.innerHTML = PwpSpinner.SVG_SOURCE;
+        resolve();
+      });
+    });
   }
 
   static get SVG_SOURCE() {
@@ -39,18 +43,20 @@ class PwpSpinner extends HTMLElement {
 customElements.define('pwp-spinner', PwpSpinner);
 
 const globalSpinner = document.createElement('pwp-spinner');
-Object.assign(globalSpinner.style, {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  pointerEvents: 'none',
-  display: 'none',
-  alignItems: 'center',
-  justifyContent: 'center',
+requestIdleCallback(_ => {
+  Object.assign(globalSpinner.style, {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none',
+    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+  });
+  globalSpinner.classList.add('global');
+  document.body.appendChild(globalSpinner);
 });
-globalSpinner.classList.add('global');
-document.body.appendChild(globalSpinner);
 
 export {globalSpinner};

@@ -78,7 +78,7 @@ class Router {
     const newView = this._loadFragment(link);
     await animation;
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
-      globalSpinner.show();
+      globalSpinner.ready.then(_ => globalSpinner.show());
     }
     if(pushState) history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
     await newView.ready;

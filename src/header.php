@@ -20,7 +20,7 @@
 <title>SurmBlog</title>
 <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/style.css">
 <?
-  // wp_head();
+  wp_head();
 ?>
 <pwp-view rendered>
 
