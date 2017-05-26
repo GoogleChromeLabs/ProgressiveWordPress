@@ -18,3 +18,4 @@
 <?
   wp_head();
 ?>
+<pwp-view rendered>

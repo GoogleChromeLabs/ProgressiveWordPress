@@ -38,7 +38,7 @@ async function minifyCss() {
 
 async function minifyJs() {
   let files = await filesWithPatterns([/\.js$/i]);
-  files = files.map(file => new Promise((resolve, reject) => babel.transformFile(`src/${file}`, babelConfig, (err, {code}) => err ? reject(err) : resolve({code, name: file}))));
+  files = files.map(file => new Promise((resolve, reject) => babel.transformFile(`src/${file}`, babelConfig, (err, result) => err ? reject(err) : resolve({code: result.code, name: file}))));
   files = await Promise.all(files);
   files = files.map(async file => {
     const dir = path.dirname(file.name);

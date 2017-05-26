@@ -12,7 +12,9 @@
    * limitations under the License.
    */
 ?>
+</pwp-view>
 <?
   wp_footer();
 ?>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>

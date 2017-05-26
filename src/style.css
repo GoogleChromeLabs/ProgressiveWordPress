@@ -24,3 +24,6 @@ a {
   text-decoration: none;
   color: hsla(0, 40%, 30%, 1);
 }
+pwp-view {
+  display: block;
+}

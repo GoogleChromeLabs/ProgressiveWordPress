@@ -14,6 +14,7 @@
 class Router {
   constructor() {
     this._bindHandlers();
+    this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
   }
 
@@ -23,14 +24,59 @@ class Router {
 
   _onLinkClick(event) {
     if(event.target.tagName !== 'A') return;
+    const link = new URL(event.target.href);
+    // If it’s an external link, just navigate.
+    if(link.host !== this._hostname) {
+      return;
+    }
+    // We also navigate normally for admin links
+    if(link.pathname.startsWith('/wp-admin')) {
+      document.location.href = link;
+      return;
+    }
+
     event.preventDefault();
     this.navigate(event.target.href);
   }
 
-  navigate(link) {
-    console.log('lol', link);
-    document.location.href = link;
+  static get TRANSITION_DURATION() {
+    return '0.3s';
   }
+
+  async navigate(link) {
+    // console.log('internal link – navigate for now');
+    // document.location.href = link.href;
+    const oldView = document.querySelector('pwp-view');
+    const newView = document.createElement('pwp-view');
+    newView.templateURL = 'https://surmblog.dev:8080/wp-content/themes/surmblog/post.mustache'; // FIXME
+    newView.dataURL = link.toString();
+    newView.style.opacity = '0';
+
+    oldView.style.transition = `opacity ${Router.TRANSITION_DURATION} linear`;
+    oldView.style.opacity = '0';
+    await transitionEndPromise(oldView);
+    await newView.ready;
+    oldView.parentNode.replaceChild(newView, oldView);
+    newView.style.transition = `opacity ${Router.TRANSITION_DURATION} linear`;
+    await requestAnimationFramePromise();
+    await requestAnimationFramePromise();
+    newView.style.opacity = '1';
+    await transitionEndPromise(newView);
+    console.log('Transition done');
+  }
+}
+
+function transitionEndPromise(element) {
+  return new Promise(resolve => {
+    element.addEventListener('transitionend', function f() {
+      element.removeEventListener('transitionend', f);
+      resolve();
+    });
+  });
+}
+
+function requestAnimationFramePromise() {
+  return new Promise(resolve => requestAnimationFrame(resolve));
 }
 
 const instance = new Router();
