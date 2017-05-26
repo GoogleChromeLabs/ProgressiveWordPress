@@ -11,6 +11,8 @@
  * limitations under the License.
  */
 
+import {globalSpinner} from './pwp-spinner.js';
+
 class Router {
   constructor() {
     this._bindHandlers();
@@ -76,10 +78,11 @@ class Router {
     const newView = this._loadFragment(link);
     await animation;
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
-      console.log('Spinner!'); // TODO
+      globalSpinner.show();
     }
     if(pushState) history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
     await newView.ready;
+    globalSpinner.hide();
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
     if(pushState) history.pushState({scrollTop}, '', link);

@@ -18,3 +18,4 @@
 ?>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-spinner.js"></script>

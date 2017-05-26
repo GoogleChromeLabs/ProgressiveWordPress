@@ -27,3 +27,7 @@ a {
 pwp-view {
   display: block;
 }
+
+pwp-spinner.global {
+  transform: scale(4);
+}
