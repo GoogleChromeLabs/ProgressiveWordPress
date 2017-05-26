@@ -25,10 +25,10 @@ class Router {
   }
 
   _onPopState(event) {
-    this.navigate(location.href, event.state.scrollTop);
+    this.navigate(location.href, event.state.scrollTop, false);
   }
 
-  _onLinkClick(event) {
+  async _onLinkClick(event) {
     if(event.target.tagName !== 'A') return;
     const link = new URL(event.target.href);
     // If it’s an external link, just navigate.
@@ -42,32 +42,48 @@ class Router {
     }
 
     event.preventDefault();
-    this.navigate(event.target.href);
+    this.navigate(link.toString());
   }
 
   static get TRANSITION_DURATION() {
     return '0.3s';
   }
 
-  async navigate(link, scrollTop = 0) {
-    // console.log('internal link – navigate for now');
-    // document.location.href = link.href;
-    const oldView = document.querySelector('pwp-view');
-    const newView = document.createElement('pwp-view');
-    newView.fragmentURL = link.toString();
-    newView.style.opacity = '0';
-
+  async _animateOut(oldView) {
     oldView.style.transition = `opacity ${Router.TRANSITION_DURATION} linear`;
     oldView.style.opacity = '0';
-    await transitionEndPromise(oldView);
-    await newView.ready;
-    oldView.parentNode.replaceChild(newView, oldView);
-    history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
-    document.scrollingElement.scrollTop = scrollTop;
-    history.pushState({scrollTop}, '', link);
+    return transitionEndPromise(oldView);
+  }
+
+  async _animateIn(newView) {
+    newView.style.opacity = '0';
+    await requestAnimationFramePromise();
+    await requestAnimationFramePromise();
     newView.style.transition = `opacity ${Router.TRANSITION_DURATION} linear`;
     newView.style.opacity = '1';
     await transitionEndPromise(newView);
+  }
+
+  _loadFragment(link) {
+    const newView = document.createElement('pwp-view');
+    newView.fragmentURL = link;
+    return newView;
+  }
+
+  async navigate(link, scrollTop = 0, pushState = true) {
+    const oldView = document.querySelector('pwp-view');
+    const animation = this._animateOut(oldView);
+    const newView = this._loadFragment(link);
+    await animation;
+    if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
+      console.log('Spinner!'); // TODO
+    }
+    if(pushState) history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
+    await newView.ready;
+    document.scrollingElement.scrollTop = scrollTop;
+    oldView.parentNode.replaceChild(newView, oldView);
+    if(pushState) history.pushState({scrollTop}, '', link);
+    await this._animateIn(newView);
     console.log('Transition done');
   }
 }
@@ -83,6 +99,10 @@ function transitionEndPromise(element) {
 
 function requestAnimationFramePromise() {
   return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
+function timeoutPromise(ms, name = 'timeout') {
+  return new Promise(resolve => setTimeout(_ => resolve(name), ms));
 }
 
 const instance = new Router();
