@@ -22,7 +22,23 @@
     baseUrl: '<?=home_url();?>',
   };
 </script>
+<script>
+  _registry = {};
+  importPolyfill = path => {
+    if(!(path in _registry)) {
+      const entry = _registry[path] = {};
+      entry.promise = new Promise(resolve => entry.resolve = resolve);
+      document.head.appendChild(Object.assign(
+        document.createElement('script'),
+        {
+          type: 'module',
+          innerText: `import * as X from '${path}'; _registry['${path}'].resolve(X);`,
+        }
+      ));
+    }
+    return _registry[path].promise;
+  }
+</script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
-<!--<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-spinner.js"></script>-->
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>

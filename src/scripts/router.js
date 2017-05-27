@@ -11,14 +11,13 @@
  * limitations under the License.
  */
 
-import {globalSpinner} from './pwp-spinner.js';
-
 class Router {
   constructor() {
     this._bindHandlers();
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
     window.addEventListener('popstate', this._onPopState);
+    this._globalSpinner = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`).globalSpinner;
   }
 
   _bindHandlers() {
@@ -77,6 +76,7 @@ class Router {
     const animation = this._animateOut(oldView);
     const newView = this._loadFragment(link);
     await animation;
+    const globalSpinner = await this._globalSpinner;
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
       globalSpinner.ready.then(_ => globalSpinner.show());
     }
