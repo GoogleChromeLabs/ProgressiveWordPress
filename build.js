@@ -3,6 +3,8 @@ const fs = require('mz/fs');
 const babel = require('babel-core');
 const glob = require('glob');
 const path = require('path');
+const AsyncArray = require('./async_array.js')
+const package = require('./package.json');
 
 Promise.all([
   copyStatic(),
@@ -18,43 +20,60 @@ const cssoConfig = {
 };
 
 const babelConfig = {
-    presets: ["babili"],
-  };
+  presets: ["babili"],
+};
+
+const templateData = {
+  'VERSION': package.version,
+};
 
 async function copyStatic() {
-  let files = await filesWithPatterns([/\.php$/i]);
-  files = files.map(file => copy(`src/${file}`, `dist/${file}`))
-  await Promise.all(files);
+  filesWithPatterns([/\.php$/i])
+    .map(async file => copy(`src/${file}`, `dist/${file}`))
+    .array;
 }
 
 async function minifyCss() {
-  let files = await filesWithPatterns([/\.css$/i]);
-  files = await readAll(files);
-  files.forEach(file => file.csso = csso.minify(file.content, Object.assign({}, cssoConfig, {filename: file.name})));
-  const cssFiles = files.map(file => fs.writeFile(`dist/${file.name}`, `${file.csso.css}/*# sourceMappingURL=${file.name}.map */`));
-  const maps = files.map(file => fs.writeFile(`dist/${file.name}.map`, file.csso.map.toString()));
-  await Promise.all([...cssFiles, ...maps]);
+  filesWithPatterns([/\.css$/i])
+    .map(async file => ({name: file, contents: await fs.readFile(`src/${file}`)}))
+    .map(async file => Object.assign(file, {contents: file.contents.toString('utf-8')}))
+    .map(async file => {
+      const cssoConfigCopy = Object.assign({}, cssoConfig, {filename: file.name});
+      return Object.assign(file, {csso: csso.minify(file.contents, cssoConfigCopy)});
+    })
+    .map(async file => {
+      await fs.writeFile(`dist/${file.name}`, `${file.csso.css}/*# sourceMappingURL=${file.name}.map */`);
+      await fs.writeFile(`dist/${file.name}.map`, file.csso.map.toString());
+    })
+    .array;
 }
 
 async function minifyJs() {
-  let files = await filesWithPatterns([/\.js$/i]);
-  files = files.map(file => new Promise((resolve, reject) => babel.transformFile(`src/${file}`, babelConfig, (err, result) => err ? reject(err) : resolve({code: result.code, name: file}))));
-  files = await Promise.all(files);
-  files = files.map(async file => {
-    const dir = path.dirname(file.name);
-    await mkdirAll(`dist/${dir}`);
-    return fs.writeFile(`dist/${file.name}`, file.code);
-  });
-  await Promise.all(files);
+  filesWithPatterns([/\.js$/i])
+    .map(async file => ({name: file, contents: await fs.readFile(`src/${file}`)}))
+    .map(async file => Object.assign(file, {contents: file.contents.toString('utf-8')}))
+    .map(async file => {
+      for(const [key, val] of Object.entries(templateData)) {
+        file.contents = file.contents.replace(`{%${key}%}`, val);
+      }
+      return file;
+    })
+    .map(async file => Object.assign(file, {code: babel.transform(file.contents, babelConfig).code}))
+    .map(async file => {
+      const dir = path.dirname(file.name);
+      await mkdirAll(`dist/${dir}`);
+      return fs.writeFile(`dist/${file.name}`, file.code);
+    })
+    .array;
 }
 
-var files = [];
-async function filesWithPatterns(regexps) {
+var files;
+function filesWithPatterns(regexps) {
   if(!files) {
-    files = await new Promise((resolve, reject) => glob('src/**', (err, f) => err ? reject(err) : resolve(f)));
-    files = files.map(file => file.substr(4));
+    files = AsyncArray.from(new Promise((resolve, reject) => glob('src/**', (err, f) => err ? reject(err) : resolve(f))))
+      .map(async file => file.substr(4));
   }
-  return files.filter(file => regexps.some(regexp => regexp.test(file)));
+  return files.filter(async file => regexps.some(regexp => regexp.test(file)));
 }
 
 async function copy(from, to) {
@@ -62,11 +81,6 @@ async function copy(from, to) {
   const dir = path.dirname(to);
   await mkdirAll(dir);
   await fs.writeFile(to, data);
-}
-
-async function readAll(files) {
-  const contents = await Promise.all(files.map(file => fs.readFile(`src/${file}`)));
-  return files.map((_, i) => ({name: files[i], content: contents[i].toString('utf-8')}));
 }
 
 async function mkdirAll(dir) {
