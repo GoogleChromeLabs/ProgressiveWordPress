@@ -12,6 +12,7 @@ FROM wordpress:4.7-php7.0-apache
 
 RUN ln -sf /etc/apache2/mods-available/socache_shmcb.* /etc/apache2/mods-enabled/
 RUN ln -sf /etc/apache2/mods-available/ssl.* /etc/apache2/mods-enabled/
+RUN ln -sf /etc/apache2/mods-available/headers.* /etc/apache2/mods-enabled/
 RUN echo "deb http://http.debian.net/debian testing main" > /etc/apt/sources.list.d/testing.list
 COPY docker_assets/testing /etc/apt/preferences.d/
 RUN apt-get update

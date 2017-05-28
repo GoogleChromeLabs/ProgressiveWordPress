@@ -1,10 +1,10 @@
 {
   "name": "ProgressiveWordPress",
-  "version": "0.0.1",
+  "version": "0.0.26",
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p dist; node build.js",
+    "build": "npm version --no-git-tag-version -f patch && mkdir -p dist; node build.js",
     "copy-static": "cp -r src/*.php dist/",
     "minify-css": "for file in src/*.css; do csso src/*.css dist/ -m file",
     "watch": "npm-watch"
@@ -12,10 +12,9 @@
   "watch": {
     "build": {
       "patterns": [
-        "src/*",
+        "src/**",
         "build.js"
-      ],
-      "extensions": "php,js,html,css,mustache"
+      ]
     }
   },
   "repository": {

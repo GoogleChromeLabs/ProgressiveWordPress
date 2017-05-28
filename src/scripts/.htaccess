@@ -1,0 +1,3 @@
+<FilesMatch "sw\.js$">
+Header add "Service-Worker-Allowed" "/"
+</FilesMatch>

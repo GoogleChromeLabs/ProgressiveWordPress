@@ -28,7 +28,7 @@ const templateData = {
 };
 
 async function copyStatic() {
-  filesWithPatterns([/\.php$/i])
+  filesWithPatterns([/\.php$/i, /.htaccess$/i])
     .map(async file => copy(`src/${file}`, `dist/${file}`))
     .array;
 }
@@ -70,7 +70,7 @@ async function minifyJs() {
 var files;
 function filesWithPatterns(regexps) {
   if(!files) {
-    files = AsyncArray.from(new Promise((resolve, reject) => glob('src/**', (err, f) => err ? reject(err) : resolve(f))))
+    files = AsyncArray.from(new Promise((resolve, reject) => glob('src/**', {dot: true}, (err, f) => err ? reject(err) : resolve(f))))
       .map(async file => file.substr(4));
   }
   return files.filter(async file => regexps.some(regexp => regexp.test(file)));
