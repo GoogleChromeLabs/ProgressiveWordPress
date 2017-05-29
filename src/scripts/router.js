@@ -17,7 +17,7 @@ class Router {
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
     window.addEventListener('popstate', this._onPopState);
-    this._globalSpinner = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`).globalSpinner;
+    this._globalSpinner = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`).then(obj => obj.globalSpinner);
   }
 
   _bindHandlers() {
@@ -82,7 +82,7 @@ class Router {
     }
     if(pushState) history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
     await newView.ready;
-    globalSpinner.hide();
+    globalSpinner.ready.then(_ => globalSpinner.hide());
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
     if(pushState) history.pushState({scrollTop}, '', link);

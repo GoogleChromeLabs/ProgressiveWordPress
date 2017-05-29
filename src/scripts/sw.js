@@ -1,9 +1,13 @@
 const VERSION = '{%VERSION%}';
 
 self.oninstall = event => {
-  console.log('On install');
+  event.waitUntil(self.skipWaiting());
 };
 
+self.onactivate = event => {
+  event.waitUntil(self.clients.claim());
+}
+
 self.onfetch = event => {
-  console.log(`On fetch ${event.request.url}`);
+  console.log('onfetch', event.request.url);
 };
