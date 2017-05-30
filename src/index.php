@@ -13,9 +13,7 @@
    */
 ?>
 <?
-  $fragment = $_GET['fragment'] == 'true';
-
-  if(!$fragment) get_template_part('header');
+  if(!is_fragment()) get_template_part('header');
 ?>
 <? if(have_posts()): ?>
     <ul>

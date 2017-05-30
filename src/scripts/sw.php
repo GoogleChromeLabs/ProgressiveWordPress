@@ -13,17 +13,11 @@
    */
 ?>
 <?
-  require_once(dirname(__FILE__).'/../../../wp-load.php');
-  if(!is_fragment()) {
-    add_preload('/style.css', 'style');
-    send_preload();
-  }
+  require('../../../../wp-load.php');
+  header('Service-Worker-Allowed: /');
+  header('Content-Type: application/javascript');
 ?>
-<!doctype html>
-<title>SurmBlog</title>
-<link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/style.css">
+_wordpressConfig={templateUrl:`<?=get_bloginfo('template_url');?>`};
 <?
-  wp_head();
+  readfile('sw.js');
 ?>
-<pwp-view rendered>
-

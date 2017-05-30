@@ -87,7 +87,6 @@ class Router {
     oldView.parentNode.replaceChild(newView, oldView);
     if(pushState) history.pushState({scrollTop}, '', link);
     await this._animateIn(newView);
-    console.log('Transition done');
   }
 }
 

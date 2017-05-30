@@ -11,4 +11,4 @@
  * limitations under the License.
  */
 
-navigator.serviceWorker.register(`${_wordpressConfig.templateUrl}/scripts/sw.js`, {scope: '/'});
+navigator.serviceWorker.register(`${_wordpressConfig.templateUrl}/scripts/sw.php`, {scope: '/'});

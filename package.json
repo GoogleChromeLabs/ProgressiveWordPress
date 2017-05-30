@@ -1,6 +1,6 @@
 {
   "name": "ProgressiveWordPress",
-  "version": "0.0.38",
+  "version": "0.0.149",
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
@@ -12,9 +12,10 @@
   "watch": {
     "build": {
       "patterns": [
-        "src/**",
+        "src/**/*",
         "build.js"
-      ]
+      ],
+      "extensions": "php,json,js,html,css"
     }
   },
   "repository": {

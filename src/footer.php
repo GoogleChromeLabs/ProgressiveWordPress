@@ -12,6 +12,9 @@
    * limitations under the License.
    */
 ?>
+<?
+  require_once(dirname(__FILE__).'/../../../wp-load.php');
+?>
 </pwp-view>
 <?
   wp_footer();
