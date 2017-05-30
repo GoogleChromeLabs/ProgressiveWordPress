@@ -42,6 +42,8 @@
     return _registry[path].promise;
   }
 </script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-notification.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>

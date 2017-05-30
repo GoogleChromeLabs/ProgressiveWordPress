@@ -10,24 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  font-family: sans-serif;
-}
-body {
-  background-color: hsla(0, 10%, 95%, 1);
-}
-a {
-  text-decoration: none;
-  color: hsla(0, 40%, 30%, 1);
-}
-pwp-view {
-  display: block;
+
+function injectLazyStuff() {
+  document.querySelectorAll('noscript.lazyload').forEach(lazy => {
+    parseHTML(lazy.innerText).forEach(elem => {
+      lazy.parentNode.appendChild(elem);
+    });
+  });
 }
 
-pwp-spinner.global {
-  transform: scale(4);
+function parseHTML(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return Array.from(div.children);
 }
+
+requestIdleCallback(_ => injectLazyStuff());

@@ -17,7 +17,7 @@ const VERSION = '{%VERSION%}';
 
 self.oninstall = event => {
   event.waitUntil(async function() {
-    const cache = await caches.open('pwp-static');
+    const cache = await caches.open('pwp');
     await cache.addAll([
       `${_wordpressConfig.templateUrl}/header.php?fragment=true`,
       `${_wordpressConfig.templateUrl}/?fragment=true`,
@@ -72,7 +72,7 @@ async function staleWhileRevalidate(request, waitUntil) {
   const networkResponsePromise = fetch(request).catch(_ => {});
 
   waitUntil(async function () {
-    const cache = await caches.open('pwp-dynamic');
+    const cache = await caches.open('pwp');
     const networkResponse = await networkResponsePromise;
     if(networkResponse)
       return cache.put(request, networkResponse.clone());
