@@ -69,12 +69,17 @@ function isAssetRequest(request) {
 }
 
 async function staleWhileRevalidate(request, waitUntil) {
-  const networkResponsePromise = fetch(request);
-  const cacheResponse = await caches.match(request);
+  const networkResponsePromise = fetch(request).catch(_ => {});
+
   waitUntil(async function () {
     const cache = await caches.open('pwp-dynamic');
-    return cache.put(request, (await networkResponsePromise).clone());
+    const networkResponse = await networkResponsePromise;
+    if(networkResponse)
+      return cache.put(request, networkResponse.clone());
   }());
-
-  return cacheResponse ? cacheResponse : (await networkResponsePromise).clone();
+  const cacheResponse = await caches.match(request);
+  if (cacheResponse) return cacheResponse;
+  const networkResponse = await networkResponsePromise;
+  if(networkResponse) return networkResponse.clone();
+  throw new Error('Neither network nor cache had a response')
 }

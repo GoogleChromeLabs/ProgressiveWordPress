@@ -25,7 +25,12 @@ class PwpView extends HTMLElement {
     const fragmentURL = new URL(newVal);
     fragmentURL.searchParams.append('fragment', 'true');
     this._ready = (async _ => {
-      const fragment = await fetch(fragmentURL.toString()).then(resp => resp.text());
+      let fragment;
+      try {
+        fragment = await fetch(fragmentURL.toString()).then(resp => resp.text());
+      } catch(e) {
+        fragment = 'This content is not available.';
+      }
       this.innerHTML = fragment;
     })();
   }
