@@ -36,9 +36,10 @@ self.onactivate = event => {
 }
 
 self.onfetch = event => {
-  if(isFragmentRequest(event.request) || isAssetRequest(event.request)) {
+  if(isWpRequest(event.request))
+    return fetch(event.request);
+  if(isFragmentRequest(event.request) || isAssetRequest(event.request))
     return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
-  }
 
   const newRequestURL = new URL(event.request.url);
   newRequestURL.searchParams.append('fragment', 'true');
@@ -66,6 +67,11 @@ function isFragmentRequest(request) {
 
 function isAssetRequest(request) {
   return /(jpe?g|png|css|js)$/i.test(request.url);
+}
+
+function isWpRequest(request) {
+  const parsedUrl = new URL(request.url);
+  return /^\/wp-/i.test(parsedUrl.pathname);
 }
 
 async function staleWhileRevalidate(request, waitUntil) {

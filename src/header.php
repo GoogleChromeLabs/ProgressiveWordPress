@@ -16,6 +16,7 @@
   require_once(dirname(__FILE__).'/../../../wp-load.php');
 ?>
 <!doctype html>
+<meta charset="utf8">
 <title>SurmBlog</title>
 <style>
 <? readfile(dirname(__FILE__).'/critical.css'); ?>
