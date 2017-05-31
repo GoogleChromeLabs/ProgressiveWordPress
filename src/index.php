@@ -29,5 +29,5 @@
   Nothing here :(
 <? endif; ?>
 <?
-  if(!$fragment) get_template_part('footer');
+  if(!is_fragment()) get_template_part('footer');
 ?>

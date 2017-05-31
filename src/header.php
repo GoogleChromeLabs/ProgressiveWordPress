@@ -14,14 +14,12 @@
 ?>
 <?
   require_once(dirname(__FILE__).'/../../../wp-load.php');
-  if(!is_fragment()) {
-    add_preload('/critical.css', 'style');
-    send_preload();
-  }
 ?>
 <!doctype html>
 <title>SurmBlog</title>
-<link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/critical.css">
+<style>
+<? readfile(dirname(__FILE__).'/critical.css'); ?>
+</style>
 <noscript class="lazyload">
   <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/lazy.css">
 </noscript>
