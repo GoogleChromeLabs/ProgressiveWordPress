@@ -22,7 +22,7 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/header.php?fragment=true`,
       `${_wordpressConfig.templateUrl}/?fragment=true`,
       `${_wordpressConfig.templateUrl}/footer.php?fragment=true`,
-      `${_wordpressConfig.templateUrl}/style.css`,
+      `${_wordpressConfig.templateUrl}/lazy.css`,
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
@@ -71,7 +71,7 @@ function isAssetRequest(request) {
 
 function isWpRequest(request) {
   const parsedUrl = new URL(request.url);
-  return /^\/wp-/i.test(parsedUrl.pathname);
+  return /^\/wp-/i.test(parsedUrl.pathname) && !parsedUrl.pathname.startsWith('/wp-content');
 }
 
 async function staleWhileRevalidate(request, waitUntil) {
