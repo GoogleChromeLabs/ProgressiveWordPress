@@ -14,10 +14,12 @@
 ?>
 <?
   require('../../../../wp-load.php');
+  etag_start();
   header('Service-Worker-Allowed: /');
   header('Content-Type: application/javascript');
 ?>
 _wordpressConfig={templateUrl:`<?=get_bloginfo('template_url');?>`};
 <?
   readfile('sw.js');
+  etag_end();
 ?>
