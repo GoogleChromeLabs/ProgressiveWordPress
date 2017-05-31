@@ -25,4 +25,3 @@ COPY docker_assets/000-default.conf /etc/apache2/sites-available/
 RUN mkdir -p /var/www/html/wp-content/themes/surmblog
 COPY dist /var/www/html/wp-content/themes/surmblog
 VOLUME /var/www/html/wp-content/themes/surmblog
-

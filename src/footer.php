@@ -28,6 +28,9 @@
 <script>
 <? readfile(dirname(__FILE__).'/scripts/import-polyfill.js'); ?>
 </script>
+<script>
+<? readfile(dirname(__FILE__).'/scripts/ric-polyfill.js'); ?>
+</script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
