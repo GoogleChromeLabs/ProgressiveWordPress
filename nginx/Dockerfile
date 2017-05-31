@@ -8,8 +8,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM wordpress:4.7-php7.0-apache
+FROM nginx:1.13
 
-COPY dist /var/www/html/wp-content/themes/surmblog
-VOLUME /var/www/html/wp-content/themes/surmblog
-
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY cert.pem /etc/nginx/
+COPY key.pem /etc/nginx/
