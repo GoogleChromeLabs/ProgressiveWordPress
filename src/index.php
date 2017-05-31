@@ -13,6 +13,7 @@
    */
 ?>
 <?
+  etag_start();
   if(!is_fragment()) get_template_part('header');
 ?>
 <? if(have_posts()): ?>
@@ -30,4 +31,5 @@
 <? endif; ?>
 <?
   if(!is_fragment()) get_template_part('footer');
+  etag_end();
 ?>

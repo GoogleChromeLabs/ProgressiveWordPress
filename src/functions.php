@@ -39,4 +39,21 @@
   function is_fragment() {
     return $_GET['fragment'] == 'true';
   }
+
+  function etag_start() {
+    ob_start();
+  }
+
+  function etag_end() {
+    $content = ob_get_clean();
+    $etag = hash('sha256', $content);
+    $request = $_SERVER['HTTP_IF_NONE_MATCH'];
+    if($etag == $request) {
+      http_response_code(304);
+      return;
+    }
+
+    header('Etag: ' . $etag);
+    echo $content;
+  }
 ?>
