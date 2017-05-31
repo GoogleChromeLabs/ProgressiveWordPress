@@ -14,6 +14,7 @@
 ?>
 <?
   require_once(dirname(__FILE__).'/../../../wp-load.php');
+  etag_start();
 ?>
 </pwp-view>
 <?
@@ -36,3 +37,6 @@
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-notification.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
+<?
+  etag_end();
+?>

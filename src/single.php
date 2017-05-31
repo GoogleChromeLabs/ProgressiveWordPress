@@ -13,9 +13,8 @@
    */
 ?>
 <?
-  $fragment = $_GET['fragment'] == 'true';
-
-  if(!$fragment) get_template_part('header');
+  etag_start();
+  if(!is_fragment()) get_template_part('header');
 ?>
 <a href="<?=home_url();?>">Back</a>
 <? if(have_posts()): ?>
@@ -28,5 +27,6 @@
   Nothing here :(
 <? endif; ?>
 <?
-  if(!$fragment) get_template_part('footer');
+  if(!is_fragment()) get_template_part('footer');
+  etag_end();
 ?>

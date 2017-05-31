@@ -14,6 +14,7 @@
 ?>
 <?
   require_once(dirname(__FILE__).'/../../../wp-load.php');
+  etag_start();
 ?>
 <!doctype html>
 <meta charset="utf8">
@@ -28,4 +29,6 @@
   wp_head();
 ?>
 <pwp-view rendered>
-
+<?
+  etag_end();
+?>
