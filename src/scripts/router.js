@@ -72,6 +72,10 @@ class Router {
   }
 
   async navigate(link, scrollTop = 0, pushState = true) {
+    if(pushState) {
+      history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
+      history.pushState({scrollTop}, '', link);
+    }
     const oldView = document.querySelector('pwp-view');
     const animation = this._animateOut(oldView);
     const newView = this._loadFragment(link);
@@ -80,12 +84,10 @@ class Router {
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
       globalSpinner.ready.then(_ => globalSpinner.show());
     }
-    if(pushState) history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
     await newView.ready;
     globalSpinner.ready.then(_ => globalSpinner.hide());
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
-    if(pushState) history.pushState({scrollTop}, '', link);
     await this._animateIn(newView);
   }
 }
