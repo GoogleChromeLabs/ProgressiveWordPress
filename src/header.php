@@ -28,6 +28,7 @@
 <?
   wp_head();
 ?>
+<? wp_nav_menu(array('theme_location' => 'main-nav')); ?>
 <pwp-view rendered>
 <?
   etag_end();

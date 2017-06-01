@@ -25,9 +25,8 @@ class PwpNotification extends HTMLElement {
     this.style.display = 'none';
   }
 
-  show(duration = 3000) {
+  show() {
     this.style.display = '';
-    setTimeout(_ => this.remove(), duration); // TODO: Make animation ’n stuff
   }
 }
 customElements.define('pwp-notification', PwpNotification);

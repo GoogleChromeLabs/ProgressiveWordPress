@@ -17,6 +17,7 @@
   etag_start();
 ?>
 </pwp-view>
+<? wp_nav_menu(array('theme_location' => 'footer-nav')); ?>
 <?
   wp_footer();
 ?>
@@ -31,6 +32,9 @@
 </script>
 <script>
 <? readfile(dirname(__FILE__).'/scripts/ric-polyfill.js'); ?>
+</script>
+<script>
+<? readfile(dirname(__FILE__).'/scripts/sw-postmessage.js'); ?>
 </script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>

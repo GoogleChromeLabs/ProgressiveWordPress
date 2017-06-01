@@ -26,7 +26,8 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
-    ])
+    ]);
+    // TODO Need to broadcast changes here
     return self.skipWaiting();
   }());
 };
@@ -74,16 +75,31 @@ function isWpRequest(request) {
   return /^\/wp-/i.test(parsedUrl.pathname) && !parsedUrl.pathname.startsWith('/wp-content');
 }
 
+async function broadcast(msg) {
+  const clients = await self.clients.matchAll();
+  clients.forEach(client => client.postMessage(msg));
+}
+
 async function staleWhileRevalidate(request, waitUntil) {
   const networkResponsePromise = fetch(request).catch(_ => {});
+  const cacheResponsePromise = caches.match(request);
 
+  // Update cache
   waitUntil(async function () {
     const cache = await caches.open('pwp');
     const networkResponse = await networkResponsePromise;
-    if(networkResponse)
-      return cache.put(request, networkResponse.clone());
+    const cacheResponse = await cacheResponsePromise;
+    if(networkResponse && cacheResponse) {
+      const changed = networkResponse.headers.get('Etag') !== cacheResponse.headers.get('Etag');
+      if(changed) await broadcast({type: 'resource_update', name: request.url});
+    }
+    if(networkResponse) {
+       cache.put(request, networkResponse.clone());
+    }
   }());
-  const cacheResponse = await caches.match(request);
+
+  // Determine response
+  const cacheResponse = await cacheResponsePromise;
   if (cacheResponse) return cacheResponse;
   const networkResponse = await networkResponsePromise;
   if(networkResponse) return networkResponse.clone();

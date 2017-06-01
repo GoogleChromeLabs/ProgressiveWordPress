@@ -15,6 +15,11 @@
 <?
   $preloads = [];
 
+  register_nav_menus(array(
+    'main-nav' => 'Main navigation menu',
+    'footer-nav' => 'Footer menu',
+  ));
+
   function add_preload($asset, $type = 'style') {
     global $preloads;
     array_push($preloads, array('asset' => $asset, 'type' => $type));

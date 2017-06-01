@@ -16,6 +16,19 @@ if(!('serviceWorker' in navigator)) {
   return;
 }
 
-navigator.serviceWorker.register(`${_wordpressConfig.templateUrl}/scripts/sw.php`, {scope: '/'});
+const messages = [];
+
+function tempHandler(event) {
+  messages.push(event);
+}
+
+navigator.serviceWorker.addEventListener('message', tempHandler);
+
+requestIdleCallback(async _ => {
+  const {handler} = await importPolyfill(`${_wordpressConfig.templateUrl}/scripts/resource-updates.js`);
+  navigator.serviceWorker.removeEventListener('message', tempHandler);
+  navigator.serviceWorker.addEventListener('message', handler);
+  messages.forEach(message => handler(message));
+});
 
 })();
