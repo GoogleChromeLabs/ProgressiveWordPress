@@ -37,7 +37,7 @@
   // This just a 1K script, but it’s synchronous and will be injected before
   // ours. We don’t need it, so just don’t load it at all.
   function my_deregister_scripts(){
-    wp_deregister_script( 'wp-embed' );
+    wp_deregister_script('wp-embed');
   }
   add_action( 'wp_footer', 'my_deregister_scripts' );
 
@@ -73,5 +73,38 @@
 
     header('Etag: ' . $etag);
     echo $content;
+  }
+
+  function thumb_data($srcimagepath) {
+    $dstimagewidth = 9;
+    $dstimageheight = 9;
+
+    $srcimagesize = getimagesize($srcimagepath);
+    $srcimagewidth = $srcimagesize[0];
+    $srcimageheight = $srcimagesize[1];
+    $srcimage = imagecreatefrompng($srcimagepath);
+    $dstimage = imagecreatetruecolor($dstimagewidth, $dstimageheight);
+    imagecopyresized($dstimage, $srcimage, 0, 0, 0, 0, $dstimagewidth, $dstimageheight, $srcimagewidth, $srcimageheight);
+
+    ob_start();
+    imagepng($dstimage);
+    $rawimg = ob_get_contents();
+    ob_end_clean();
+    $base64img = base64_encode($rawimg);
+    return array(
+      'base64' => $base64img,
+      'width' => $srcimagewidth,
+      'height' => $srcimageheight,
+    );
+  }
+
+  function lazy_image($img) {
+    $thumb = thumb_data(dirname(__FILE__).'/../../../'.$img);
+    ?>
+      <pwp-lazy-image
+        src="<?=$img;?>"
+        width="<?=$thumb['width'];?>" height="<?=$thumb['height'];?>"
+        style="background-image: url(data:image/png;base64,<?=$thumb['base64'];?>);"></pwp-lazy-image>
+    <?
   }
 ?>
