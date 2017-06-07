@@ -12,25 +12,16 @@
    * limitations under the License.
    */
 ?>
-<?
-  etag_start();
-  if(!is_fragment()) get_template_part('header');
-?>
-<a href="<?=home_url();?>">Back</a>
-<? if(have_posts()): ?>
-  <? while(have_posts()): the_post() ?>
-    <h2><a href="<? the_permalink(); ?>"><? the_title(); ?></a></h2>
-    <p><? the_date(); ?></p>
-    <? the_content(); ?>
-    <?
-      comments_template();
-      comment_form();
-    ?>
-  <? endwhile; ?>
+<h2>Comments</h2>
+<? if(have_comments()): ?>
+  <ul>
+    <? while(have_comments()): the_comment() ?>
+      <li>
+        <div><?=get_comment_author();?></div>
+        <div><?=get_comment_text();?></div>
+      </li>
+    <? endwhile; ?>
+  </ul>
 <? else: ?>
-  Nothing here :(
+  No comments.
 <? endif; ?>
-<?
-  if(!is_fragment()) get_template_part('footer');
-  etag_end();
-?>
