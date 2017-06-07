@@ -26,7 +26,8 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
-    ]);
+    ]
+      .map(url => new Request(url, {credentials: "include"})));
     // TODO Need to broadcast changes here
     return self.skipWaiting();
   }());
@@ -37,9 +38,11 @@ self.onactivate = event => {
 }
 
 self.onfetch = event => {
-  if(isWpRequest(event.request))
+  if(isCustomizerRequest(event))
+    return fetch(event);
+  if(isWpRequest(event))
     return fetch(event.request);
-  if(isFragmentRequest(event.request) || isAssetRequest(event.request))
+  if(isFragmentRequest(event) || isAssetRequest(event))
     return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
 
   const newRequestURL = new URL(event.request.url);
@@ -62,17 +65,21 @@ self.onfetch = event => {
   event.respondWith(new Response(readable));
 };
 
-function isFragmentRequest(request) {
-  return new URL(request.url).searchParams.get('fragment') === 'true';
+function isFragmentRequest(event) {
+  return new URL(event.request.url).searchParams.get('fragment') === 'true';
 }
 
-function isAssetRequest(request) {
-  return /(jpe?g|png|css|js)$/i.test(request.url);
+function isAssetRequest(event) {
+  return /(jpe?g|png|css|js)$/i.test(event.request.url);
 }
 
-function isWpRequest(request) {
-  const parsedUrl = new URL(request.url);
+function isWpRequest(event) {
+  const parsedUrl = new URL(event.request.url);
   return /^\/wp-/i.test(parsedUrl.pathname) && !parsedUrl.pathname.startsWith('/wp-content');
+}
+
+function isCustomizerRequest(event) {
+  return new URL(event.request.url).searchParams.has('customize_changeset_uuid');
 }
 
 async function broadcast(msg) {
@@ -81,7 +88,7 @@ async function broadcast(msg) {
 }
 
 async function staleWhileRevalidate(request, waitUntil) {
-  const networkResponsePromise = fetch(request).catch(_ => {});
+  const networkResponsePromise = fetch(request, {credentials: "include"}).catch(_ => {});
   const cacheResponsePromise = caches.match(request);
 
   // Update cache
