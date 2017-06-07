@@ -38,10 +38,8 @@ self.onactivate = event => {
 }
 
 self.onfetch = event => {
-  if(isCustomizerRequest(event))
-    return fetch(event);
-  if(isWpRequest(event))
-    return fetch(event.request);
+  if(isCustomizerRequest(event) || isWpRequest(event))
+    return; // A return passes handling to the network
   if(isFragmentRequest(event) || isAssetRequest(event))
     return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
 
