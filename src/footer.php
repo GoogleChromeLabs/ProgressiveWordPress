@@ -18,14 +18,6 @@
 ?>
 </pwp-view>
 <? wp_nav_menu(array('theme_location' => 'footer-nav')); ?>
-<div style="height: 200vh">lol</div>
-<?
-  lazy_image('/wp-content/themes/surmblog/images/testimage.png');
-?>
-<pwp-lazy-image
-  src="<?=get_bloginfo('template_url');?>/images/testimage.png"
-  width="<?=$img['width'];?>" height="<?=$img['height'];?>"
-  style="background-image: url(data:image/png;base64,<?=$img['thumb'];?>);"></pwp-lazy-image>
 <?
   wp_footer();
 ?>
