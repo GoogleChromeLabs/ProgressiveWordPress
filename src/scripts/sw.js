@@ -12,6 +12,8 @@
  */
 
 importScripts(`${_wordpressConfig.templateUrl}/scripts/transformstream.js`);
+importScripts(`${_wordpressConfig.templateUrl}/scripts/idb.js`);
+importScripts(`${_wordpressConfig.templateUrl}/scripts/bg-sync-manager.js`);
 
 const VERSION = '{%VERSION%}';
 
@@ -38,6 +40,7 @@ self.onactivate = event => {
 }
 
 self.onfetch = event => {
+  if(isCommentRequest(event)) return backgroundSyncFetch(event);
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
   if(isFragmentRequest(event) || isAssetRequest(event))
@@ -80,6 +83,11 @@ function isCustomizerRequest(event) {
   return new URL(event.request.url).searchParams.has('customize_changeset_uuid');
 }
 
+function isCommentRequest(event) {
+  return event.request.method === 'POST' &&
+    new URL(event.request.url).pathname === '/wp-comments-post.php';
+}
+
 async function broadcast(msg) {
   const clients = await self.clients.matchAll();
   clients.forEach(client => client.postMessage(msg));
@@ -109,4 +117,13 @@ async function staleWhileRevalidate(request, waitUntil) {
   const networkResponse = await networkResponsePromise;
   if(networkResponse) return networkResponse.clone();
   throw new Error('Neither network nor cache had a response')
+}
+
+function backgroundSyncFetch(event) {
+  event.waitUntil(async function() {
+    const referrer = new URL(event.request.referrer);
+    event.respondWith(new Response(null, {status: 302, headers: {"Location": referrer.pathname}}));
+    await _bgSyncManager.enqueue(event.request);
+    await self.registration.sync.register('comment-sync');
+  }());
 }
