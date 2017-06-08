@@ -66,6 +66,35 @@ self.onfetch = event => {
   event.respondWith(new Response(readable));
 };
 
+self.onsync = event => {
+  switch(event.tag) {
+    case 'test-tag-from-devtools':
+    case 'comment-sync':
+      commentSync(event);
+    break;
+    default:
+      console.error(`Unknown background sync: ${event.tag}`);
+  }
+}
+
+function commentSync(event) {
+  event.waitUntil(async function() {
+    console.log('Event: ', event.lastChance, event);
+    const pending = await _bgSyncManager.getAll();
+    await Promise.all(
+      pending.map(async request => {
+        // do something
+        if(Math.random() < 0.5) return;
+        // if we are here, it succeeded
+        _bgSyncManager.delete(request);
+      })
+    );
+    const numRemaining = await _bgSyncManager.numPending()
+    if(numRemaining > 0) return Promise.reject();
+    return;
+  }());
+}
+
 function isFragmentRequest(event) {
   return new URL(event.request.url).searchParams.get('fragment') === 'true';
 }

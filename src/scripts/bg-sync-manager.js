@@ -13,11 +13,14 @@
 
 (function () {
   class BgSyncManager {
+    static generateUID() {
+      return `${Date.now()}-${performance.now()}`;
+    }
     constructor() {
       this._dbPromise = idb.open('bgsyncs', 1, upgradeDB => {
         switch (upgradeDB.oldVersion) {
           case 0:
-            upgradeDB.createObjectStore('requests', {autoIncrement: true});
+            upgradeDB.createObjectStore('requests', {keyPath: 'id'});
         }
       });
     }
@@ -25,17 +28,18 @@
     async enqueue(request) {
       const db = await this._dbPromise;
       const body = await request.arrayBuffer();
-      return db
+      await db
         .transaction('requests', 'readwrite')
         .objectStore('requests')
         .put({
+          id: BgSyncManager.generateUID(),
           url: request.url,
           headers: Array.from(request.headers),
           method: request.method,
           body,
-          status: 'pending',
         })
-        .complete
+        .complete;
+        return;
     }
 
     async getAll() {
@@ -44,6 +48,24 @@
         .transaction('requests')
         .objectStore('requests')
         .getAll();
+    }
+
+    async delete(request) {
+      const db = await this._dbPromise;
+      await db
+        .transaction('requests', 'readwrite')
+        .objectStore('requests')
+        .delete(request.id)
+        .complete;
+      return;
+    }
+
+    async numPending() {
+      const db = await this._dbPromise;
+      return db
+        .transaction('requests')
+        .objectStore('requests')
+        .count();
     }
   }
 
