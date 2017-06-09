@@ -25,9 +25,10 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/?fragment=true`,
       `${_wordpressConfig.templateUrl}/footer.php?fragment=true`,
       `${_wordpressConfig.templateUrl}/lazy.css`,
+      `${_wordpressConfig.templateUrl}/scripts/import-polyfill.js`,
+      `${_wordpressConfig.templateUrl}/scripts/ric-polyfill.js`,
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
-      `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
     ]
       .map(url => new Request(url, {credentials: "include"})));
     // TODO Need to broadcast changes here

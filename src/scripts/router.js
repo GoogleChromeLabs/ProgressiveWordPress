@@ -13,10 +13,10 @@
 
 class Router {
   constructor() {
-    // super();
     this._bindHandlers();
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
+    performance.mark('router.hijack');
     window.addEventListener('popstate', this._onPopState);
     this._globalSpinner = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`).then(obj => obj.globalSpinner);
   }
@@ -90,7 +90,6 @@ class Router {
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
     await this._animateIn(newView);
-    // this.dispatch('router-navigate', )
   }
 }
 

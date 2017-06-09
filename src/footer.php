@@ -27,19 +27,13 @@
     baseUrl: '<?=home_url();?>',
   };
 </script>
-<script>
-<? readfile(dirname(__FILE__).'/scripts/import-polyfill.js'); ?>
-</script>
-<script>
-<? readfile(dirname(__FILE__).'/scripts/ric-polyfill.js'); ?>
-</script>
-<script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
-<script>
-<? readfile(dirname(__FILE__).'/scripts/sw-postmessage.js'); ?>
-</script>
-<script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
+<script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
+<script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
+<script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
+<script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
+<script src="<?=get_bloginfo('template_url');?>/scripts/sw-postmessage.js" defer></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-notification.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
