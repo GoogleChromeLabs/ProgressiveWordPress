@@ -40,7 +40,7 @@ self.onactivate = event => {
 }
 
 self.onfetch = event => {
-  if(isCommentRequest(event)) return backgroundSyncFetch(event);
+  if(isCommentRequest(event)) return postComment(event);
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
   if(isFragmentRequest(event) || isAssetRequest(event))
@@ -70,29 +70,11 @@ self.onsync = event => {
   switch(event.tag) {
     case 'test-tag-from-devtools':
     case 'comment-sync':
-      commentSync(event);
+      _bgSyncManager.process(event);
     break;
     default:
       console.error(`Unknown background sync: ${event.tag}`);
   }
-}
-
-function commentSync(event) {
-  event.waitUntil(async function() {
-    console.log('Event: ', event.lastChance, event);
-    const pending = await _bgSyncManager.getAll();
-    await Promise.all(
-      pending.map(async request => {
-        // do something
-        if(Math.random() < 0.5) return;
-        // if we are here, it succeeded
-        _bgSyncManager.delete(request);
-      })
-    );
-    const numRemaining = await _bgSyncManager.numPending()
-    if(numRemaining > 0) return Promise.reject();
-    return;
-  }());
 }
 
 function isFragmentRequest(event) {
@@ -148,11 +130,13 @@ async function staleWhileRevalidate(request, waitUntil) {
   throw new Error('Neither network nor cache had a response')
 }
 
-function backgroundSyncFetch(event) {
+function postComment(event) {
+  if(!_bgSyncManager.supportsBackgroundSync) return;
+
   event.waitUntil(async function() {
     const referrer = new URL(event.request.referrer);
     event.respondWith(new Response(null, {status: 302, headers: {"Location": referrer.pathname}}));
     await _bgSyncManager.enqueue(event.request);
-    await self.registration.sync.register('comment-sync');
+    await _bgSyncManager.trigger();
   }());
 }

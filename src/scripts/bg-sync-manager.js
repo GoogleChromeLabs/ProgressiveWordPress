@@ -12,10 +12,31 @@
  */
 
 (function () {
+  async function serializeRequest(request) {
+    const body = await request.arrayBuffer();
+    return {
+      url: request.url,
+      headers: Array.from(request.headers),
+      method: request.method,
+      credentials: request.credentials,
+      referrer: request.referrer,
+      body,
+    };
+  }
+
+  async function deserializeRequest(obj) {
+    return new Request(obj.url, obj);
+  }
+
   class BgSyncManager {
-    static generateUID() {
+    generateUID() {
       return `${Date.now()}-${performance.now()}`;
     }
+
+    get supportsBackgroundSync() {
+      return 'SyncManager' in self;
+    }
+
     constructor() {
       this._dbPromise = idb.open('bgsyncs', 1, upgradeDB => {
         switch (upgradeDB.oldVersion) {
@@ -25,37 +46,55 @@
       });
     }
 
+    async syncManager() {
+      let registration = self.registration;
+      if(!registration) {
+        try {
+          registration = await navigator.serviceWorker.getRegistration();
+        } catch(e) {}
+      }
+      return registration.sync;
+    }
+
+    async trigger() {
+      return (await this.syncManager()).register('comment-sync');
+    }
+
+    async isSyncing() {
+      const manager = await this.syncManager();
+      const tags = await manager.getTags();
+      return tags.includes('comment-sync');
+    }
+
     async enqueue(request) {
       const db = await this._dbPromise;
-      const body = await request.arrayBuffer();
+      const obj = await serializeRequest(request);
       await db
         .transaction('requests', 'readwrite')
         .objectStore('requests')
-        .put({
-          id: BgSyncManager.generateUID(),
-          url: request.url,
-          headers: Array.from(request.headers),
-          method: request.method,
-          body,
-        })
+        .put(Object.assign(
+          obj,
+          {id: this.generateUID()}
+        ))
         .complete;
-        return;
+      return;
     }
 
     async getAll() {
       const db = await this._dbPromise;
-      return db
+      const objs = await db
         .transaction('requests')
         .objectStore('requests')
         .getAll();
+      return Promise.all(objs.map(async obj => ({request: await deserializeRequest(obj), id: obj.id})));
     }
 
-    async delete(request) {
+    async delete(id) {
       const db = await this._dbPromise;
       await db
         .transaction('requests', 'readwrite')
         .objectStore('requests')
-        .delete(request.id)
+        .delete(id)
         .complete;
       return;
     }
@@ -66,6 +105,24 @@
         .transaction('requests')
         .objectStore('requests')
         .count();
+    }
+
+    process(event) {
+      event.waitUntil((async _ => {
+        console.log('Event: ', event.lastChance, event);
+        const pending = await this.getAll();
+        await Promise.all(
+          pending.map(async request => {
+            try {
+              await fetch(request.request);
+              await _bgSyncManager.delete(request.id);
+            } catch(e) {}
+          })
+        );
+        const numRemaining = await _bgSyncManager.numPending()
+        if(numRemaining > 0) return Promise.reject();
+        return;
+      })());
     }
   }
 
