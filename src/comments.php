@@ -25,3 +25,4 @@
 <? else: ?>
   No comments.
 <? endif; ?>
+<div id="pendingcomments"></div>

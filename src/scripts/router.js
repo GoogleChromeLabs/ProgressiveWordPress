@@ -13,6 +13,7 @@
 
 class Router {
   constructor() {
+    // super();
     this._bindHandlers();
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
@@ -89,6 +90,7 @@ class Router {
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
     await this._animateIn(newView);
+    // this.dispatch('router-navigate', )
   }
 }
 

@@ -44,6 +44,7 @@
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-notification.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
 <?
   etag_end();
 ?>
