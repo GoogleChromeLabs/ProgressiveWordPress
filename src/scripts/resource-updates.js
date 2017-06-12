@@ -25,12 +25,13 @@ const handlers = {
     const rsrc = new URL(event.data.name);
     const isCoreItem = coreItemDetectors.some(d => d.test(rsrc.pathname));
     const isCurrentItem = rsrc.pathname === new URL(location.href).pathname;
-    console.log(`${rsrc.pathname} (${new URL(location.href).pathname}): core=${isCoreItem}, current=${isCurrentItem}`);
     if(isCoreItem || isCurrentItem) {
-      console.log(`Update: ${event.data.name}`);
       promptForReload();
     }
   },
+  comment_update: event => {
+    _bgSyncManager.dispatch({numPending: event.data.numPending});
+  }
 };
 
 function promptForReload() {

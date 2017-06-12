@@ -11,20 +11,30 @@
  * limitations under the License.
  */
 
-const commentPanel = document.querySelector('#pendingcomments');
-if (commentPanel)
-  commentPanel.addEventListener('click', async event => {
-    if(event.target.tagName !== 'BUTTON') return;
-    await _bgSyncManager.trigger();
-    updatePanel();
-  });
+import {instance as globalRouter} from './router.js';
 
-async function updatePanel() {
-  const numPending =
-    (await _bgSyncManager.getAll())
-      .filter(req => new URL(req.request.referrer).pathname === location.pathname)
-      .length;
-  if(numPending <= 0) return;
+let commentPanel;
+async function updatePanel(numPending) {
+  if(!commentPanel) {
+    commentPanel = document.querySelector('#pendingcomments');
+    if (commentPanel)
+      commentPanel.addEventListener('click', async event => {
+        if(event.target.tagName !== 'BUTTON') return;
+        await _bgSyncManager.trigger();
+        updatePanel();
+      });
+  }
+
+  if(!numPending)
+    numPending =
+      (await _bgSyncManager.getAll())
+        .filter(req => new URL(req.request.referrer).pathname === location.pathname)
+        .length;
+
+  if(numPending <= 0) {
+    commentPanel.innerHTML = '';
+    return;
+  }
 
   commentPanel.innerHTML = `${numPending} comments are pending submission.`;
   if(await _bgSyncManager.isSyncing())
@@ -34,4 +44,8 @@ async function updatePanel() {
 }
 
 updatePanel();
-setInterval(updatePanel, 30000);
+globalRouter.subscribe(_ => {
+  commentPanel = null;
+  updatePanel()
+});
+_bgSyncManager.subscribe(({numPending}) => updatePanel(numPending));

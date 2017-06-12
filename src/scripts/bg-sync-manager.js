@@ -28,22 +28,23 @@
     return new Request(obj.url, obj);
   }
 
-  class BgSyncManager {
-    generateUID() {
-      return `${Date.now()}-${performance.now()}`;
-    }
-
-    get supportsBackgroundSync() {
-      return 'SyncManager' in self;
-    }
-
+  class BgSyncManager extends Observable {
     constructor() {
+      super();
       this._dbPromise = idb.open('bgsyncs', 1, upgradeDB => {
         switch (upgradeDB.oldVersion) {
           case 0:
             upgradeDB.createObjectStore('requests', {keyPath: 'id'});
         }
       });
+    }
+
+    generateUID() {
+      return `${Date.now()}-${performance.now()}`;
+    }
+
+    get supportsBackgroundSync() {
+      return 'SyncManager' in self;
     }
 
     async syncManager() {
@@ -109,7 +110,6 @@
 
     process(event) {
       event.waitUntil((async _ => {
-        console.log('Event: ', event.lastChance, event);
         const pending = await this.getAll();
         await Promise.all(
           pending.map(async request => {
@@ -119,8 +119,10 @@
             } catch(e) {}
           })
         );
-        const numRemaining = await _bgSyncManager.numPending()
-        if(numRemaining > 0) return Promise.reject();
+        const numPending = await _bgSyncManager.numPending();
+        const clients = await self.clients.matchAll();
+        clients.forEach(client => client.postMessage({type: 'comment_update', numPending}));
+        if(numPending > 0) return Promise.reject();
         return;
       })());
     }

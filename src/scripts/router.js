@@ -91,6 +91,7 @@ class Router extends Observable {
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
     await this._animateIn(newView);
+    this.dispatch({address: link});
   }
 }
 

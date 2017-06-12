@@ -13,6 +13,7 @@
 
 importScripts(`${_wordpressConfig.templateUrl}/scripts/transformstream.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/idb.js`);
+importScripts(`${_wordpressConfig.templateUrl}/scripts/observable.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/bg-sync-manager.js`);
 
 const VERSION = '{%VERSION%}';
@@ -29,6 +30,7 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/scripts/ric-polyfill.js`,
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
+      `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
     ]
       .map(url => new Request(url, {credentials: "include"})));
     // TODO Need to broadcast changes here

@@ -31,4 +31,4 @@ class Observable {
   }
 }
 
-window.Observable = window.Observable || Observable;
+self.Observable = self.Observable || Observable;
