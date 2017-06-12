@@ -20,19 +20,14 @@ const coreItemDetectors = [
   /surmblog\/footer.php$/i,
 ];
 
-const handlers = {
-  resource_update: event => {
-    const rsrc = new URL(event.data.name);
-    const isCoreItem = coreItemDetectors.some(d => d.test(rsrc.pathname));
-    const isCurrentItem = rsrc.pathname === new URL(location.href).pathname;
-    if(isCoreItem || isCurrentItem) {
-      promptForReload();
-    }
-  },
-  comment_update: event => {
-    _bgSyncManager.dispatch({numPending: event.data.numPending});
+_pubsubhub.subscribe('resource_update', msg => {
+  const rsrc = new URL(msg.name);
+  const isCoreItem = coreItemDetectors.some(d => d.test(rsrc.pathname));
+  const isCurrentItem = rsrc.pathname === new URL(location.href).pathname;
+  if(isCoreItem || isCurrentItem) {
+    promptForReload();
   }
-};
+});
 
 function promptForReload() {
   if(hasBeenPromptedForReload) return;
@@ -44,10 +39,4 @@ function promptForReload() {
   prompt.show();
   hasBeenPromptedForReload = true;
 }
-
-export const handler = function(event) {
-  if(event.data.type in handlers && typeof handlers[event.data.type] === 'function')
-    return handlers[event.data.type](event);
-  console.error('Unknown postMessage:', event);
-};
 

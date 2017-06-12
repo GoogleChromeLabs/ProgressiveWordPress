@@ -11,9 +11,8 @@
  * limitations under the License.
  */
 
-class Router extends Observable {
+class Router {
   constructor() {
-    super();
     this._bindHandlers();
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);
@@ -91,7 +90,7 @@ class Router extends Observable {
     document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
     await this._animateIn(newView);
-    this.dispatch({address: link});
+    _pubsubhub.dispatch('navigation', {address: link});
   }
 }
 

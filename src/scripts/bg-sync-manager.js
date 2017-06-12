@@ -28,9 +28,8 @@
     return new Request(obj.url, obj);
   }
 
-  class BgSyncManager extends Observable {
+  class BgSyncManager {
     constructor() {
-      super();
       this._dbPromise = idb.open('bgsyncs', 1, upgradeDB => {
         switch (upgradeDB.oldVersion) {
           case 0:
@@ -120,8 +119,7 @@
           })
         );
         const numPending = await _bgSyncManager.numPending();
-        const clients = await self.clients.matchAll();
-        clients.forEach(client => client.postMessage({type: 'comment_update', numPending}));
+        _pubsubhub.dispatch('comment_update');
         if(numPending > 0) return Promise.reject();
         return;
       })());

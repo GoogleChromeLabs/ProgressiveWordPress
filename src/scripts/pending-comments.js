@@ -14,22 +14,23 @@
 import {instance as globalRouter} from './router.js';
 
 let commentPanel;
-async function updatePanel(numPending) {
+async function updatePanel() {
   if(!commentPanel) {
     commentPanel = document.querySelector('#pendingcomments');
-    if (commentPanel)
+    if(commentPanel) {
       commentPanel.addEventListener('click', async event => {
         if(event.target.tagName !== 'BUTTON') return;
         await _bgSyncManager.trigger();
         updatePanel();
       });
+    }
   }
+  if(!commentPanel) return;
 
-  if(!numPending)
-    numPending =
-      (await _bgSyncManager.getAll())
-        .filter(req => new URL(req.request.referrer).pathname === location.pathname)
-        .length;
+  const numPending =
+    (await _bgSyncManager.getAll())
+      .filter(req => new URL(req.request.referrer).pathname === location.pathname)
+      .length;
 
   if(numPending <= 0) {
     commentPanel.innerHTML = '';
@@ -44,8 +45,8 @@ async function updatePanel(numPending) {
 }
 
 updatePanel();
-globalRouter.subscribe(_ => {
+_pubsubhub.subscribe('navigation', _ => {
   commentPanel = null;
-  updatePanel()
+  updatePanel();
 });
-_bgSyncManager.subscribe(({numPending}) => updatePanel(numPending));
+_pubsubhub.subscribe('comment_update', _ => updatePanel());

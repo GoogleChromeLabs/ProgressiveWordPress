@@ -13,7 +13,7 @@
 
 importScripts(`${_wordpressConfig.templateUrl}/scripts/transformstream.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/idb.js`);
-importScripts(`${_wordpressConfig.templateUrl}/scripts/observable.js`);
+importScripts(`${_wordpressConfig.templateUrl}/scripts/pubsubhub.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/bg-sync-manager.js`);
 
 const VERSION = '{%VERSION%}';
@@ -102,11 +102,6 @@ function isCommentRequest(event) {
     new URL(event.request.url).pathname === '/wp-comments-post.php';
 }
 
-async function broadcast(msg) {
-  const clients = await self.clients.matchAll();
-  clients.forEach(client => client.postMessage(msg));
-}
-
 async function staleWhileRevalidate(request, waitUntil) {
   const networkResponsePromise = fetch(request, {credentials: "include"}).catch(_ => {});
   const cacheResponsePromise = caches.match(request);
@@ -118,7 +113,7 @@ async function staleWhileRevalidate(request, waitUntil) {
     const cacheResponse = await cacheResponsePromise;
     if(networkResponse && cacheResponse) {
       const changed = networkResponse.headers.get('Etag') !== cacheResponse.headers.get('Etag');
-      if(changed) await broadcast({type: 'resource_update', name: request.url});
+      if(changed) await _pubsubhub.dispatch('resource_update', {name: request.url});
     }
     if(networkResponse) {
        cache.put(request, networkResponse.clone());
