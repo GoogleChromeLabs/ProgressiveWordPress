@@ -28,6 +28,7 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/lazy.css`,
       `${_wordpressConfig.templateUrl}/scripts/import-polyfill.js`,
       `${_wordpressConfig.templateUrl}/scripts/ric-polyfill.js`,
+      `${_wordpressConfig.templateUrl}/scripts/pubsubhub.js`,
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,

@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-import './pwp-notification.js';
+importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-notification.js`);
 
 let hasBeenPromptedForReload = false;
 
@@ -36,7 +36,7 @@ function promptForReload() {
     The contents of this page have been updated. Please <a href="javascript:location.reload()">reload</a>
   `;
   document.body.appendChild(prompt);
-  prompt.show();
+  customElements.whenDefined('pwp-notification').then(_ => prompt.show());
   hasBeenPromptedForReload = true;
 }
 
