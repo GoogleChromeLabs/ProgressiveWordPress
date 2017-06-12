@@ -14,22 +14,24 @@
 let scriptChain = Promise.resolve();
 
 function* findLazyElements() {
-  const blocks =
-    Array.from(document.querySelectorAll('noscript.lazyload'))
+  const blocks = [
+    ...Array.from(document.querySelectorAll('noscript.lazyload'))
       .map(lazy =>
         parseHTML(lazy.innerText)
-          .map(elem => {
-            const obj = {elem, parent: lazy.parentNode};
-            if(obj.elem.tagName === 'SCRIPT') {
-              const s = document.createElement('script');
-              s.type = obj.elem.type;
-              s.src = obj.elem.src;
-              s.async = false;
-              obj.elem = s;
-            }
-            return obj;
-          })
-      );
+        .map(elem => ({elem, parent: lazy.parentNode}))
+      ),
+    ...Array.from(document.querySelectorAll('template.lazyload'))
+      .map(lazy =>
+        Array.from(lazy.content.cloneNode(true).children)
+        .map(elem => ({elem, parent: lazy.parentNode}))
+        .map(item => {
+          if(item.elem.tagName !== 'SCRIPT') return item;
+          item.elem = Object.assign(item.elem.cloneNode(true), {async: false});
+          return item;
+        })
+      ),
+  ];
+
   for(const block of blocks) {
     yield* block;
   }

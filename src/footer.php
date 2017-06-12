@@ -32,7 +32,7 @@
 <script src="<?=get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
-<noscript class="lazyload">
+<template class="lazyload">
 <script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
 <script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
@@ -40,7 +40,7 @@
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
-</noscript>
+</template>
 <?
   etag_end();
 ?>
