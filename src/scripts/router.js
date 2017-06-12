@@ -11,8 +11,9 @@
  * limitations under the License.
  */
 
-class Router {
+class Router extends Observable {
   constructor() {
+    super();
     this._bindHandlers();
     this._hostname = location.host;
     document.addEventListener('click', this._onLinkClick);

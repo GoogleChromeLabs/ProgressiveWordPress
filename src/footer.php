@@ -29,8 +29,10 @@
 </script>
 <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
 <script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/observable.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
+<noscript class="lazyload">
 <script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
 <script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
 <script src="<?=get_bloginfo('template_url');?>/scripts/sw-postmessage.js" defer></script>
@@ -39,6 +41,7 @@
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
+</noscript>
 <?
   etag_end();
 ?>

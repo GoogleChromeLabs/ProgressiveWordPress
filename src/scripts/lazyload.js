@@ -11,12 +11,29 @@
  * limitations under the License.
  */
 
-function injectLazyStuff() {
-  document.querySelectorAll('noscript.lazyload').forEach(lazy => {
-    parseHTML(lazy.innerText).forEach(elem => {
-      lazy.parentNode.appendChild(elem);
-    });
-  });
+let scriptChain = Promise.resolve();
+
+function* findLazyElements() {
+  const blocks =
+    Array.from(document.querySelectorAll('noscript.lazyload'))
+      .map(lazy =>
+        parseHTML(lazy.innerText)
+          .map(elem => {
+            const obj = {elem, parent: lazy.parentNode};
+            if(obj.elem.tagName === 'SCRIPT') {
+              const s = document.createElement('script');
+              s.type = obj.elem.type;
+              s.src = obj.elem.src;
+              s.async = false;
+              obj.elem = s;
+            }
+            return obj;
+          })
+      );
+  for(const block of blocks) {
+    yield* block;
+  }
+
 }
 
 function parseHTML(html) {
@@ -25,4 +42,10 @@ function parseHTML(html) {
   return Array.from(div.children);
 }
 
-requestIdleCallback(_ => injectLazyStuff());
+const it = findLazyElements();
+requestIdleCallback(function f() {
+  const {value, done} = it.next();
+  if(done) return;
+  value.parent.appendChild(value.elem);
+  requestIdleCallback(f);
+});
