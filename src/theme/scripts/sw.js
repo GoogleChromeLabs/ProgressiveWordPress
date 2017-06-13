@@ -47,7 +47,7 @@ self.onfetch = event => {
   if(isCommentRequest(event)) return postComment(event);
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
-  if(isFragmentRequest(event) || isAssetRequest(event))
+  if(isFragmentRequest(event) || isAssetRequest(event) || isPluginRequest(event))
     return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
 
   const newRequestURL = new URL(event.request.url);
@@ -87,6 +87,10 @@ function isFragmentRequest(event) {
 
 function isAssetRequest(event) {
   return /(jpe?g|png|css|js)$/i.test(event.request.url);
+}
+
+function isPluginRequest(event) {
+  return new URL(event.request.url).pathname.startsWith('/wp-content/plugins');
 }
 
 function isWpRequest(event) {

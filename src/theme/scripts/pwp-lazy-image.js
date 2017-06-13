@@ -24,23 +24,6 @@ const io = new IntersectionObserver(
   threshold: 0,
 });
 
-
-const styleTemplate = data => `
-  <style>
-    :host {
-      display: block;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-image: url(${data.background});
-    }
-    :host:before {
-      display: block;
-      content: '';
-      padding-top: ${data.aspectRatio*100}%;
-    }
-  </style>
-`;
-
 class PwpLazyImage extends HTMLElement {
   static get observedAttributes() {
     return ['full', 'src'];
@@ -48,14 +31,9 @@ class PwpLazyImage extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({mode: 'open'});
   }
 
   connectedCallback() {
-    this.shadowRoot.innerHTML = styleTemplate({
-      background: '',
-      aspectRatio: this.height / this.width,
-    });
     io.observe(this);
   }
 
@@ -68,11 +46,7 @@ class PwpLazyImage extends HTMLElement {
     const img = document.createElement('img');
     img.src = this.src;
     img.onload = _ => {
-      this.style.backgroundImage = '';
-      this.shadowRoot.innerHTML = styleTemplate({
-        background: this.src,
-        aspectRatio: this.height / this.width,
-      });
+      this.style.backgroundImage = `url(${this.src})`;
     };
   }
 
@@ -104,13 +78,6 @@ class PwpLazyImage extends HTMLElement {
   get height() {
     if(this.hasAttribute('height')) return this.getAttribute('height');
     return 1;
-  }
-
-  show() {
-
-    const img = document.createElement('img');
-    img.src = this.getAttribute('src');
-    img.onload = _ => this.style.backgroundImage = `url(${img.src})`;
   }
 }
 customElements.define('pwp-lazy-image', PwpLazyImage);

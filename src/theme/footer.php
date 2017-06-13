@@ -39,6 +39,7 @@
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
 <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/resource-updates.js"></script>
+<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
 </template>
 <?
   etag_end();

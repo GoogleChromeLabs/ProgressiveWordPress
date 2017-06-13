@@ -34,7 +34,8 @@ The Docker setup is a typical LAMP setup for ProgressiveWordpress (LAMPWP?!). Th
 $ docker run --name pwp-mysql -e MYSQL_ROOT_PASSWORD=lolz -d mysql:8.0
 $ docker build -t surma/progressivewordpress .
 $ docker run --name pwp --link pwp-mysql:mysql \
-  -v $(pwd)/dist:/var/www/html/wp-content/themes/surmblog \
+  -v $(pwd)/dist/theme:/var/www/html/wp-content/themes/surmblog \
+  -v $(pwd)/dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin \
   -v $(pwd)/uploads:/var/www/html/wp-content/uploads \
   -p 8080:80 -d surma/progressivewordpress
 ```

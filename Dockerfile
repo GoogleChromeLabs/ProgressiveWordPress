@@ -22,6 +22,7 @@ COPY docker_assets/http2.conf /etc/apache2/conf-available/
 RUN ln -sf /etc/apache2/conf-available/http2.* /etc/apache2/conf-enabled/
 COPY docker_assets/certs /etc/apache2/certs
 COPY docker_assets/000-default.conf /etc/apache2/sites-available/
-RUN mkdir -p /var/www/html/wp-content/themes/surmblog
+RUN mkdir -p /var/www/html/wp-content/themes/surmblog /var/www/html/wp-content/plugins/pwp-lazy-image
 COPY dist /var/www/html/wp-content/themes/surmblog
 VOLUME /var/www/html/wp-content/themes/surmblog
+VOLUME /var/www/html/wp-content/plugins/pwp-lazy-image-plugin
