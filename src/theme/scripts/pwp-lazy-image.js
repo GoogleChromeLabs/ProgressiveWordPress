@@ -24,6 +24,18 @@ const io = new IntersectionObserver(
   threshold: 0,
 });
 
+const animStyle = document.createElement('style');
+animStyle.innerHTML = `
+@keyframes pwp-lazy-image-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}`;
+document.head.appendChild(animStyle);
+
 class PwpLazyImage extends HTMLElement {
   static get observedAttributes() {
     return ['full', 'src'];
@@ -46,7 +58,15 @@ class PwpLazyImage extends HTMLElement {
     const img = document.createElement('img');
     img.src = this.src;
     img.onload = _ => {
-      this.style.backgroundImage = `url(${this.src})`;
+      img.style.animationName = 'pwp-lazy-image-fade-in'
+      img.style.animationDuration = '0.5s';
+      img.style.animationIterationCount = 1;
+      img.style.position = 'absolute';
+      img.style.top = 0;
+      img.style.left = 0;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      this.appendChild(img);
     };
   }
 
