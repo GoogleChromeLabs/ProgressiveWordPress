@@ -32,6 +32,10 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Black.woff`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Bold.woff`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Medium.woff`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Light.woff`,
     ]
       .map(url => new Request(url, {credentials: "include"})));
     // TODO Need to broadcast changes here
@@ -86,7 +90,7 @@ function isFragmentRequest(event) {
 }
 
 function isAssetRequest(event) {
-  return /(jpe?g|png|css|js)$/i.test(event.request.url);
+  return /(jpe?g|png|css|js|woff)$/i.test(event.request.url);
 }
 
 function isPluginRequest(event) {

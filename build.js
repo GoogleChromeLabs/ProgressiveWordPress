@@ -28,7 +28,7 @@ const templateData = {
 };
 
 async function copyStatic() {
-  filesWithPatterns([/\.php$/i, /.htaccess$/i, /.(png|jpe?g)$/i])
+  filesWithPatterns([/\.php$/i, /\.htaccess$/i, /\.(png|jpe?g)$/i, /\.woff$/i])
     .map(async file => copy(`src/${file}`, `dist/${file}`))
     .array;
 }

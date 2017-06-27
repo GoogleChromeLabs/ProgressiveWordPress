@@ -18,9 +18,9 @@
 ?>
 <!doctype html>
 <meta charset="utf8">
-<title>SurmBlog</title>
+<title>Aimless Stack Pointers</title>
 <style>
-<? readfile(dirname(__FILE__).'/critical.css'); ?>
+<? include(dirname(__FILE__).'/critical.css'); ?>
 </style>
 <noscript class="lazyload">
   <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/lazy.css">
