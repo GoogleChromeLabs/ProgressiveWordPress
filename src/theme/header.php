@@ -36,11 +36,11 @@
 </head>
 <body>
   <header class="hero <?=is_single()?'single':'';?>">
-    <div class="ribbon ribbon--btt">
+    <a href="<?=home_url();?>" class="ribbon ribbon--btt">
       Aimless<br>
       Stack<br>
       Pointer
-    </div>
+    </a>
   </header>
   <pwp-view rendered>
     <?
