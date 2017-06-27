@@ -1,0 +1,30 @@
+.hero {
+  display: block;
+  position: relative;
+  width: 100vw;
+  height: 66vw;
+  max-height: calc(100vh - 64px);
+  background-image: url('<?=get_bloginfo("template_url");?>/images/poster.jpg');
+  background-size: cover;
+  background-position: 50% 100%;
+  margin-bottom: 64px;
+}
+
+.hero .ribbon {
+  height: 256px;
+  width: 400px;
+  background-color: var(--pink);
+  position: absolute;
+  left: 32px;
+  bottom: -63px;
+  padding: 32px;
+  box-sizing: border-box;
+
+  font-family: "Catamaran Bold";
+  color: var(--light-pink);
+  font-size: 64px;
+  line-height: 1em;
+  display: flex;
+  align-items: center;
+
+}

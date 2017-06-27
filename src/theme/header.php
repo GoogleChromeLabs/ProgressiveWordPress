@@ -24,15 +24,24 @@
   <style>
   <?
     include(dirname(__FILE__).'/critical.css');
+    include(dirname(__FILE__).'/components/header_critical.css');
     include(dirname(__FILE__).'/components/footer_critical.css');
   ?>
   </style>
   <noscript class="lazyload">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/footer_lazy.css">
+    <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/header_lazy.css">
   </noscript>
 </head>
 <body>
+  <header class="hero <?=is_single()?'single':'';?>">
+    <div class="ribbon ribbon--btt">
+      Aimless<br>
+      Stack<br>
+      Pointer
+    </div>
+  </header>
   <pwp-view rendered>
     <?
       etag_end();
