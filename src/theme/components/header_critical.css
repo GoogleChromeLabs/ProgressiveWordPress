@@ -10,6 +10,10 @@
   margin-bottom: 64px;
 }
 
+.hero.single {
+  height: 128px
+}
+
 .hero .ribbon {
   height: 256px;
   width: 400px;
@@ -20,11 +24,30 @@
   padding: 32px;
   box-sizing: border-box;
 
-  font-family: "Catamaran Bold";
+  font-family: 'Catamaran Bold';
   color: var(--light-pink);
   font-size: 64px;
   line-height: 1em;
   display: flex;
   align-items: center;
-
 }
+
+.hero.single .ribbon {
+  background-color: transparent;
+  font-family: 'Catamaran Light';
+  position: absolute;
+  z-index: 1;
+  font-size: 24px;
+  height: auto;
+  padding: 0;
+  bottom: 32px;
+}
+
+.hero.single .ribbon br {
+  display: none;
+}
+
+.hero.single .ribbon:after {
+  display: none;
+}
+
