@@ -16,7 +16,6 @@
   $preloads = [];
 
   register_nav_menus(array(
-    'main-nav' => 'Main navigation menu',
     'footer-nav' => 'Footer menu',
   ));
 

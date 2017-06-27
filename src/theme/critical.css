@@ -53,20 +53,12 @@ html, body {
 }
 body {
   background-color: var(--light-pink);
-}
-a {
-  text-decoration: none;
-  color: var(--pink);
+  display: flex;
+  flex-direction: column;
 }
 pwp-view {
   display: block;
-}
-pwp-spinner.global {
-  transform: scale(4);
-}
-pwp-notification {
-  display: block;
-  background-color: white;
+  flex-grow: 1;
 }
 pwp-lazy-image {
   position: relative;
@@ -75,3 +67,9 @@ pwp-lazy-image {
   background-repeat: no-repeat;
 }
 
+ul.menu {
+  margin: 0;
+  list-style: none;
+  display: flex;
+  padding: 0;
+}

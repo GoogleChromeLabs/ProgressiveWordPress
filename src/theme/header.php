@@ -17,19 +17,23 @@
   etag_start();
 ?>
 <!doctype html>
-<meta charset="utf8">
-<title>Aimless Stack Pointers</title>
-<style>
-<? include(dirname(__FILE__).'/critical.css'); ?>
-</style>
-<noscript class="lazyload">
-  <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/lazy.css">
-</noscript>
-<?
-  wp_head();
-?>
-<? wp_nav_menu(array('theme_location' => 'main-nav')); ?>
-<pwp-view rendered>
-<?
-  etag_end();
-?>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>Aimless Stack Pointers</title>
+  <style>
+  <?
+    include(dirname(__FILE__).'/critical.css');
+    include(dirname(__FILE__).'/components/footer_critical.css');
+  ?>
+  </style>
+  <noscript class="lazyload">
+    <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/lazy.css">
+    <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/footer_lazy.css">
+  </noscript>
+</head>
+<body>
+  <pwp-view rendered>
+    <?
+      etag_end();
+    ?>

@@ -12,7 +12,7 @@ Promise.all([
   minifyJs(),
 ])
   .then(_ => console.log('Done'))
-  .catch(err => console.log(err));
+  .catch(err => console.log(err.stack));
 
 const cssoConfig = {
   restructure: true,
@@ -28,7 +28,7 @@ const templateData = {
 };
 
 async function copyStatic() {
-  filesWithPatterns([/\.php$/i, /\.htaccess$/i, /\.(png|jpe?g)$/i, /\.woff$/i])
+  filesWithPatterns([/\.php$/i, /\.htaccess$/i, /\.(png|jpe?g|svg)$/i, /\.woff$/i])
     .map(async file => copy(`src/${file}`, `dist/${file}`))
     .array;
 }
@@ -42,6 +42,7 @@ async function minifyCss() {
       return Object.assign(file, {csso: csso.minify(file.contents, cssoConfigCopy)});
     })
     .map(async file => {
+      await mkdirAll(path.dirname(`dist/${file.name}`));
       await fs.writeFile(`dist/${file.name}`, `${file.csso.css}/*# sourceMappingURL=${file.name}.map */`);
       await fs.writeFile(`dist/${file.name}.map`, file.csso.map.toString());
     })
