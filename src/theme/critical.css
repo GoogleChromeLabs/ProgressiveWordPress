@@ -70,9 +70,13 @@ a {
   color: inherit;
   text-decoration: none;
 }
+p {
+  margin: 0;
+}
 ul.menu {
   margin: 0;
   list-style: none;
   display: flex;
   padding: 0;
 }
+

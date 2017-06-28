@@ -1,0 +1,113 @@
+/**
+ * Copyright 2017 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+:root {
+  --article-ribbon-size: 140px;
+}
+
+article {
+  margin: 0 auto;
+  max-width: 1000px;
+  box-sizing: border-box;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+
+article a {
+  color: var(--pink);
+}
+
+article:last-of-type {
+  margin-bottom: 0;
+}
+
+article > header {
+  display: flex;
+  align-items: flex-end;
+}
+article > header > .headline {
+  flex: 1 1 0;
+  border-bottom: 6px solid black;
+  border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
+  color: var(--pink);
+  font-family: 'Catamaran Bold';
+  font-size: 36px;
+  transform: translateY(-64px);
+  padding-left: 40px;
+  line-height: 1em;
+}
+
+article > header > .ribbon {
+  flex: 0 0 var(--article-ribbon-size);
+  width: var(--article-ribbon-size);
+  height: var(--article-ribbon-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Catamaran Bold';
+  font-size: 30px;
+  padding: 0;
+}
+
+article > main {
+  padding-left: calc(var(--article-ribbon-size) + 40px);
+  margin-top: -36px;
+}
+
+article .excerpt {
+  font-family: 'Catamaran Medium';
+}
+
+article > footer {
+  font-size: 14px;
+  padding-top: 16px;
+  margin-top: 32px;
+  margin-left: calc(var(--article-ribbon-size) + 40px);
+  border-top: 6px solid black;
+  border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+article > footer > * {
+  flex: 1 1 0;
+}
+
+.post-categories {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  justify-content: flex-end;
+}
+
+.post-categories a {
+  margin: 0 0.2em;
+}
+
+.post-categories a:before {
+  content: '#';
+}
+
+article > footer > .download {
+  flex: 0 0 200px;
+  border :0;
+  background: none;
+  color: var(--pink);
+}
+
+

@@ -13,6 +13,7 @@
 :root {
   --gradient-pink: #E179A1;
   --shading-pink: #973158;
+  --shading-blue: #59919E;
   --pink-gradient-image: linear-gradient(90deg, var(--pink), var(--gradient-pink));
   --pink-rgradient-image: radial-gradient(ellipse farthest-corner at 0% 100%,var(--pink), var(--gradient-pink));
 }
@@ -34,5 +35,9 @@ pwp-notification {
   border-style: solid;
   border-color: var(--shading-pink) transparent transparent  var(--shading-pink);
   border-width: 32px 16px;
+}
+
+.ribbon.ribbon--blue:after {
+  border-color: var(--shading-blue) transparent transparent  var(--shading-blue);
 }
 

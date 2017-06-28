@@ -17,15 +17,9 @@
   if(!is_fragment()) get_template_part('header');
 ?>
 <? if(have_posts()): ?>
-    <ul>
-      <? while(have_posts()): the_post() ?>
-        <li>
-          <h2><a href="<? the_permalink(); ?>"><? the_title(); ?></a></h2>
-          <p><? the_date(); ?></p>
-          <p><? the_excerpt(); ?></p>
-        </li>
-      <? endwhile; ?>
-    </ul>
+  <? while(have_posts()): the_post() ?>
+    <? include('fragment-post-preview.php'); ?>
+  <? endwhile; ?>
 <? else: ?>
   Nothing here :(
 <? endif; ?>

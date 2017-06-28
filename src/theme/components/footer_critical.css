@@ -8,6 +8,7 @@
   font-family: 'Catamaran Medium';
   color: var(--light-pink);
   white-space: nowrap;
+  margin-top: 100px;
 }
 
 .footer a {
