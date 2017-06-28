@@ -46,7 +46,7 @@ article > header > .headline {
   font-size: 36px;
   transform: translateY(-64px);
   padding-left: 40px;
-  line-height: 1em;
+  line-height: 1.5em;
 }
 
 article > header > .ribbon {
@@ -65,6 +65,7 @@ article > header > .ribbon {
 article > main {
   padding-left: calc(var(--article-ribbon-size) + 40px);
   margin-top: -36px;
+  max-width: 720px;
 }
 
 article .excerpt {
