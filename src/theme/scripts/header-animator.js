@@ -38,6 +38,9 @@ class HeaderAnimator {
     const ribbon = this._header.querySelector('.ribbon');
     const text = this._header.querySelector('a');
     const singleRect = this._header.getBoundingClientRect();
+    this._header.classList.remove('single');
+    const ribbonRect = ribbon.getBoundingClientRect();
+    this._header.classList.add('single');
 
     // Text out
     text.style.opacity = 1;
@@ -58,21 +61,23 @@ class HeaderAnimator {
       this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
       this._header.style.transform =  '';
       await transitionEndPromise(this._header);
-      this._header.style.transition = '';
-      this._header.style.transform = '';
     })();
 
     // Header down
     const a2 = (async _ => {
-      ribbon.style.transform = 'translateX(-50vw)';
+      ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
       ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.1s`;
       ribbon.style.transform =  '';
       await transitionEndPromise(ribbon);
+    })();
+    Promise.all([a1, a2]).then(_ => {
+      this._header.style.transition = '';
+      this._header.style.transform = '';
       ribbon.style.transition = '';
       ribbon.style.transform = '';
-    })();
+    });
   }
 
   async toSingle() {
@@ -80,6 +85,7 @@ class HeaderAnimator {
 
     const ribbon = this._header.querySelector('.ribbon');
     const text = this._header.querySelector('a');
+    const ribbonRect = ribbon.getBoundingClientRect();
     this._header.classList.add('single');
     const singleRect = this._header.getBoundingClientRect();
     this._header.classList.remove('single');
@@ -90,7 +96,7 @@ class HeaderAnimator {
       ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
-      ribbon.style.transform = 'translateX(-50vw)';
+      ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
       await transitionEndPromise(ribbon);
     })();
 
@@ -101,15 +107,13 @@ class HeaderAnimator {
       await requestAnimationFramePromise();
       this._header.style.transform = `translateY(calc(-100% + ${singleRect.bottom}px))`;
       await transitionEndPromise(this._header);
-      this._header.style.transition = '';
-      this._header.style.transform = '';
-      ribbon.style.transform = '';
-      ribbon.style.transition = '';
     })();
 
     await Promise.all([a1, a2]);
 
     this._header.classList.add('single');
+    ribbon.style.transform = '';
+    ribbon.style.transition = '';
 
     // Text in
     (async _ => {
