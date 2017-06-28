@@ -55,7 +55,7 @@ class HeaderAnimator {
     this._header.classList.remove('single');
     // Ribbon right
     const a1 = (async _ => {
-      this._header.style.transform = `translateY(calc(-100% + ${singleRect.bottom}px))`;
+      this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
       this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
@@ -105,7 +105,7 @@ class HeaderAnimator {
       this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.2s`;
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
-      this._header.style.transform = `translateY(calc(-100% + ${singleRect.bottom}px))`;
+      this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
       await transitionEndPromise(this._header);
     })();
 
