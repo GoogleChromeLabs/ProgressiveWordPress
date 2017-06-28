@@ -14,6 +14,7 @@
   --gradient-pink: #E179A1;
   --shading-pink: #973158;
   --pink-gradient-image: linear-gradient(90deg, var(--pink), var(--gradient-pink));
+  --pink-rgradient-image: radial-gradient(ellipse farthest-corner at 0% 100%,var(--pink), var(--gradient-pink));
 }
 
 pwp-notification {

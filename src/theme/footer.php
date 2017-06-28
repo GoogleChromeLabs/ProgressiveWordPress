@@ -36,8 +36,8 @@
   </footer>
   <script>
     window._wordpressConfig = {
-      templateUrl: '<?=get_bloginfo('template_url');?>',
-      baseUrl: '<?=home_url();?>',
+      templateUrl: new URL('<?=get_bloginfo('template_url');?>').toString(),
+      baseUrl: new URL('<?=home_url();?>').toString(),
     };
   </script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>

@@ -34,6 +34,7 @@
 
 .hero.single .ribbon {
   background-color: transparent;
+  background-image: none;
   font-family: 'Catamaran Light';
   position: absolute;
   z-index: 1;

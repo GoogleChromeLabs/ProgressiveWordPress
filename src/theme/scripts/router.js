@@ -19,6 +19,7 @@ class Router {
     performance.mark('router.hijack');
     window.addEventListener('popstate', this._onPopState);
     this._globalSpinner = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`).then(obj => obj.globalSpinner);
+    this._headerAnimator = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/header-animator.js`).then(obj => obj.default);
   }
 
   _bindHandlers() {
@@ -72,15 +73,28 @@ class Router {
     return newView;
   }
 
+  async _animateHeader(toSingle) {
+    const currentState = document.querySelector('header.hero').classList.contains('single');
+    if(currentState === toSingle) return;
+
+    const headerAnimator = await this._headerAnimator;
+    if(toSingle)
+      return headerAnimator.toSingle();
+    return headerAnimator.toFull();
+  }
+
   async navigate(link, scrollTop = 0, pushState = true) {
     if(pushState) {
       history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
       history.pushState({scrollTop}, '', link);
     }
+
+    const targetIsSingle = link !== _wordpressConfig.baseUrl;
     const oldView = document.querySelector('pwp-view');
-    const animation = this._animateOut(oldView);
+    const viewAnimation = this._animateOut(oldView);
+    const headerAnimation = this._animateHeader(targetIsSingle);
     const newView = this._loadFragment(link);
-    await animation;
+    await Promise.all([viewAnimation, headerAnimation]);
     const globalSpinner = await this._globalSpinner;
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
       globalSpinner.ready.then(_ => globalSpinner.show());
