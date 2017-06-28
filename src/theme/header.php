@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/footer_lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/header_lazy.css">
+    <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/article_lazy.css">
   </noscript>
 </head>
 <body>

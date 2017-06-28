@@ -37,10 +37,10 @@ article > header {
   display: flex;
   align-items: flex-end;
 }
+
 article > header > .headline {
   flex: 1 1 0;
-  border-bottom: 6px solid black;
-  border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
+  border-bottom: 6px solid transparent;
   color: var(--pink);
   font-family: 'Catamaran Bold';
   font-size: 36px;
@@ -77,8 +77,7 @@ article > footer {
   padding-top: 16px;
   margin-top: 32px;
   margin-left: calc(var(--article-ribbon-size) + 40px);
-  border-top: 6px solid black;
-  border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
+  border-top: 6px solid transparent;
 
   display: flex;
   align-items: flex-start;
@@ -105,10 +104,12 @@ article > footer > * {
 }
 
 article > footer > .download {
-  flex: 0 0 200px;
+  flex: 0 0 auto;
   border :0;
   background: none;
   color: var(--pink);
+  display: flex;
+  align-items: center;
 }
 
 
