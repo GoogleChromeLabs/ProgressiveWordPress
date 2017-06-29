@@ -38,11 +38,13 @@
 </head>
 <body>
   <header class="hero <?=is_single()?'single':'';?>">
-    <a href="<?=home_url();?>" class="ribbon ribbon--btt">
-      Aimless<br>
-      Stack<br>
-      Pointer
-    </a>
+    <div class="wrapper">
+      <a href="<?=home_url();?>" class="ribbon ribbon--btt">
+        Aimless<br>
+        Stack<br>
+        Pointer
+      </a>
+    </div>
   </header>
   <pwp-view rendered>
     <?

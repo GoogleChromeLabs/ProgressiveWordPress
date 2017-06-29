@@ -49,6 +49,13 @@ article > header > .headline {
   line-height: 1.5em;
 }
 
+@media (max-width: 700px) {
+  article > header > .headline {
+    transform: translateY(-16px);
+    padding-left: 0.5em;
+  }
+}
+
 article > header > .ribbon {
   flex: 0 0 var(--article-ribbon-size);
   width: var(--article-ribbon-size);
@@ -62,10 +69,29 @@ article > header > .ribbon {
   padding: 0;
 }
 
+@media (max-width: 700px) {
+  article > header > .ribbon {
+    font-size: 18px;
+    height: 4em;
+    flex-basis: 4em;
+  }
+  article > header > .ribbon:after {
+    border-width: 16px 8px;
+  }
+}
+
+
 article > main {
   padding-left: calc(var(--article-ribbon-size) + 40px);
-  margin-top: -36px;
+  margin-top: -30px;
   max-width: 720px;
+}
+
+@media (max-width: 700px) {
+  article > main {
+    padding-left: 0;
+    margin-top: 32px;
+  }
 }
 
 article .excerpt {
@@ -81,6 +107,12 @@ article > footer {
 
   display: flex;
   align-items: flex-start;
+}
+
+@media (max-width: 700px) {
+  article > footer {
+    margin-left: 0;
+  }
 }
 
 article > footer > * {

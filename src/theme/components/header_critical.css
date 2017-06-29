@@ -1,5 +1,5 @@
 .hero {
-  display: block;
+  display: flex;
   position: relative;
   width: 100vw;
   height: 66vw;
@@ -25,6 +25,13 @@
   background-color: var(--light-blue);
 }
 
+.hero .wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .hero .ribbon {
   height: 256px;
   width: 400px;
@@ -37,6 +44,14 @@
   line-height: 1em;
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 700px) {
+  .hero .ribbon {
+    font-size: 48px;
+    height: 180px;
+    width: 280px;
+  }
 }
 
 .hero.single .ribbon {
