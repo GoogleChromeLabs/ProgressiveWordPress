@@ -12,9 +12,18 @@
  */
 
 :root {
-  --ribbon-size: 140px;
-  --ribbon-size-small: 80px;
-  --ribbon-flap-size: 32px;
+  --ribbon-size-factor: 18;
+  --ribbon-size: calc(var(--base-unit) * var(--ribbon-size-factor));
+  /*--ribbon-size-small: calc(var(--base-unit) * 80 / 30);*/
+  --ribbon-flap-factor: 8;
+  --ribbon-flap-size: calc(var(--base-unit) * var(--ribbon-flap-factor));
+}
+
+@media (max-width: 700px) {
+  :root {
+    --ribbon-flap-factor: 4;
+    --ribbon-size-factor: 9;
+  }
 }
 
 .ribbon {
@@ -29,17 +38,17 @@
   height: var(--ribbon-size);
 
   font-family: 'Catamaran Bold';
-  font-size: 30px;
+  font-size: calc(var(--headline-size) * var(--ribbon-size-factor) / 18);
   padding: 0;
 }
 
-@media (max-width: 700px) {
+/*@media (max-width: 700px) {
   .ribbon {
     font-size: 18px;
     height: var(--ribbon-size-small);
     flex-basis: var(--ribbon-size-small);
   }
-}
+}*/
 
 .ribbon.ribbon--blue {
   background-color: var(--light-blue);

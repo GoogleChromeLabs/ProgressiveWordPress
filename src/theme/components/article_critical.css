@@ -11,14 +11,17 @@
  * limitations under the License.
  */
 
+:root {
+  --divider-width: var(--base-unit);
+}
 article {
   margin: 0 auto;
   max-width: 1000px;
   box-sizing: border-box;
-  padding: 0 32px;
+  padding: 0 var(--pad);
   display: flex;
   flex-direction: column;
-  margin-bottom: 100px;
+  margin-bottom: var(--spacer);
 }
 
 article a {
@@ -36,33 +39,31 @@ article > header {
 
 article > header > .headline {
   flex: 1 1 0;
-  border-bottom: 6px solid transparent;
+  border-bottom: var(--divider-width) solid transparent;
   color: var(--pink);
   font-family: 'Catamaran Bold';
-  font-size: 36px;
-  transform: translateY(calc(-2 * var(--ribbon-flap-size)));
-  padding-left: 40px;
+  font-size: var(--headline-size);
+  transform: translateY(calc(-1 * var(--ribbon-flap-size)));
+  padding-left: calc(var(--pad));
   line-height: 1.5em;
 }
 
 @media (max-width: 700px) {
   article > header > .headline {
-    transform: translateY(calc(-1 * var(--ribbon-flap-size)));
-    padding-left: 0.5em;
-    font-size: 28px;
+    font-size: calc(var(--headline-size) * 0.8);
   }
 }
 
 article > main {
-  padding-left: calc(var(--ribbon-size) + 40px);
-  margin-top: -30px;
+  padding-left: calc(var(--ribbon-size) + var(--ribbon-flap-size) / 2);
+  margin-top: calc(-1 * var(--ribbon-flap-size) + var(--pad));
   max-width: 720px;
 }
 
 @media (max-width: 700px) {
   article > main {
     padding-left: 0;
-    margin-top: 16px;
+    margin-top: var(--pad);
   }
 }
 
@@ -71,25 +72,45 @@ article .excerpt {
 }
 
 article > footer {
-  font-size: 14px;
-  padding-top: 16px;
-  margin-top: 32px;
-  margin-left: calc(var(--ribbon-size) + 40px);
-  border-top: 6px solid transparent;
+  font-size: var(--small-size);
+  font-family: var(--small-font);
+  font-weight: var(--small-weight);
+  padding-top: calc(var(--pad));
+  margin-top: var(--pad);
+  margin-left: calc(var(--ribbon-size) + var(--ribbon-flap-size) / 2);
+  border-top: var(--divider-width) solid transparent;
 
   display: flex;
   align-items: flex-start;
 }
 
+article .download {
+  margin: 0 0.5em;
+}
+
 @media (max-width: 700px) {
   article > footer {
     margin-left: 0;
-    margin-top: 16px;
+  }
+}
+@media (max-width: 480px) {
+  article > footer {
+    flex-direction: column;
+  }
+  article .post-categories {
+    order: 1;
+  }
+  article .credit {
+    order: 2;
+  }
+  article .download {
+    order: 3;
+    margin: 0;
   }
 }
 
 article > footer > * {
-  flex: 1 1 0;
+  flex: 1 1 auto;
 }
 
 .post-categories {
@@ -112,7 +133,7 @@ article > footer > * {
 
 article > footer > .download {
   flex: 0 0 auto;
-  border :0;
+  border: 0;
   background: none;
   color: var(--pink);
   display: flex;

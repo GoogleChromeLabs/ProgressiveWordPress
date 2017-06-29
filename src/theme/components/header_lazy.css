@@ -8,11 +8,3 @@
   bottom: 0;
   background-image: radial-gradient(ellipse farthest-corner, rgba(0,0,0,0), rgba(0,0,0,0.4));
 }
-
-@media (max-width: 700px) {
-  .hero .ribbon:after {
-    border-width: var(--ribbon-flap-size) calc(var(--ribbon-flap-size) / 2);
-  }
-}
-.hero .ribbon {
-}

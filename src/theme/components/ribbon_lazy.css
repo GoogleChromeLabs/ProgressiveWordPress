@@ -26,14 +26,14 @@
   transform: translateX(100%);
   border-style: solid;
   border-color: var(--shading-pink) transparent transparent var(--shading-pink);
-  border-width: var(--ribbon-flap-size) calc(var(--ribbon-flap-size) / 2);
+  border-width: calc(var(--ribbon-flap-size) / 2) calc(var(--ribbon-flap-size) / 4);
 }
-
+/*
 @media (max-width: 700px) {
   .ribbon:after {
     border-width: calc(var(--ribbon-flap-size) / 2) calc(var(--ribbon-flap-size) / 4);
   }
-}
+}*/
 
 .ribbon.ribbon--blue:after {
   border-color: var(--shading-blue) transparent transparent var(--shading-blue);
