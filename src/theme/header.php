@@ -27,6 +27,7 @@
     include(dirname(__FILE__).'/components/header_critical.css');
     include(dirname(__FILE__).'/components/footer_critical.css');
     include(dirname(__FILE__).'/components/article_critical.css');
+    include(dirname(__FILE__).'/components/ribbon_critical.css');
   ?>
   </style>
   <noscript class="lazyload">
@@ -34,6 +35,7 @@
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/footer_lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/header_lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/article_lazy.css">
+    <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/ribbon_lazy.css">
   </noscript>
 </head>
 <body>

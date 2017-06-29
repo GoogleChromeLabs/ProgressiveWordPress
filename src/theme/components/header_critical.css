@@ -11,18 +11,7 @@
 }
 
 .hero.single {
-  height: 128px
-}
-
-.ribbon {
-  background-color: var(--pink);
-  padding: 32px;
-  color: var(--light-pink);
-  box-sizing: border-box;
-}
-
-.ribbon.ribbon--blue {
-  background-color: var(--light-blue);
+  height: 90px
 }
 
 .hero .wrapper {
@@ -38,12 +27,13 @@
   position: absolute;
   left: 32px;
   bottom: -63px;
+  padding: 32px;
 
   font-family: 'Catamaran Bold';
   font-size: 64px;
   line-height: 1em;
-  display: flex;
-  align-items: center;
+  text-align: left;
+  justify-content: flex-start;
 }
 
 @media (max-width: 700px) {

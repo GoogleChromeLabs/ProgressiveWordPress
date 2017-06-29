@@ -11,10 +11,6 @@
  * limitations under the License.
  */
 
-:root {
-  --article-ribbon-size: 140px;
-}
-
 article {
   margin: 0 auto;
   max-width: 1000px;
@@ -44,45 +40,21 @@ article > header > .headline {
   color: var(--pink);
   font-family: 'Catamaran Bold';
   font-size: 36px;
-  transform: translateY(-64px);
+  transform: translateY(calc(-2 * var(--ribbon-flap-size)));
   padding-left: 40px;
   line-height: 1.5em;
 }
 
 @media (max-width: 700px) {
   article > header > .headline {
-    transform: translateY(-16px);
+    transform: translateY(calc(-1 * var(--ribbon-flap-size)));
     padding-left: 0.5em;
+    font-size: 28px;
   }
 }
-
-article > header > .ribbon {
-  flex: 0 0 var(--article-ribbon-size);
-  width: var(--article-ribbon-size);
-  height: var(--article-ribbon-size);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-family: 'Catamaran Bold';
-  font-size: 30px;
-  padding: 0;
-}
-
-@media (max-width: 700px) {
-  article > header > .ribbon {
-    font-size: 18px;
-    height: 4em;
-    flex-basis: 4em;
-  }
-  article > header > .ribbon:after {
-    border-width: 16px 8px;
-  }
-}
-
 
 article > main {
-  padding-left: calc(var(--article-ribbon-size) + 40px);
+  padding-left: calc(var(--ribbon-size) + 40px);
   margin-top: -30px;
   max-width: 720px;
 }
@@ -90,7 +62,7 @@ article > main {
 @media (max-width: 700px) {
   article > main {
     padding-left: 0;
-    margin-top: 32px;
+    margin-top: 16px;
   }
 }
 
@@ -102,7 +74,7 @@ article > footer {
   font-size: 14px;
   padding-top: 16px;
   margin-top: 32px;
-  margin-left: calc(var(--article-ribbon-size) + 40px);
+  margin-left: calc(var(--ribbon-size) + 40px);
   border-top: 6px solid transparent;
 
   display: flex;
@@ -112,6 +84,7 @@ article > footer {
 @media (max-width: 700px) {
   article > footer {
     margin-left: 0;
+    margin-top: 16px;
   }
 }
 
@@ -125,6 +98,8 @@ article > footer > * {
   display: flex;
   list-style: none;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  white-space: nowrap;
 }
 
 .post-categories a {
