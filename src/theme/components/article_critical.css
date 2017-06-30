@@ -41,8 +41,9 @@ article > header > .headline {
   flex: 1 1 0;
   border-bottom: var(--divider-width) solid transparent;
   color: var(--pink);
-  font-family: 'Catamaran Bold';
+  font-family: var(--headline-font);
   font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
   transform: translateY(calc(-1 * var(--ribbon-flap-size)));
   padding-left: calc(var(--pad));
   line-height: 1.5em;
@@ -65,6 +66,49 @@ article > main {
     padding-left: 0;
     margin-top: var(--pad);
   }
+}
+
+article > main h1 {
+  border-bottom: var(--divider-width) solid transparent;
+  font-family: var(--headline-font);
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: 1.5em;
+  color: var(--pink);
+  margin-left: calc(-1 * var(--pad));
+  padding-left: var(--pad);
+}
+
+article > main h2 {
+  font-family: var(--subheadline-font);
+  font-size: var(--subheadline-size);
+  font-weight: var(--subheadline-weight);
+  margin-bottom: 0;
+}
+article > main h2 + p {
+  margin-top: 0;
+}
+
+article > main blockquote {
+  margin-left: calc(-1 * (var(--pad) + var(--divider-width)));
+  border-left: var(--divider-width) solid transparent;
+  padding-left: calc(var(--pad));
+}
+
+article > main pre {
+  display: block;
+  background-color: var(--dark-blue);
+  color: var(--light-pink);
+  margin: 0 calc(-1 * var(--pad));
+  padding: var(--pad);
+}
+
+article > main p {
+  margin: var(--pad) 0;
+}
+article > main p:first-child,
+article > main p:last-child {
+  margin: 0;
 }
 
 article .excerpt {

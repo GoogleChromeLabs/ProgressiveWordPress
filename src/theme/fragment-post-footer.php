@@ -12,8 +12,11 @@
    * limitations under the License.
    */
 ?>
-<article class="preview">
-  <? include('fragment-post-header.php'); ?>
-  <main class="excerpt"><? the_excerpt(); ?></main>
-  <? include('fragment-post-footer.php'); ?>
-</article>
+<footer>
+  <div class="credit">
+    <p>Authored by <a href="#"><? the_author(); ?></a></p>
+    <p><a href="#"><?=comments_number('No comments', '1 comment', '%s comments');?></a></p>
+  </div>
+  <button class="download">Save for offline reading</button>
+  <? the_category(); ?>
+</footer>

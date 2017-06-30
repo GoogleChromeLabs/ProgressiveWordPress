@@ -16,6 +16,7 @@
 .ribbon {
   position: relative;
   background-image: var(--pink-rgradient-image);
+  border-radius: 2px;
 }
 
 .ribbon:after {

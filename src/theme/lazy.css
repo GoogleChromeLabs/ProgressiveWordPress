@@ -18,6 +18,7 @@
   --pink-gradient-image: linear-gradient(90deg, var(--pink), var(--gradient-pink));
   --pink-rgradient-image: radial-gradient(ellipse farthest-corner at 0% 100%,var(--pink), var(--gradient-pink));
   --blue-rgradient-image: radial-gradient(ellipse farthest-corner at 0% 100%,var(--light-blue), var(--gradient-light-blue));
+  --grey-gradient-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0));
 }
 
 pwp-notification {

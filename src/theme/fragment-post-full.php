@@ -12,8 +12,7 @@
    * limitations under the License.
    */
 ?>
-<article class="preview">
+<article class="full">
   <? include('fragment-post-header.php'); ?>
-  <main class="excerpt"><? the_excerpt(); ?></main>
-  <? include('fragment-post-footer.php'); ?>
+  <main><? the_content(); ?></main>
 </article>

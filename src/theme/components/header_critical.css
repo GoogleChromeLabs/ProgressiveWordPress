@@ -19,6 +19,7 @@
 
 .hero.single {
   height: var(--small-header);
+  margin-bottom: var(--pad);
 }
 
 .hero .wrapper {

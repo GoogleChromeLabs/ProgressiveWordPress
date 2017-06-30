@@ -10,6 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 article > footer > .download:before {
   content: '';
   width: 1em;
@@ -22,11 +23,11 @@ article.cached > footer > .download:before {
 }
 
 article > header > .headline {
-  border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
+  border-image: var(--grey-gradient-image) 100% 1;
 }
 
 article > footer {
-  border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
+  border-image: var(--grey-gradient-image) 100% 1;
 }
 
 article {
@@ -36,4 +37,12 @@ article {
 .offline article:not(.cached) {
   opacity: 0.3;
   pointer-events: none;
+}
+
+article > main > h1 {
+  border-image: var(--grey-gradient-image) 100% 1;
+}
+
+article > main blockquote {
+  border-image: var(--blue-rgradient-image) 1 100%;
 }

@@ -16,12 +16,9 @@
   etag_start();
   if(!is_fragment()) get_template_part('header');
 ?>
-<a href="<?=home_url();?>">Back</a>
 <? if(have_posts()): ?>
   <? while(have_posts()): the_post() ?>
-    <h2><a href="<? the_permalink(); ?>"><? the_title(); ?></a></h2>
-    <p><? the_date(); ?></p>
-    <? the_content(); ?>
+    <? include('fragment-post-full.php'); ?>
     <?
       comments_template();
       comment_form();

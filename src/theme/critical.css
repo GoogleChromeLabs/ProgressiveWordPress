@@ -75,6 +75,7 @@ html, body {
   background-color: var(--pink);
   font-family: 'Catamaran Light', Verdana, sans-serif;
   font-size: var(--line-size);
+  color: var(--dark-blue);
 }
 body {
   background-color: var(--light-pink);
