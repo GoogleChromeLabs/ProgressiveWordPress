@@ -28,3 +28,12 @@ article > header > .headline {
 article > footer {
   border-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0)) 100% 1;
 }
+
+article {
+  transition: opacity 0.3s linear;
+}
+
+.offline article:not(.cached) {
+  opacity: 0.3;
+  pointer-events: none;
+}

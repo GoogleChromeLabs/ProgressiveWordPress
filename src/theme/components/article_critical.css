@@ -88,6 +88,10 @@ article .download {
   margin: 0 0.5em;
 }
 
+article > footer > * {
+  flex: 1 1 0;
+}
+
 @media (max-width: 700px) {
   article > footer {
     margin-left: 0;
@@ -96,6 +100,9 @@ article .download {
 @media (max-width: 480px) {
   article > footer {
     flex-direction: column;
+  }
+  article > footer > * {
+    flex: 1 0 auto;
   }
   article .post-categories {
     order: 1;
@@ -107,10 +114,6 @@ article .download {
     order: 3;
     margin: 0;
   }
-}
-
-article > footer > * {
-  flex: 1 1 auto;
 }
 
 .post-categories {

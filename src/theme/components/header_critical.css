@@ -10,7 +10,7 @@
   position: relative;
   width: 100vw;
   height: 66vw;
-  max-height: calc(100vh - 64px);
+  max-height: calc(50vh - 64px);
   background-image: url('<?=get_bloginfo("template_url");?>/images/poster.jpg');
   background-size: cover;
   background-position: 50% 100%;
@@ -29,6 +29,7 @@
   display: flex;
   align-items: center;
   padding-left: var(--pad);
+  box-sizing: border-box;
 }
 
 .hero .ribbon {

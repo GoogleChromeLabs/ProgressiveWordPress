@@ -53,6 +53,7 @@
     <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
     <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/resource-updates.js"></script>
     <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/offline-articles.js"></script>
   </template>
 </body>
 <?
