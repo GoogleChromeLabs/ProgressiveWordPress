@@ -55,3 +55,6 @@ article > main pre {
   box-shadow: 2px 2px 4px rgba(0,0,0,.23);
   border-radius: 2px;
 }
+.comments > h2 {
+  border-image: var(--blue-gradient-image) 100% 1;
+}

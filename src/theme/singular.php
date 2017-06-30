@@ -19,10 +19,13 @@
 <? if(have_posts()): ?>
   <? while(have_posts()): the_post() ?>
     <? include('fragment-post-full.php'); ?>
-    <?
-      comments_template();
-      comment_form();
-    ?>
+    <aside class="comments">
+      <h2>Comments</h2>
+      <? comment_form(); ?>
+      <button>Leave a comment</button>
+      <div id="pendingcomments"></div>
+      <? comments_template(); ?>
+    </aside>
   <? endwhile; ?>
 <? else: ?>
   Nothing here :(

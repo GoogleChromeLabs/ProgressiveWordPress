@@ -12,11 +12,11 @@
    * limitations under the License.
    */
 ?>
-<h2>Comments</h2>
 <? if(have_comments()): ?>
   <ul>
     <? while(have_comments()): the_comment() ?>
       <li>
+        <?=get_avatar(comment_author_email(), 250);?>
         <div><?=get_comment_author();?></div>
         <div><?=get_comment_text();?></div>
       </li>
@@ -25,4 +25,3 @@
 <? else: ?>
   No comments.
 <? endif; ?>
-<div id="pendingcomments"></div>

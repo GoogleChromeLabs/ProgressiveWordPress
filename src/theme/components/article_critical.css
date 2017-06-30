@@ -187,4 +187,33 @@ article > footer > .download {
   align-items: center;
 }
 
+.comments {
+  margin: 0 auto;
+  max-width: 1000px;
+  box-sizing: border-box;
+  padding: 0 var(--pad);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacer);
+  padding-left: calc(var(--ribbon-size) + var(--ribbon-flap-size) / 2 + var(--pad));
+  margin-top: var(--spacer);
+}
 
+.comments > h2 {
+  border-bottom: var(--divider-width) solid transparent;
+  font-family: var(--headline-font);
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: 1.5em;
+  color: var(--light-blue);
+  margin-left: calc(-1 * var(--pad));
+  padding-left: var(--pad);
+}
+
+.comments ul {
+  list-style: none;
+  padding: 0;
+}
+.comments ul li {
+  margin: 0;
+}
