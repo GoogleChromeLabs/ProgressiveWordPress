@@ -46,3 +46,12 @@ article > main > h1 {
 article > main blockquote {
   border-image: var(--blue-rgradient-image) 1 100%;
 }
+article > main pwp-lazy-image {
+  box-shadow: 2px 2px 4px rgba(0,0,0,.23);
+  border-radius: 2px;
+  overflow: hidden;
+}
+article > main pre {
+  box-shadow: 2px 2px 4px rgba(0,0,0,.23);
+  border-radius: 2px;
+}
