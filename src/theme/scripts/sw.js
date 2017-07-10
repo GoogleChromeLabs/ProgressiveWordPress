@@ -51,7 +51,7 @@ self.onfetch = event => {
   if(isCommentRequest(event)) return postComment(event);
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
-  if(isFragmentRequest(event) || isAssetRequest(event) || isPluginRequest(event))
+  if(isFragmentRequest(event) || isAssetRequest(event) || isPluginRequest(event) || isCrossOriginRequest(event))
     return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
 
   const newRequestURL = new URL(event.request.url);
@@ -83,6 +83,10 @@ self.onsync = event => {
     default:
       console.error(`Unknown background sync: ${event.tag}`);
   }
+}
+
+function isCrossOriginRequest(event) {
+  return new URL(event.request.url).hostname !== new URL(_wordpressConfig.templateUrl).hostname;
 }
 
 function isFragmentRequest(event) {
@@ -134,7 +138,7 @@ async function staleWhileRevalidate(request, waitUntil) {
   if (cacheResponse) return cacheResponse;
   const networkResponse = await networkResponsePromise;
   if(networkResponse) return networkResponse.clone();
-  throw new Error('Neither network nor cache had a response')
+  throw new Error(`Neither network nor cache had a response for ${request.url}`);
 }
 
 function postComment(event) {
