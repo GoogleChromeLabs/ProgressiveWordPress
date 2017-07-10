@@ -21,8 +21,8 @@
     <? include('fragment-post-full.php'); ?>
     <aside class="comments">
       <h2>Comments</h2>
+      <button class="btn">Leave a comment</button>
       <? comment_form(); ?>
-      <button>Leave a comment</button>
       <div id="pendingcomments"></div>
       <? comments_template(); ?>
     </aside>

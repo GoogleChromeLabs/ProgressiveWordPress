@@ -28,6 +28,7 @@
     include(dirname(__FILE__).'/components/footer_critical.css');
     include(dirname(__FILE__).'/components/article_critical.css');
     include(dirname(__FILE__).'/components/ribbon_critical.css');
+    include(dirname(__FILE__).'/components/comments_critical.css');
   ?>
   </style>
   <noscript class="lazyload">

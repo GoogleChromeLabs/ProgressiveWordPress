@@ -14,11 +14,12 @@
 ?>
 <? if(have_comments()): ?>
   <ul>
-    <? while(have_comments()): the_comment() ?>
-      <li>
-        <?=get_avatar(comment_author_email(), 250);?>
-        <div><?=get_comment_author();?></div>
-        <div><?=get_comment_text();?></div>
+    <? while(have_comments()): the_comment(); ?>
+      <li class="comment">
+        <?=get_avatar(get_comment_author_email(), 250); ?>
+        <div class="comment__author"><?=get_comment_author();?></div>
+        <div class="comment__date"><?=get_comment_date('D, M m Y, H:i');?></div>
+        <div class="comment__text"><?=get_comment_text();?></div>
       </li>
     <? endwhile; ?>
   </ul>
