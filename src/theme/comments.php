@@ -13,7 +13,7 @@
    */
 ?>
 <? if(have_comments()): ?>
-  <ul>
+  <ul class="comments">
     <? while(have_comments()): the_comment(); ?>
       <li class="comment">
         <?=get_avatar(get_comment_author_email(), 250); ?>

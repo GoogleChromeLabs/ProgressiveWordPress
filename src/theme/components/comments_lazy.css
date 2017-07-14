@@ -1,0 +1,3 @@
+.commentsection > h2 {
+  border-image: var(--blue-gradient-image) 100% 1;
+}

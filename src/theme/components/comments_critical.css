@@ -23,7 +23,7 @@
   display: none;
 }
 
-.comments {
+.commentsection {
   margin: 0 auto;
   max-width: 1000px;
   box-sizing: border-box;
@@ -36,12 +36,12 @@
   margin-top: var(--spacer);
 }
 @media (max-width: 700px) {
-  .comments {
+  .commentsection {
     padding: 0 var(--pad);
   }
 }
 
-.comments > h2 {
+.commentsection > h2 {
   border-bottom: var(--divider-width) solid transparent;
   font-family: var(--headline-font);
   font-size: var(--headline-size);
@@ -52,15 +52,16 @@
   padding-left: var(--pad);
 }
 
-.comments ul {
+.commentsection ul {
   list-style: none;
   padding: 0;
+  margin-top: var(--pad);
 }
-.comments ul li {
+.commentsection ul li {
   margin: 0;
 }
 
-.comments .comment {
+.commentsection .comment {
   position: relative;
   min-height: var(--avatar-size);
   margin-bottom: var(--pad);
@@ -112,6 +113,5 @@
   background-color: var(--light-blue);
   border: 0;
   padding: calc(var(--pad) / 2) calc(var(--pad) * 2);
-  margin-bottom: var(--pad);
 }
 

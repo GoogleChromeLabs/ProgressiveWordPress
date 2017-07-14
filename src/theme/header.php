@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/header_lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/article_lazy.css">
     <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/ribbon_lazy.css">
+    <link rel="stylesheet" href="<?=get_bloginfo('template_url');?>/components/comments_lazy.css">
   </noscript>
 </head>
 <body>

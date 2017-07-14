@@ -145,5 +145,5 @@ function requestAnimationFramePromise() {
 
 
 const instance = new HeaderAnimator();
-export {instance as default};
+export {instance as default, HeaderAnimator};
 

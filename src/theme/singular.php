@@ -19,9 +19,9 @@
 <? if(have_posts()): ?>
   <? while(have_posts()): the_post() ?>
     <? include('fragment-post-full.php'); ?>
-    <aside class="comments">
+    <aside class="commentsection">
       <h2>Comments</h2>
-      <button class="btn">Leave a comment</button>
+      <button class="btn commentformexpand">Leave a comment</button>
       <? comment_form(); ?>
       <div id="pendingcomments"></div>
       <? comments_template(); ?>
