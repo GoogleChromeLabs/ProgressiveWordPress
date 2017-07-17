@@ -56,6 +56,7 @@ self.onfetch = event => {
 
   const newRequestURL = new URL(event.request.url);
   newRequestURL.searchParams.append('fragment', 'true');
+  newRequestURL.searchParams.delete('loadimages');
 
   const responsePromises = [
     `${_wordpressConfig.templateUrl}/header.php?fragment=true`,
@@ -134,7 +135,7 @@ async function staleWhileRevalidate(request, event) {
   // Update cache
   event.waitUntil(async function () {
     const cacheName = await extractCacheName(event);
-    const cache = await caches.open(`pwp_${cacheName}`);
+    const cache = await caches.open(cacheName);
     const networkResponse = await networkResponsePromise;
     const cacheResponse = await cacheResponsePromise;
     if(networkResponse && cacheResponse) {
@@ -155,12 +156,15 @@ async function staleWhileRevalidate(request, event) {
 }
 
 async function extractCacheName(event) {
-  const client = await self.clients.get(event.clientId);
   let url = event.request.url;
+  if(url.startsWith(_wordpressConfig.templateUrl))
+    return 'pwp';
+
+  const client = await self.clients.get(event.clientId);
   if(client) {
     url = client.url;
   }
-  return `pathid_${new URL(url).pathname.split('/')[1]}`;
+  return `pwp_pathid_${new URL(url).pathname.split('/')[1]}`;
 }
 
 function postComment(event) {
