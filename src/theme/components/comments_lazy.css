@@ -1,3 +1,21 @@
 .commentsection > h2 {
   border-image: var(--blue-gradient-image) 100% 1;
 }
+
+.commentsection input[type=text],
+.commentsection textarea {
+  font-family: var(--line-font);
+  font-weight: var(--line-weight);
+  font-size: var(--line-size);
+  color: var(--pink);
+  border: 0;
+  border-bottom: 2px solid var(--pink);
+  border-radius: 2px;
+  display: block;
+  background-color: transparent;
+  margin: calc(var(--pad) / 2) 0;
+}
+
+.commentsection textarea {
+  border: 2px solid var(--pink);
+}

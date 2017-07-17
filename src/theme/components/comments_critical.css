@@ -115,3 +115,6 @@
   padding: calc(var(--pad) / 2) calc(var(--pad) * 2);
 }
 
+.btn--pink {
+  background-color: var(--pink);
+}
