@@ -33,7 +33,7 @@ class HeaderAnimator {
   }
 
   async toFull() {
-    if(this.isFull) return;
+    if(this.isFull) return _ => {};
 
     const ribbon = this._header.querySelector('.ribbon');
     const text = this._header.querySelector('a');
@@ -52,80 +52,98 @@ class HeaderAnimator {
     text.style.transition = '';
     text.style.opacity = '';
 
-    this._header.classList.remove('single');
-    // Ribbon right
-    const a1 = (async _ => {
-      this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
-      await requestAnimationFramePromise();
-      await requestAnimationFramePromise();
-      this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
-      this._header.style.transform =  '';
-      await transitionEndPromise(this._header);
-    })();
+    return async _ => {
+      this._header.classList.remove('single');
+      // Ribbon right
+      const a1 = (async _ => {
+        this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
+        await requestAnimationFramePromise();
+        await requestAnimationFramePromise();
+        this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+        this._header.style.transform =  '';
+        await transitionEndPromise(this._header);
+      })();
 
-    // Header down
-    const a2 = (async _ => {
-      ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
-      await requestAnimationFramePromise();
-      await requestAnimationFramePromise();
-      ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.1s`;
-      ribbon.style.transform =  '';
-      await transitionEndPromise(ribbon);
-    })();
-    Promise.all([a1, a2]).then(_ => {
-      this._header.style.transition = '';
-      this._header.style.transform = '';
-      ribbon.style.transition = '';
-      ribbon.style.transform = '';
-    });
+      // Header down
+      const a2 = (async _ => {
+        ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
+        await requestAnimationFramePromise();
+        await requestAnimationFramePromise();
+        ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.1s`;
+        ribbon.style.transform =  '';
+        await transitionEndPromise(ribbon);
+      })();
+      Promise.all([a1, a2]).then(_ => {
+        this._header.style.transition = '';
+        this._header.style.transform = '';
+        ribbon.style.transition = '';
+        ribbon.style.transform = '';
+      });
+    };
   }
 
-  async toSingle() {
-    if(this.isSingle) return;
-
+  async toSingle(switchContent) {
+    if(this.isSingle) return _=>{};
+    const scrollPos = document.scrollingElement.scrollTop;
     const ribbon = this._header.querySelector('.ribbon');
     const text = this._header.querySelector('a');
     const ribbonRect = ribbon.getBoundingClientRect();
     this._header.classList.add('single');
     const singleRect = this._header.getBoundingClientRect();
     this._header.classList.remove('single');
+    document.scrollingElement.scrollTop = scrollPos;
+    const headerInViewAtStart = ribbonRect.bottom > 0;
+    const headerInViewAtFadeIn = singleRect.bottom > 0;
 
+    if(headerInViewAtStart) {
+      // Ribbon left
+      const a1 = (async _ => {
+        ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+        await requestAnimationFramePromise();
+        await requestAnimationFramePromise();
+        ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
+        await transitionEndPromise(ribbon);
+      })();
 
-    // Ribbon left
-    const a1 = (async _ => {
-      ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+      // Header up
+      const a2 = (async _ => {
+        this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.2s`;
+        await requestAnimationFramePromise();
+        await requestAnimationFramePromise();
+        this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
+        await transitionEndPromise(this._header);
+      })();
+
+      await Promise.all([a1, a2]);
+    }
+    ribbon.style.transform = `translateX(-400%)`;
+    if(!headerInViewAtFadeIn) {
+      this._header.style.transition = '';
+      this._header.style.transform = `translateY(-100%)`;
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
-      ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
-      await transitionEndPromise(ribbon);
-    })();
-
-    // Header up
-    const a2 = (async _ => {
-      this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.2s`;
-      await requestAnimationFramePromise();
-      await requestAnimationFramePromise();
-      this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
-      await transitionEndPromise(this._header);
-    })();
-
-    await Promise.all([a1, a2]);
-
-    this._header.classList.add('single');
-    ribbon.style.transform = '';
-    ribbon.style.transition = '';
-
-    // Text in
-    (async _ => {
+    }
+    return async _ => {
+      this._header.classList.add('single');
+      ribbon.style.transform = '';
+      ribbon.style.transition = '';
       text.style.opacity = 0;
+      if(!headerInViewAtFadeIn) {
+        this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.2s`;
+        this._header.style.transform = `translateY(0)`;
+        await transitionEndPromise(this._header);
+        this._header.style.transform = this._header.style.transition = '';
+      }
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
+
+      // Text in
       text.style.transition = `opacity ${HeaderAnimator.TRANSITION_DURATION} linear`;
       text.style.opacity = 1;
       await transitionEndPromise(text);
       text.style.transition = '';
       text.style.opacity = '';
-    })();
+    }
   }
 }
 

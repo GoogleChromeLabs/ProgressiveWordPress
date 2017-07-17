@@ -94,16 +94,16 @@ class Router {
     const viewAnimation = this._animateOut(oldView);
     const headerAnimation = this._animateHeader(targetIsSingle);
     const newView = this._loadFragment(link);
-    await Promise.all([viewAnimation, headerAnimation]);
+    const continueAnimation = (await Promise.all([viewAnimation, headerAnimation]))[1];
     const globalSpinner = await this._globalSpinner;
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
       globalSpinner.ready.then(_ => globalSpinner.show());
     }
     await newView.ready;
     globalSpinner.ready.then(_ => globalSpinner.hide());
-    document.scrollingElement.scrollTop = scrollTop;
     oldView.parentNode.replaceChild(newView, oldView);
-    await this._animateIn(newView);
+    document.scrollingElement.scrollTop = 0;
+    await Promise.all([this._animateIn(newView), continueAnimation()]);
     _pubsubhub.dispatch('navigation', {address: link});
   }
 }
