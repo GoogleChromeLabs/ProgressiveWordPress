@@ -33,7 +33,7 @@ class HeaderAnimator {
   }
 
   async toFull() {
-    if(this.isFull) return _ => {};
+    if(this.isFull) return _=>{};
 
     const ribbon = this._header.querySelector('.ribbon');
     const text = this._header.querySelector('a');

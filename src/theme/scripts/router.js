@@ -75,7 +75,7 @@ class Router {
 
   async _animateHeader(toSingle) {
     const currentState = document.querySelector('header.hero').classList.contains('single');
-    if(currentState === toSingle) return;
+    if(currentState === toSingle) return _=>{};
 
     const headerAnimator = await this._headerAnimator;
     if(toSingle)

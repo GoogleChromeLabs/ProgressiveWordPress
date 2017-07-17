@@ -52,7 +52,7 @@ self.onfetch = event => {
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
   if(isFragmentRequest(event) || isAssetRequest(event) || isPluginRequest(event) || isCrossOriginRequest(event))
-    return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
+    return event.respondWith(staleWhileRevalidate(event.request, event));
 
   const newRequestURL = new URL(event.request.url);
   newRequestURL.searchParams.append('fragment', 'true');
@@ -61,7 +61,7 @@ self.onfetch = event => {
     `${_wordpressConfig.templateUrl}/header.php?fragment=true`,
     newRequestURL,
     `${_wordpressConfig.templateUrl}/footer.php?fragment=true`,
-  ].map(u => staleWhileRevalidate(new Request(u), event.waitUntil.bind(event)));
+  ].map(u => staleWhileRevalidate(new Request(u), event));
 
   const {readable, writable} = new TransformStream();
   event.waitUntil(async function() {
@@ -127,13 +127,14 @@ function isCommentRequest(event) {
     new URL(event.request.url).pathname === '/wp-comments-post.php';
 }
 
-async function staleWhileRevalidate(request, waitUntil) {
+async function staleWhileRevalidate(request, event) {
   const networkResponsePromise = fetch(request, {credentials: "include"}).catch(_ => {});
   const cacheResponsePromise = caches.match(request);
 
   // Update cache
-  waitUntil(async function () {
-    const cache = await caches.open('pwp');
+  event.waitUntil(async function () {
+    const cacheName = await extractCacheName(event);
+    const cache = await caches.open(`pwp_${cacheName}`);
     const networkResponse = await networkResponsePromise;
     const cacheResponse = await cacheResponsePromise;
     if(networkResponse && cacheResponse) {
@@ -147,10 +148,19 @@ async function staleWhileRevalidate(request, waitUntil) {
 
   // Determine response
   const cacheResponse = await cacheResponsePromise;
-  if (cacheResponse) return cacheResponse;
+  if (cacheResponse) return cacheResponse.clone();
   const networkResponse = await networkResponsePromise;
   if(networkResponse) return networkResponse.clone();
   throw new Error(`Neither network nor cache had a response for ${request.url}`);
+}
+
+async function extractCacheName(event) {
+  const client = await self.clients.get(event.clientId);
+  let url = event.request.url;
+  if(client) {
+    url = client.url;
+  }
+  return `pathid_${new URL(url).pathname.split('/')[1]}`;
 }
 
 function postComment(event) {
