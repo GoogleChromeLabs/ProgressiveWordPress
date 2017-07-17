@@ -34,7 +34,7 @@ article {
   transition: opacity 0.3s linear;
 }
 
-.offline article:not(.cached) {
+.offline article.preview:not(.cached) {
   opacity: 0.3;
   pointer-events: none;
 }
