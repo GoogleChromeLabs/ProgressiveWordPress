@@ -65,6 +65,14 @@ self.onfetch = event => {
 
   const {readable, writable} = new TransformStream();
   event.waitUntil(async function() {
+    if(needsSmallHeader(event)) {
+      responsePromises[0] = async function() {
+        // TODO: Super dirty. Should be a trasform stream, really.
+        const resp = await responsePromises[0];
+        const body = await resp.text();
+        return new Response(body.replace('class="hero', 'class="hero single'));
+      }();
+    }
     for (const responsePromise of responsePromises) {
       const response = await responsePromise;
       await response.body.pipeTo(writable, {preventClose: true});
@@ -83,6 +91,10 @@ self.onsync = event => {
     default:
       console.error(`Unknown background sync: ${event.tag}`);
   }
+}
+
+function needsSmallHeader(event) {
+  return new URL(event.request.url).pathname !== '/';
 }
 
 function isCrossOriginRequest(event) {
