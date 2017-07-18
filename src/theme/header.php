@@ -17,9 +17,23 @@
   etag_start();
 ?>
 <!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+
+  <link rel="manifest" href="<?=get_bloginfo('template_url');?>/manifest.php">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="PWP">
+  <meta name="apple-mobile-web-app-title" content="PWP">
+  <meta name="theme-color" content="#FFF8F7">
+  <meta name="msapplication-navbutton-color" content="#FFF8F7">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-starturl" content="/">
+  <link rel="icon" type="image/jpeg" sizes="512x512" href="<?=bloginfo('template_url');?>/images/icon.png">
+  <link rel="apple-touch-icon" type="image/jpeg" sizes="512x512" href="<?=bloginfo('template_url');?>/images/icon.png">
+
   <title>Aimless Stack Pointers</title>
   <style>
   <?

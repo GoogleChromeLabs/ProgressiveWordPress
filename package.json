@@ -1,6 +1,6 @@
 {
   "name": "ProgressiveWordPress",
-  "version": "0.0.3008",
+  "version": "0.0.3057",
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,12 @@
   "author": "Surma <surma@surma.link>",
   "license": "Apache-2.0",
   "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
     "cssnano": "^3.10.0",
-    "mz": "^2.6.0"
+    "glob": "^7.1.2",
+    "mz": "^2.6.0",
+    "npm-watch": "^0.2.0",
+    "systemjs": "^0.20.15"
   }
 }

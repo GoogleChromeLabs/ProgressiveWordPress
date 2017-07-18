@@ -107,7 +107,8 @@ function isFragmentRequest(event) {
 }
 
 function isAssetRequest(event) {
-  return /(jpe?g|png|css|svg|js|woff)$/i.test(event.request.url);
+  return /(jpe?g|png|css|svg|js|woff)$/i.test(event.request.url)
+    || event.request.url.endsWith('manifest.php');
 }
 
 function isPluginRequest(event) {
