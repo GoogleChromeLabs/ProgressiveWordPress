@@ -62,6 +62,7 @@ function updateLinks() {
 }
 
 async function downloadArticle(article) {
+  article.classList.add('downloading');
   const link = new URL(article.querySelector('header a').href);
   link.searchParams.append('loadimages', 'true');
   const ifr = document.createElement('iframe');
@@ -74,5 +75,6 @@ async function downloadArticle(article) {
     });
   });
   document.body.removeChild(ifr);
+  article.classList.remove('downloading');
   article.classList.add('cached');
 }

@@ -44,7 +44,6 @@ class PwpSpinner extends HTMLElement {
   }
 
   connectedCallback() {
-    this.hide();
     this.ready = new Promise(resolve => {
       requestIdleCallback(_ => {
         this.innerHTML = PwpSpinner.SVG_SOURCE;
@@ -68,6 +67,7 @@ class PwpSpinner extends HTMLElement {
 customElements.define('pwp-spinner', PwpSpinner);
 
 const globalSpinner = document.createElement('pwp-spinner');
+globalSpinner.hide();
 requestIdleCallback(_ => {
   Object.assign(globalSpinner.style, {
     position: 'fixed',

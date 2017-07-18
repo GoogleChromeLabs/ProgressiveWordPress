@@ -17,6 +17,6 @@
     <p>Authored by <a href="#"><? the_author(); ?></a></p>
     <p><a href="#"><?=comments_number('No comments', '1 comment', '% comments');?></a></p>
   </div>
-  <button class="download">Save for offline reading</button>
+  <button class="download"><pwp-spinner></pwp-spinner>Save for offline reading</button>
   <? the_category(); ?>
 </footer>

@@ -11,12 +11,26 @@
  * limitations under the License.
  */
 
+
+article > footer > .download > pwp-spinner {
+  display: none;
+  fill: var(--pink);
+  margin-right: 0.5em;
+  width: 1em;
+  height: 1em;
+}
 article > footer > .download:before {
   content: '';
   width: 1em;
   height: 1em;
   background: url('../images/download.svg') 50% 50%/contain no-repeat;
   margin-right: 0.5em;
+}
+article.downloading > footer > .download > pwp-spinner {
+  display: inline-block;
+}
+article.downloading > footer > .download:before {
+  display: none;
 }
 article.cached > footer > .download:before {
   background-image: url('../images/downloaded.svg');
