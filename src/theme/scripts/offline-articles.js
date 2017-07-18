@@ -56,7 +56,7 @@ function updateLinks() {
           article = article.parentNode;
         if(!article)
           throw new Error('Invalid download button?!');
-        if(article.classList.has('cached'))
+        if(article.classList.contains('cached'))
           return;
         downloadArticle(article);
       });
