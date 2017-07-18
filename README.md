@@ -28,21 +28,16 @@ $ npm run watch
 
 #### Docker
 
-The Docker setup is a typical LAMP setup for ProgressiveWordpress (LAMPWP?!). The Docker image is based on the [official Wordpress Docker image](https://hub.docker.com/_/wordpress/) but adds a self-signed certificate and HTTP/2 configuration files.  It is also published to the [Docker Hub](https://hub.docker.com/r/surma/progressivewordpress/) if you don’t want to build locally. WordPress also needs a  MySQL server (root password is set to `lolz`), for which the [offical MySQL Docker image](https://hub.docker.com/_/mysql/) is used.
+The Docker setup is a typical LAMP setup for ProgressiveWordpress (LAMPWP?!). The Docker image is based on the [official Wordpress Docker image](https://hub.docker.com/_/wordpress/) but adds a self-signed certificate and HTTP/2 configuration files. It is also published to the [Docker Hub](https://hub.docker.com/r/surma/progressivewordpress/) if you don’t want to build locally. WordPress also needs a MySQL server for which the [official MySQL Docker image](https://hub.docker.com/_/mysql/) is used.
 
 ```
-$ docker run --name pwp-mysql -e MYSQL_ROOT_PASSWORD=lolz -d mysql:8.0
-$ docker build -t surma/progressivewordpress .
-$ docker run --name pwp --link pwp-mysql:mysql \
-  -v $(pwd)/dist/theme:/var/www/html/wp-content/themes/surmblog \
-  -v $(pwd)/dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin \
-  -v $(pwd)/uploads:/var/www/html/wp-content/uploads \
-  -p 8080:80 -d surma/progressivewordpress
+$ docker pull surma/wordpress # if you don’t want to build locally
+$ docker-compose up
 ```
 
 Add `surmblog.dev` to your HOSTS file and point it at `127.0.0.1`. Add `docker_assets/certs/cert.pem` to your local key chain and trust it.
 
-Blog is now available at `https://surmblog.dev:8080`.
+WordPress install wizard is now available at `https://surmblog.dev:8080`. Once installed, make sure to [enable the theme](https://surmblog.dev:8080/wp-admin/themes.php) and [set the permalink style](https://surmblog.dev:8080/wp-admin/options-permalink.php) to “Post name”.
 
 ---
 Apache 2.0
