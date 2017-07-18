@@ -164,7 +164,7 @@ async function extractCacheName(event) {
   if(client) {
     url = client.url;
   }
-  return `pwp_pathid_${new URL(url).pathname.split('/')[1]}`;
+  return `pwp_pathid_${new URL(url).pathname.split('/').filter(s => !!s).join('_')}`;
 }
 
 function postComment(event) {

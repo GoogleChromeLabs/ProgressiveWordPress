@@ -19,7 +19,7 @@ class Router {
     performance.mark('router.hijack');
     window.addEventListener('popstate', this._onPopState);
     this._globalSpinner = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`).then(obj => obj.globalSpinner);
-    this._headerAnimator = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/header-animator.js`).then(obj => obj.default);
+    this._transitionAnimator = importPolyfill(`${_wordpressConfig.templateUrl}/scripts/transition-animator.js`).then(obj => obj.default);
   }
 
   _bindHandlers() {
@@ -77,7 +77,7 @@ class Router {
     const currentState = document.querySelector('header.hero').classList.contains('single');
     if(currentState === toSingle) return _=>{};
 
-    const headerAnimator = await this._headerAnimator;
+    const headerAnimator = await this._transitionAnimator;
     if(toSingle)
       return headerAnimator.toSingle();
     return headerAnimator.toFull();

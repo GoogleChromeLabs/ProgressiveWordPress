@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-class HeaderAnimator {
+class TransitionAnimator {
   static get TRANSITION_DURATION() {
     return '0.5s';
   }
@@ -46,7 +46,7 @@ class HeaderAnimator {
     text.style.opacity = 1;
     await requestAnimationFramePromise();
     await requestAnimationFramePromise();
-    text.style.transition = `opacity ${HeaderAnimator.TRANSITION_DURATION} linear`;
+    text.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} linear`;
     text.style.opacity = 0;
     await transitionEndPromise(text);
     text.style.transition = '';
@@ -59,7 +59,7 @@ class HeaderAnimator {
         this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
-        this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+        this._header.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
         this._header.style.transform =  '';
         await transitionEndPromise(this._header);
       })();
@@ -69,7 +69,7 @@ class HeaderAnimator {
         ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
-        ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.1s`;
+        ribbon.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F} 0.1s`;
         ribbon.style.transform =  '';
         await transitionEndPromise(ribbon);
       })();
@@ -98,7 +98,7 @@ class HeaderAnimator {
     if(headerInViewAtStart) {
       // Ribbon left
       const a1 = (async _ => {
-        ribbon.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+        ribbon.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
         ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
@@ -107,7 +107,7 @@ class HeaderAnimator {
 
       // Header up
       const a2 = (async _ => {
-        this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.2s`;
+        this._header.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F} 0.2s`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
         this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
@@ -129,7 +129,7 @@ class HeaderAnimator {
       ribbon.style.transition = '';
       text.style.opacity = 0;
       if(!headerInViewAtFadeIn) {
-        this._header.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F} 0.2s`;
+        this._header.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F} 0.2s`;
         this._header.style.transform = `translateY(0)`;
         await transitionEndPromise(this._header);
         this._header.style.transform = this._header.style.transition = '';
@@ -138,7 +138,7 @@ class HeaderAnimator {
       await requestAnimationFramePromise();
 
       // Text in
-      text.style.transition = `opacity ${HeaderAnimator.TRANSITION_DURATION} linear`;
+      text.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} linear`;
       text.style.opacity = 1;
       await transitionEndPromise(text);
       text.style.transition = '';
@@ -162,6 +162,6 @@ function requestAnimationFramePromise() {
 }
 
 
-const instance = new HeaderAnimator();
-export {instance as default, HeaderAnimator};
+const instance = new TransitionAnimator();
+export {instance as default, TransitionAnimator};
 
