@@ -22,6 +22,7 @@ class TransitionAnimator {
 
   constructor() {
     this._header = document.querySelector('header.hero');
+    this._footer = document.querySelector('footer.footer');
   }
 
   get isSingle() {
@@ -42,15 +43,24 @@ class TransitionAnimator {
     const ribbonRect = ribbon.getBoundingClientRect();
     this._header.classList.add('single');
 
+    // Footer down
+    const a1 = (async _ => {
+      this._footer.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
+      this._footer.style.transform = 'translateY(100%)';
+    })();
     // Text out
-    text.style.opacity = 1;
-    await requestAnimationFramePromise();
-    await requestAnimationFramePromise();
-    text.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} linear`;
-    text.style.opacity = 0;
-    await transitionEndPromise(text);
-    text.style.transition = '';
-    text.style.opacity = '';
+    const a2 = (async _ => {
+      text.style.opacity = 1;
+      await requestAnimationFramePromise();
+      await requestAnimationFramePromise();
+      text.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} linear`;
+      text.style.opacity = 0;
+      await transitionEndPromise(text);
+      text.style.transition = '';
+      text.style.opacity = '';
+    })();
+
+    await Promise.all([a1, a2]);
 
     return async _ => {
       this._header.classList.remove('single');
@@ -73,12 +83,19 @@ class TransitionAnimator {
         ribbon.style.transform =  '';
         await transitionEndPromise(ribbon);
       })();
-      Promise.all([a1, a2]).then(_ => {
-        this._header.style.transition = '';
-        this._header.style.transform = '';
-        ribbon.style.transition = '';
-        ribbon.style.transform = '';
-      });
+
+      // Footer up
+      const a3 = (async _ => {
+        this._footer.style.transform = 'translateY(0)';
+        await transitionEndPromise(this._footer);
+        this._footer.style.transition = this._footer.style.transform = '';
+      })();
+
+      await Promise.all([a1, a2, a3])
+      this._header.style.transition = '';
+      this._header.style.transform = '';
+      ribbon.style.transition = '';
+      ribbon.style.transform = '';
     };
   }
 
@@ -94,6 +111,12 @@ class TransitionAnimator {
     document.scrollingElement.scrollTop = scrollPos;
     const headerInViewAtStart = ribbonRect.bottom > 0;
     const headerInViewAtFadeIn = singleRect.bottom > 0;
+
+    // Footer down
+    (async _ => {
+      this._footer.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
+      this._footer.style.transform = 'translateY(100%)';
+    })();
 
     if(headerInViewAtStart) {
       // Ribbon left
@@ -124,6 +147,13 @@ class TransitionAnimator {
       await requestAnimationFramePromise();
     }
     return async _ => {
+      // Footer up
+      (async _ => {
+        this._footer.style.transform = 'translateY(0)';
+        await transitionEndPromise(this._footer);
+        this._footer.style.transition = this._footer.style.transform = '';
+      })();
+
       this._header.classList.add('single');
       ribbon.style.transform = '';
       ribbon.style.transition = '';
