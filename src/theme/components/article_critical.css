@@ -1,0 +1,192 @@
+/**
+ * Copyright 2017 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+:root {
+  --divider-width: var(--base-unit);
+}
+article {
+  margin: 0 auto;
+  max-width: 1000px;
+  box-sizing: border-box;
+  padding: 0 var(--pad);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacer);
+}
+
+article a {
+  color: var(--pink);
+}
+
+article:last-of-type {
+  margin-bottom: 0;
+}
+
+article > header {
+  display: flex;
+  align-items: flex-end;
+}
+
+article > header > .headline {
+  flex: 1 1 0;
+  border-bottom: var(--divider-width) solid transparent;
+  color: var(--pink);
+  font-family: var(--headline-font);
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  transform: translateY(calc(-1 * var(--ribbon-flap-size)));
+  padding-left: calc(var(--pad));
+  line-height: 1.5em;
+}
+
+@media (max-width: 700px) {
+  article > header > .headline {
+    font-size: calc(var(--headline-size) * 0.8);
+  }
+}
+
+article > main {
+  padding-left: calc(var(--ribbon-size) + var(--ribbon-flap-size) / 2);
+  margin-top: calc(-1 * var(--ribbon-flap-size) + var(--pad));
+  max-width: 720px;
+}
+
+@media (max-width: 700px) {
+  article > main {
+    padding-left: 0;
+    margin-top: var(--pad);
+  }
+}
+
+article > main h1 {
+  border-bottom: var(--divider-width) solid transparent;
+  font-family: var(--headline-font);
+  font-size: var(--headline-size);
+  font-weight: var(--headline-weight);
+  line-height: 1.5em;
+  color: var(--pink);
+  margin-left: calc(-1 * var(--pad));
+  padding-left: var(--pad);
+}
+
+article > main h2 {
+  font-family: var(--subheadline-font);
+  font-size: var(--subheadline-size);
+  font-weight: var(--subheadline-weight);
+  margin-bottom: 0;
+}
+article > main h2 + p {
+  margin-top: 0;
+}
+
+article > main blockquote {
+  margin-left: calc(-1 * (var(--pad) + var(--divider-width)));
+  border-left: var(--divider-width) solid transparent;
+  padding-left: calc(var(--pad));
+}
+
+article > main pre {
+  display: block;
+  background-color: var(--dark-blue);
+  color: var(--light-pink);
+  margin: 0 calc(-1 * var(--pad));
+  padding: var(--pad);
+}
+
+article > main p {
+  margin: var(--pad) 0;
+}
+article > main p:first-child {
+  font-family: var(--line-font);
+  font-weight: var(--line-weight);
+}
+article > main p:first-child,
+article > main p:last-child {
+  margin: 0;
+}
+
+article .excerpt {
+  font-family: 'Catamaran Medium';
+}
+
+article > footer {
+  font-size: var(--small-size);
+  font-family: var(--small-font);
+  font-weight: var(--small-weight);
+  padding-top: calc(var(--pad));
+  margin-top: var(--pad);
+  margin-left: calc(var(--ribbon-size) + var(--ribbon-flap-size) / 2);
+  border-top: var(--divider-width) solid transparent;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+article .download {
+  margin: 0 0.5em;
+}
+
+article > footer > * {
+  flex: 1 1 0;
+}
+
+@media (max-width: 700px) {
+  article > footer {
+    margin-left: 0;
+  }
+}
+@media (max-width: 480px) {
+  article > footer {
+    flex-direction: column;
+  }
+  article > footer > * {
+    flex: 1 0 auto;
+  }
+  article .post-categories {
+    order: 1;
+  }
+  article .credit {
+    order: 2;
+  }
+  article .download {
+    order: 3;
+    margin: 0;
+  }
+}
+
+.post-categories {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  white-space: nowrap;
+}
+
+.post-categories a {
+  margin: 0 0.2em;
+}
+
+.post-categories a:before {
+  content: '#';
+}
+
+article > footer > .download {
+  flex: 0 0 auto;
+  border: 0;
+  background: none;
+  color: var(--pink);
+  display: flex;
+  align-items: center;
+}

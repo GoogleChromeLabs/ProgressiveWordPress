@@ -10,34 +10,114 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@font-face {
+  font-family: 'Catamaran Light';
+  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Light.woff') format('woff');
+  font-display: optional;
+}
+@font-face {
+  font-family: 'Catamaran Medium';
+  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Medium.woff') format('woff');
+  font-display: optional;
+}
+@font-face {
+  font-family: 'Catamaran Bold';
+  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Bold.woff') format('woff');
+  font-display: optional;
+}
+@font-face {
+  font-family: 'Catamaran Black';
+  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Black.woff') format('woff');
+  font-display: optional;
+}
+:root {
+  --base-unit: 8px;
+  --light-pink: #FFF8F7;
+  --pink: #BF3F71;
+  --light-green: #49F2B4;
+  --light-blue: #6BB0BF;
+  --dark-blue: #184954;
+  --headline-factor: 4;
+  --headline-size: calc(var(--base-unit) * var(--headline-factor));
+  --headline-font: 'Catamaran Black', Verdana, sans-serif;
+  --headline-weight: 700;
+  --subheadline-factor: 3;
+  --subheadline-size: calc(var(--base-unit) * var(--subheadline-factor));
+  --subheadline-font: 'Catamaran Bold', Verdana, sans-serif;
+  --subheadline-weight: 500;
+  --line-factor: 2;
+  --line-size: calc(var(--base-unit) * var(--line-factor));
+  --line-font: 'Catamaran Medium', Verdana, sans-serif;
+  --line-weight: 300;
+  --small-factor: 1.5;
+  --small-size: calc(var(--base-unit) * var(--small-factor));
+  --small-font: 'Catamaran Light', Verdana, sans-serif;
+  --small-weight: 300;
+  --spacer-factor: 10;
+  --spacer: calc(var(--base-unit) * var(--spacer-factor));
+  --pad-factor: 4;
+  --pad: calc(var(--base-unit) * var(--pad-factor));
+}
+@media (max-width: 700px) {
+  :root {
+    --pad-factor: 2;
+    --spacer-factor: 5;
+  }
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  min-height: 100%;
+  border: 0;
+  width: 100vw;
+  min-height: 100vh;
   font-family: sans-serif;
+  background-color: var(--pink);
+  font-family: var(--small-font);
+  font-size: var(--line-size);
+  font-weight: var(--small-weight);
+  color: var(--dark-blue);
 }
 body {
-  background-color: hsla(0, 10%, 95%, 1);
-}
-a {
-  text-decoration: none;
-  color: hsla(0, 40%, 30%, 1);
+  background-color: var(--light-pink);
+  display: flex;
+  flex-direction: column;
 }
 pwp-view {
   display: block;
-}
-pwp-spinner.global {
-  transform: scale(4);
-}
-pwp-notification {
-  display: block;
-  background-color: white;
+  flex-grow: 1;
 }
 pwp-lazy-image {
   position: relative;
   display: block;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+p {
+  margin: 0;
+}
+strong {
+  font-family: var(--line-font);
+  font-weight: 500;
+}
+button {
+  padding: initial;
+  border: initial;
+  margin: initial;
+  background: initial;
+  font: inherit;
+}
+ul.menu {
+  margin: 0;
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+pwp-spinner {
+  fill: var(--light-blue);
 }
 

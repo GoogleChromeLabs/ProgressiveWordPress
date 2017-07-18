@@ -47,6 +47,8 @@ class PwpLazyImage extends HTMLElement {
 
   connectedCallback() {
     io.observe(this);
+    if(new URL(location.href).searchParams.has('loadimages'))
+      this.full = true;
   }
 
   disconnectedCallback() {

@@ -1,0 +1,57 @@
+/**
+ * Copyright 2017 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+:root {
+  --ribbon-size-factor: 18;
+  --ribbon-size: calc(var(--base-unit) * var(--ribbon-size-factor));
+  /*--ribbon-size-small: calc(var(--base-unit) * 80 / 30);*/
+  --ribbon-flap-factor: 8;
+  --ribbon-flap-size: calc(var(--base-unit) * var(--ribbon-flap-factor));
+}
+
+@media (max-width: 700px) {
+  :root {
+    --ribbon-flap-factor: 4;
+    --ribbon-size-factor: 9;
+  }
+}
+
+.ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--pink);
+  color: var(--light-pink);
+  box-sizing: border-box;
+  width: var(--ribbon-size);
+  height: var(--ribbon-size);
+
+  font-family: var(--subheadline-font);
+  font-size: calc(var(--headline-size) * var(--ribbon-size-factor) / 18);
+  padding: 0;
+}
+
+/*@media (max-width: 700px) {
+  .ribbon {
+    font-size: 18px;
+    height: var(--ribbon-size-small);
+    flex-basis: var(--ribbon-size-small);
+  }
+}*/
+
+.ribbon.ribbon--blue {
+  background-color: var(--light-blue);
+}
+
+

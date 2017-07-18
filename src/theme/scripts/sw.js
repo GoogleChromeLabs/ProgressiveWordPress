@@ -32,6 +32,10 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Black.woff`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Bold.woff`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Medium.woff`,
+      `${_wordpressConfig.templateUrl}/fonts/Catamaran-Light.woff`,
     ]
       .map(url => new Request(url, {credentials: "include"})));
     // TODO Need to broadcast changes here
@@ -47,20 +51,29 @@ self.onfetch = event => {
   if(isCommentRequest(event)) return postComment(event);
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
-  if(isFragmentRequest(event) || isAssetRequest(event) || isPluginRequest(event))
-    return event.respondWith(staleWhileRevalidate(event.request, event.waitUntil.bind(event)));
+  if(isFragmentRequest(event) || isAssetRequest(event) || isPluginRequest(event) || isCrossOriginRequest(event))
+    return event.respondWith(staleWhileRevalidate(event.request, event));
 
   const newRequestURL = new URL(event.request.url);
   newRequestURL.searchParams.append('fragment', 'true');
+  newRequestURL.searchParams.delete('loadimages');
 
   const responsePromises = [
     `${_wordpressConfig.templateUrl}/header.php?fragment=true`,
     newRequestURL,
     `${_wordpressConfig.templateUrl}/footer.php?fragment=true`,
-  ].map(u => staleWhileRevalidate(new Request(u), event.waitUntil.bind(event)));
+  ].map(u => staleWhileRevalidate(new Request(u), event));
 
   const {readable, writable} = new TransformStream();
   event.waitUntil(async function() {
+    if(needsSmallHeader(event)) {
+      responsePromises[0] = async function() {
+        // TODO: Super dirty. Should be a trasform stream, really.
+        const resp = await responsePromises[0];
+        const body = await resp.text();
+        return new Response(body.replace('class="hero', 'class="hero single'));
+      }();
+    }
     for (const responsePromise of responsePromises) {
       const response = await responsePromise;
       await response.body.pipeTo(writable, {preventClose: true});
@@ -81,12 +94,21 @@ self.onsync = event => {
   }
 }
 
+function needsSmallHeader(event) {
+  return new URL(event.request.url).pathname !== '/';
+}
+
+function isCrossOriginRequest(event) {
+  return new URL(event.request.url).hostname !== new URL(_wordpressConfig.templateUrl).hostname;
+}
+
 function isFragmentRequest(event) {
   return new URL(event.request.url).searchParams.get('fragment') === 'true';
 }
 
 function isAssetRequest(event) {
-  return /(jpe?g|png|css|js)$/i.test(event.request.url);
+  return /(jpe?g|png|css|svg|js|woff)$/i.test(event.request.url)
+    || event.request.url.endsWith('manifest.php');
 }
 
 function isPluginRequest(event) {
@@ -107,13 +129,14 @@ function isCommentRequest(event) {
     new URL(event.request.url).pathname === '/wp-comments-post.php';
 }
 
-async function staleWhileRevalidate(request, waitUntil) {
+async function staleWhileRevalidate(request, event) {
   const networkResponsePromise = fetch(request, {credentials: "include"}).catch(_ => {});
   const cacheResponsePromise = caches.match(request);
 
   // Update cache
-  waitUntil(async function () {
-    const cache = await caches.open('pwp');
+  event.waitUntil(async function () {
+    const cacheName = await extractCacheName(event);
+    const cache = await caches.open(cacheName);
     const networkResponse = await networkResponsePromise;
     const cacheResponse = await cacheResponsePromise;
     if(networkResponse && cacheResponse) {
@@ -127,10 +150,22 @@ async function staleWhileRevalidate(request, waitUntil) {
 
   // Determine response
   const cacheResponse = await cacheResponsePromise;
-  if (cacheResponse) return cacheResponse;
+  if (cacheResponse) return cacheResponse.clone();
   const networkResponse = await networkResponsePromise;
   if(networkResponse) return networkResponse.clone();
-  throw new Error('Neither network nor cache had a response')
+  throw new Error(`Neither network nor cache had a response for ${request.url}`);
+}
+
+async function extractCacheName(event) {
+  let url = event.request.url;
+  if(url.startsWith(_wordpressConfig.templateUrl))
+    return 'pwp';
+
+  const client = await self.clients.get(event.clientId);
+  if(client) {
+    url = client.url;
+  }
+  return `pwp_pathid_${new URL(url).pathname.split('/').filter(s => !!s).join('_')}`;
 }
 
 function postComment(event) {

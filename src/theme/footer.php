@@ -16,31 +16,47 @@
   require_once(dirname(__FILE__).'/../../../wp-load.php');
   etag_start();
 ?>
-</pwp-view>
-<? wp_nav_menu(array('theme_location' => 'footer-nav')); ?>
-<?
-  wp_footer();
-?>
-<script>
-  window._wordpressConfig = {
-    templateUrl: '<?=get_bloginfo('template_url');?>',
-    baseUrl: '<?=home_url();?>',
-  };
-</script>
-<script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
-<script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
-<script src="<?=get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
-<template class="lazyload">
-<script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
-<script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/resource-updates.js"></script>
-<script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
-</template>
+  </pwp-view>
+  <footer class="footer">
+    <div class="footer__signoff">
+      Made with 💻 by Surma
+    </div>
+    <div class="footer__social">
+      <a href="https://github.com/GoogleChrome/ProgressiveWordPress">
+        <img src="<?=get_bloginfo('template_url');?>/images/github.svg">
+      </a>
+      <a href="https://twitter.com/DasSurma">
+        <img src="<?=get_bloginfo('template_url');?>/images/twitter.svg">
+      </a>
+      <a href="#">
+        <img src="<?=get_bloginfo('template_url');?>/images/rss.svg">
+      </a>
+    </div>
+    <? wp_nav_menu(array('theme_location' => 'footer-nav')); ?>
+  </footer>
+  <script>
+    window._wordpressConfig = {
+      templateUrl: new URL('<?=get_bloginfo('template_url');?>').toString(),
+      baseUrl: new URL('<?=home_url();?>').toString(),
+    };
+  </script>
+  <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
+  <script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
+  <script src="<?=get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
+  <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
+  <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
+  <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
+  <template class="lazyload">
+    <script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
+    <script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/resource-updates.js"></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/offline-articles.js"></script>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/commentform-expander.js"></script>
+  </template>
+</body>
 <?
   etag_end();
 ?>

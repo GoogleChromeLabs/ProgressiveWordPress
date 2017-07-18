@@ -16,16 +16,28 @@
   etag_start();
   if(!is_fragment()) get_template_part('header');
 ?>
-<a href="<?=home_url();?>">Back</a>
 <? if(have_posts()): ?>
   <? while(have_posts()): the_post() ?>
-    <h2><a href="<? the_permalink(); ?>"><? the_title(); ?></a></h2>
-    <p><? the_date(); ?></p>
-    <? the_content(); ?>
-    <?
-      comments_template();
-      comment_form();
-    ?>
+    <? include('fragment-post-full.php'); ?>
+    <aside class="commentsection">
+      <h2>Comments</h2>
+      <button class="btn commentformexpand">Leave a comment</button>
+      <?
+        comment_form(array(
+          'comment_notes_before' => '',
+          'comment_notes_after' => '',
+          'fields' => array(
+              'author' => '<input name="author" placeholder="Name" type="text" value="' . esc_attr($commenter['comment_author']) . '" required>',
+              'email' => '<input name="email" placeholder="Email" type="text" value="' . esc_attr($commenter['comment_author_email']) . '" required>',
+          ),
+          'comment_field' => '<textarea name="comment" placeholder="Comment" cols="45" rows="8" required></textarea>',
+          'label_submit' => 'Post comment',
+          'class_submit' => 'btn btn--submit btn--pink',
+        ));
+      ?>
+      <div id="pendingcomments"></div>
+      <? comments_template(); ?>
+    </aside>
   <? endwhile; ?>
 <? else: ?>
   Nothing here :(

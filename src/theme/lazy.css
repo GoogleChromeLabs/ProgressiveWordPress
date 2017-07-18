@@ -10,6 +10,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+:root {
+  --gradient-pink: #E179A1;
+  --gradient-light-blue: #82C1CF;
+  --shading-pink: #973158;
+  --shading-blue: #59919E;
+  --pink-gradient-image: linear-gradient(90deg, var(--pink), var(--gradient-pink));
+  --pink-rgradient-image: radial-gradient(ellipse farthest-corner at 0% 100%, var(--pink), var(--gradient-pink));
+  --blue-rgradient-image: radial-gradient(ellipse farthest-corner at 0% 100%, var(--light-blue), var(--gradient-light-blue));
+  --grey-gradient-image: linear-gradient(90deg, hsla(191, 71%, 33%, 0.28), hsla(191, 71%, 33%, 0));
+  --blue-gradient-image: linear-gradient(90deg, var(--light-blue), rgba(0, 0, 0, 0));
+}
+
 pwp-notification {
   box-shadow: 0px -2px 9px 5px rgba(0,0,0,0.24);
 }
+
+
