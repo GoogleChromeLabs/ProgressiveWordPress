@@ -116,4 +116,7 @@ ul.menu {
   display: flex;
   padding: 0;
 }
+pwp-spinner {
+  fill: var(--light-blue);
+}
 
