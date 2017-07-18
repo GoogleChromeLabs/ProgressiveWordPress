@@ -7,7 +7,7 @@
   font-family: var(--line-font);
   font-weight: var(--line-weight);
   font-size: var(--line-size);
-  color: var(--pink);
+  color: inherit;
   border: 0;
   border-bottom: 2px solid var(--pink);
   border-radius: 2px;

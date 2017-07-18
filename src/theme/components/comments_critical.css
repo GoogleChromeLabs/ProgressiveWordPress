@@ -31,7 +31,6 @@
   display: flex;
   align-items: stretch;
   flex-direction: column;
-  margin-bottom: var(--spacer);
   padding-left: calc(var(--ribbon-size) + var(--ribbon-flap-size) / 2 + var(--pad));
   margin-top: var(--spacer);
 }
