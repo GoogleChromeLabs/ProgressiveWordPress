@@ -37,7 +37,7 @@
   width: var(--ribbon-size);
   height: var(--ribbon-size);
 
-  font-family: 'Catamaran Bold';
+  font-family: var(--subheadline-font);
   font-size: calc(var(--headline-size) * var(--ribbon-size-factor) / 18);
   padding: 0;
 }

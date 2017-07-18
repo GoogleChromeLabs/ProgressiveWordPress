@@ -41,7 +41,8 @@
   bottom: calc(var(--ribbon-flap-size) * -1);
   padding: var(--pad);
 
-  font-family: 'Catamaran Bold';
+  font-family: var(--subheadline-font);
+  font-weight: var(--subheadline-weight);
   font-size: var(--big-header-font);
   line-height: 1em;
   text-align: left;
@@ -67,7 +68,8 @@
 .hero.single .ribbon {
   background-color: transparent;
   background-image: none;
-  font-family: 'Catamaran Light';
+  font-family: var(--small-font);
+  font-weight: var(--small-weight);
   position: static;
   z-index: 1;
   font-size: var(--small-header-font);

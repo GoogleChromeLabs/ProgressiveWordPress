@@ -73,8 +73,9 @@ html, body {
   min-height: 100vh;
   font-family: sans-serif;
   background-color: var(--pink);
-  font-family: 'Catamaran Light', Verdana, sans-serif;
+  font-family: var(--small-font);
   font-size: var(--line-size);
+  font-weight: var(--small-weight);
   color: var(--dark-blue);
 }
 body {
@@ -100,7 +101,7 @@ p {
   margin: 0;
 }
 strong {
-  font-family: 'Catamaran Bold', Verdana, sans-serif;
+  font-family: var(--line-font);
   font-weight: 500;
 }
 button {

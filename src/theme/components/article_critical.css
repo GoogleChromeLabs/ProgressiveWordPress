@@ -106,6 +106,10 @@ article > main pre {
 article > main p {
   margin: var(--pad) 0;
 }
+article > main p:first-child {
+  font-family: var(--line-font);
+  font-weight: var(--line-weight);
+}
 article > main p:first-child,
 article > main p:last-child {
   margin: 0;
