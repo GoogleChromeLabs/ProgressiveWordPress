@@ -1,6 +1,6 @@
 {
   "name": "ProgressiveWordPress",
-  "version": "0.0.3088",
+  "version": "0.0.3137",
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
+    "babili": "^0.1.4",
     "cssnano": "^3.10.0",
     "glob": "^7.1.2",
     "mz": "^2.6.0",

@@ -40,21 +40,50 @@
       baseUrl: new URL('<?=home_url();?>').toString(),
     };
   </script>
+  <script src="<?=get_bloginfo('template_url');?>/scripts/system.js" nomodule></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
-  <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-view.js"></script>
+  <?
+    $modules = array('pwp-view.js', 'router.js', 'lazyload.js');
+    foreach($modules as $module):
+  ?>
+    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/<?=$module;?>"></script>
+  <?
+    endforeach;
+  ?>
+  <script nomodule>
+    <?=json_encode($modules);?>.reduce(
+      async (chain, module) => {
+        await chain;
+        return SystemJS.import(`<?=get_bloginfo('template_url');?>/scripts/systemjs/${module}`);
+      },
+      Promise.resolve()
+    )
+  </script>
   <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
   <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
   <template class="lazyload">
     <script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
     <script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/install-sw.js"></script>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pending-comments.js"></script>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/resource-updates.js"></script>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/pwp-lazy-image.js"></script>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/offline-articles.js"></script>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/commentform-expander.js"></script>
+      <?
+        $modules = array('install-sw.js', 'pending-comments.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js', 'commentform-expander.js');
+        foreach($modules as $module):
+      ?>
+        <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/<?=$module;?>"></script>
+      <?
+        endforeach;
+      ?>
+    <script nomodule>
+      <?=json_encode($modules);?>.reduce(
+        async (chain, module) => {
+          await chain;
+          return SystemJS.import(`<?=get_bloginfo('template_url');?>/scripts/systemjs/${module}`);
+        },
+        Promise.resolve()
+      )
+    </script>
+
   </template>
 </body>
 <?

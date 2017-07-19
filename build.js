@@ -8,6 +8,7 @@ const package = require('./package.json');
 
 Promise.all([
   copyStatic(),
+  copySystemJS(),
   minifyCss(),
   minifyJs(),
 ])
@@ -33,6 +34,13 @@ async function copyStatic() {
     .array;
 }
 
+async function copySystemJS() {
+  const file = await fs.readFile('./node_modules/systemjs/dist/system-production.js');
+  const contents = file.toString('utf-8');
+  const {code} = babel.transform(contents, babelConfig);
+  await fs.writeFile('dist/theme/scripts/system.js', code);
+}
+
 async function minifyCss() {
   filesWithPatterns([/\.css$/i])
     .map(async file => ({name: file, contents: await fs.readFile(`src/${file}`)}))
@@ -50,7 +58,7 @@ async function minifyCss() {
 }
 
 async function minifyJs() {
-  filesWithPatterns([/\.js$/i])
+  const orig = filesWithPatterns([/\.js$/i])
     .map(async file => ({name: file, contents: await fs.readFile(`src/${file}`)}))
     .map(async file => Object.assign(file, {contents: file.contents.toString('utf-8')}))
     .map(async file => {
@@ -67,6 +75,36 @@ async function minifyJs() {
       await fs.writeFile(`dist/${file.name}`, file.code);
     })
     .array;
+
+  const trans = filesWithPatterns([/\.js$/i])
+    .map(async file => ({name: file, contents: await fs.readFile(`src/${file}`)}))
+    .map(async file => Object.assign(file, {contents: file.contents.toString('utf-8')}))
+    .map(async file => {
+      for(const [key, val] of Object.entries(templateData)) {
+        file.contents = file.contents.replace(`{%${key}%}`, val);
+      }
+      return file;
+    })
+    .map(async file => {
+      const {code} = babel.transform(file.contents, {plugins: [require('babel-plugin-transform-es2015-modules-systemjs')]})
+      file.contents = code;
+      file.name = `${path.dirname(file.name)}/systemjs/${path.basename(file.name)}`;
+      return file;
+    })
+    // .map(async file => Object.assign(file, {code: babel.transform(file.contents, babelConfig).code}))
+    .map(async file => Object.assign(file, {code: file.contents, map: ''}))
+    .map(async file => {
+      const dir = path.dirname(file.name);
+      await mkdirAll(`dist/${dir}`);
+      await fs.writeFile(`dist/${file.name}`, file.code);
+    })
+    .array;
+
+    return await Promise.all([orig, trans]);
+}
+
+function flatten(arr) {
+  return Array.prototype.concat.apply([], arr);
 }
 
 var files;

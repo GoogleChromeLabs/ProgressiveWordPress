@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-import {HeaderAnimator} from './header-animator.js'
+import {TransitionAnimator} from './transition-animator.js'
 
 let btn, pending, respond, comments;
 
@@ -36,14 +36,14 @@ async function onClick() {
   btn.style.position = 'relative';
   await requestAnimationFramePromise();
   await requestAnimationFramePromise();
-  pending.style.transition = comments.style.transition = `transform ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
-  btn.style.transition = `opacity ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+  pending.style.transition = comments.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
+  btn.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
   pending.style.transform = comments.style.transform = `translateY(${-btnRect.height}px)`;
   btn.style.opacity = '0';
   await transitionEndPromise(pending);
   btn.style.display = 'none';
   pending.style.transition = comments.style.transition = pending.style.transform = comments.style.transform = '';
-  respond.style.transition = `opacity ${HeaderAnimator.TRANSITION_DURATION} ${HeaderAnimator.TRANSITION_F}`;
+  respond.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
   respond.style.opacity = '1';
   await transitionEndPromise(respond);
 }
