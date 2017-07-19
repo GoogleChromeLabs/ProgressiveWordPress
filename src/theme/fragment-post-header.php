@@ -13,6 +13,6 @@
    */
 ?>
 <header>
-  <div class="ribbon ribbon--ttb ribbon--blue"><? the_date('M d Y'); ?></div>
+  <div class="ribbon ribbon--ttb ribbon--blue"><?=get_the_date('M d');?><br><?=get_the_date('Y'); ?></div>
   <a href="<? the_permalink(); ?>" class="headline"><? the_title(); ?></a>
 </header>

@@ -32,7 +32,7 @@ The Docker setup is a typical LAMP setup for ProgressiveWordpress (LAMPWP?!). Th
 
 ```
 $ docker pull surma/wordpress # if you don’t want to build locally
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 Add `surmblog.dev` to your HOSTS file and point it at `127.0.0.1`. Add `docker_assets/certs/cert.pem` to your local key chain and trust it.

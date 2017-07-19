@@ -14,7 +14,6 @@
 :root {
   --ribbon-size-factor: 18;
   --ribbon-size: calc(var(--base-unit) * var(--ribbon-size-factor));
-  /*--ribbon-size-small: calc(var(--base-unit) * 80 / 30);*/
   --ribbon-flap-factor: 8;
   --ribbon-flap-size: calc(var(--base-unit) * var(--ribbon-flap-factor));
 }

@@ -42,7 +42,7 @@
 
 .footer .menu {
   flex-direction: row;
-  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .footer .menu li:not(:first-child):before {
