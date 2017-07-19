@@ -9,6 +9,7 @@ const package = require('./package.json');
 Promise.all([
   copyStatic(),
   copySystemJS(),
+  copyCustomElements(),
   minifyCss(),
   minifyJs(),
 ])
@@ -39,6 +40,13 @@ async function copySystemJS() {
   const contents = file.toString('utf-8');
   const {code} = babel.transform(contents, babelConfig);
   await fs.writeFile('dist/theme/scripts/system.js', code);
+}
+
+async function copyCustomElements() {
+  const file = await fs.readFile('./node_modules/@webcomponents/custom-elements/custom-elements.min.js');
+  const contents = file.toString('utf-8');
+  const {code} = babel.transform(contents, babelConfig);
+  await fs.writeFile('dist/theme/scripts/custom-elements.js', code);
 }
 
 async function minifyCss() {

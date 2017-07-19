@@ -21,6 +21,10 @@ if(navigator.onLine)
 else
   goOffline();
 
+function hasCacheAPI() {
+  return 'caches' in window;
+}
+
 function goOnline() {
   document.body.classList.remove('offline');
   document.body.classList.add('online');
@@ -34,6 +38,7 @@ function goOffline() {
 }
 
 function updateLinks() {
+  if(!hasCacheAPI()) return;
   Array.from(document.querySelectorAll('article.preview'))
     .forEach(article => {
       const link = new URL(article.querySelector('a.headline').href);
@@ -80,3 +85,6 @@ async function downloadArticle(article) {
   article.classList.remove('downloading');
   article.classList.add('cached');
 }
+
+if(!hasCacheAPI())
+  document.body.classList.add('nocache');

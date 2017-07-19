@@ -16,6 +16,10 @@
     return typeof window !== 'undefined' && typeof document !== 'undefined';
   }
 
+  function hasServiceWorker() {
+    return 'serviceWorker' in navigator;
+  }
+
   class Observable {
     constructor() {
       this._subscribers = new Set();
@@ -41,7 +45,8 @@
       this._observables = new Map();
       const handler = this._handler.bind(this);
       if(isBrowser())
-        navigator.serviceWorker.addEventListener('message', handler)
+        if(hasServiceWorker())
+          navigator.serviceWorker.addEventListener('message', handler)
       else
         self.addEventListener('message', handler);
     }
@@ -52,8 +57,9 @@
     }
 
     async _postMessageServiceWorker(...args) {
+      if(!hasServiceWorker()) return;
       const registration = await navigator.serviceWorker.getRegistration();
-      if(!registration.active) return;
+      if(!registration || !registration.active) return;
       return registration.active.postMessage(...args)
     }
 

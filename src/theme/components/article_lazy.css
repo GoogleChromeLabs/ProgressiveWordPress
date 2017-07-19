@@ -19,6 +19,10 @@ article > footer > .download > pwp-spinner {
   width: 1em;
   height: 1em;
 }
+.nocache article > footer > .download {
+  display: none;
+}
+
 article > footer > .download:before {
   content: '';
   width: 1em;

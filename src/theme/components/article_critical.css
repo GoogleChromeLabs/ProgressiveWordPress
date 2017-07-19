@@ -39,7 +39,8 @@ article > header {
 
 article > header > .headline {
   flex: 1 1 0;
-  border-bottom: var(--divider-width) solid transparent;
+  border: 0 solid transparent;
+  border-bottom: var(--divider-width) solid transparent !important;
   color: var(--pink);
   font-family: var(--headline-font);
   font-size: var(--headline-size);
@@ -69,6 +70,7 @@ article > main {
 }
 
 article > main h1 {
+  border: 0;
   border-bottom: var(--divider-width) solid transparent;
   font-family: var(--headline-font);
   font-size: var(--headline-size);

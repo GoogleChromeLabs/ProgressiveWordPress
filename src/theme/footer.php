@@ -41,6 +41,7 @@
     };
   </script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/system.js" nomodule></script>
+  <script src="<?=get_bloginfo('template_url');?>/scripts/custom-elements.js" defer></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
