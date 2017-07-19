@@ -5,6 +5,8 @@ services:
     image: "mysql:8.0"
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
   pwp:
     build: .
     image: "surma/progressivewordpress"
@@ -17,4 +19,4 @@ services:
     volumes:
       - ./dist/theme:/var/www/html/wp-content/themes/surmblog
       - ./dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin
-      - ./uploads:/var/www/html/wp-content/uploadse
+      - ./tmp/uploads:/var/www/html/wp-content/uploadse
