@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-let notificationHeight;
+import {TransitionAnimator} from './transition-animator.js';
 class PwpNotification extends HTMLElement {
   constructor() {
     super();
@@ -25,8 +25,17 @@ class PwpNotification extends HTMLElement {
     this.style.display = 'none';
   }
 
-  show() {
+  async show() {
     this.style.display = '';
+    this.style.opacity = '0';
+    await requestAnimationFramePromise();
+    await requestAnimationFramePromise();
+    this.style.transition = `opacity ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
+    this.style.opacity = '1';
   }
 }
 customElements.define('pwp-notification', PwpNotification);
+
+function requestAnimationFramePromise() {
+  return new Promise(resolve => requestAnimationFrame(resolve));
+}

@@ -24,6 +24,15 @@
 
 pwp-notification {
   box-shadow: 0px -2px 9px 5px rgba(0,0,0,0.24);
+  background-color: var(--light-green);
+  color: var(--light-pink);
+  font-family: var(--line-font);
+  font-size: var(--line-size);
+  font-weight: var(--line-weight);
+  padding: var(--pad);
+}
+pwp-notification a {
+  color: var(--pink);
 }
 
 

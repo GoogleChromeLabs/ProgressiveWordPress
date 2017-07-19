@@ -24,9 +24,8 @@ _pubsubhub.subscribe('resource_update', msg => {
   const rsrc = new URL(msg.name);
   const isCoreItem = coreItemDetectors.some(d => d.test(rsrc.pathname));
   const isCurrentItem = rsrc.pathname === new URL(location.href).pathname;
-  if(isCoreItem || isCurrentItem) {
+  if(isCoreItem || isCurrentItem)
     promptForReload();
-  }
 });
 
 function promptForReload() {
