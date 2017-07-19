@@ -42,6 +42,7 @@
 
 .commentsection > h2 {
   border-bottom: var(--divider-width) solid transparent;
+  border-top: 0;
   font-family: var(--headline-font);
   font-size: var(--headline-size);
   font-weight: var(--headline-weight);
