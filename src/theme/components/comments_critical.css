@@ -52,10 +52,12 @@
   padding-left: var(--pad);
 }
 
-.commentsection ul {
-  list-style: none;
+.comments {
   padding: 0;
   margin-top: var(--pad);
+}
+.commentsection ul {
+  list-style: none;
 }
 .commentsection ul li {
   margin: 0;

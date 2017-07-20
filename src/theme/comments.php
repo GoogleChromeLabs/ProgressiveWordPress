@@ -24,5 +24,5 @@
     <? endwhile; ?>
   </ul>
 <? else: ?>
-  No comments.
+  <div class="comments">No comments.</div>
 <? endif; ?>

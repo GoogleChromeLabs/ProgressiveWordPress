@@ -46,6 +46,7 @@ article > header > .headline {
   font-size: var(--headline-size);
   font-weight: var(--headline-weight);
   transform: translateY(calc(-1 * var(--ribbon-flap-size)));
+  margin-top: calc(var(--ribbon-flap-size));
   padding-left: calc(var(--pad));
   line-height: 1.5em;
 }
@@ -103,6 +104,8 @@ article > main pre {
   color: var(--light-pink);
   margin: 0 calc(-1 * var(--pad));
   padding: var(--pad);
+  overflow-x: scroll;
+  width: 100%;
 }
 
 article > main p {

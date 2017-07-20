@@ -18,4 +18,5 @@
 
 .commentsection textarea {
   border: 2px solid var(--pink);
+  width: 100%;
 }
