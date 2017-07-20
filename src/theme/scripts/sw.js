@@ -117,7 +117,7 @@ function isPluginRequest(event) {
 
 function isWpRequest(event) {
   const parsedUrl = new URL(event.request.url);
-  return /^\/wp-/i.test(parsedUrl.pathname) && !parsedUrl.pathname.startsWith('/wp-content');
+  return parsedUrl.pathname.startsWith('/wp-') && !parsedUrl.pathname.startsWith('/wp-content');
 }
 
 function isCustomizerRequest(event) {
@@ -135,7 +135,7 @@ async function staleWhileRevalidate(request, event) {
 
   // Update cache
   event.waitUntil(async function () {
-    const cacheName = await extractCacheName(event);
+    const cacheName = await extractCacheName(request.url, event);
     const cache = await caches.open(cacheName);
     const networkResponse = await networkResponsePromise;
     const cacheResponse = await cacheResponsePromise;
@@ -156,8 +156,7 @@ async function staleWhileRevalidate(request, event) {
   throw new Error(`Neither network nor cache had a response for ${request.url}`);
 }
 
-async function extractCacheName(event) {
-  let url = event.request.url;
+async function extractCacheName(url, event) {
   if(url.startsWith(_wordpressConfig.templateUrl))
     return 'pwp';
 
