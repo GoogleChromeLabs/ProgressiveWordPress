@@ -96,9 +96,11 @@ class Router {
     const newView = this._loadFragment(link);
     const continueAnimation = (await Promise.all([viewAnimation, headerAnimation]))[1];
     const globalSpinner = await this._globalSpinner;
-    if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout') {
-      globalSpinner.ready.then(_ => globalSpinner.show());
-    }
+    if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout')
+      globalSpinner.ready.then(_ => {
+        console.log('showing spinner');
+        globalSpinner.show()
+      });
     await newView.ready;
     globalSpinner.ready.then(_ => globalSpinner.hide());
     oldView.parentNode.replaceChild(newView, oldView);

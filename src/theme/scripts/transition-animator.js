@@ -57,7 +57,6 @@ class TransitionAnimator {
       text.style.opacity = 0;
       await transitionEndPromise(text);
       text.style.transition = '';
-      text.style.opacity = '';
     })();
 
     await Promise.all([a1, a2]);
@@ -76,6 +75,7 @@ class TransitionAnimator {
 
       // Header down
       const a2 = (async _ => {
+        text.style.opacity = '';
         ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
@@ -147,8 +147,6 @@ class TransitionAnimator {
       await requestAnimationFramePromise();
     }
     return async _ => {
-      if(!headerInViewAtFadeIn)
-        document.scrollingElement.scrollTop = 0;
       // Footer up
       (async _ => {
         this._footer.style.transform = 'translateY(0)';
@@ -161,6 +159,7 @@ class TransitionAnimator {
       ribbon.style.transition = '';
       text.style.opacity = 0;
       if(!headerInViewAtFadeIn) {
+        document.scrollingElement.scrollTop = 0;
         this._header.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F} 0.2s`;
         this._header.style.transform = `translateY(0)`;
         await transitionEndPromise(this._header);

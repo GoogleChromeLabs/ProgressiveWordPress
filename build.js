@@ -75,8 +75,8 @@ async function minifyJs() {
       }
       return file;
     })
-    // .map(async file => Object.assign(file, {code: babel.transform(file.contents, babelConfig).code}))
-    .map(async file => Object.assign(file, {code: file.contents, map: ''}))
+    .map(async file => Object.assign(file, {code: babel.transform(file.contents, babelConfig).code}))
+    // .map(async file => Object.assign(file, {code: file.contents, map: ''}))
     .map(async file => {
       const dir = path.dirname(file.name);
       await mkdirAll(`dist/${dir}`);
