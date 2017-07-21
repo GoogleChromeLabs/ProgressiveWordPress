@@ -35,9 +35,7 @@ $ docker pull surma/wordpress # if you don’t want to build locally
 $ docker-compose up -d
 ```
 
-Add `surmblog.dev` to your HOSTS file and point it at `127.0.0.1`. Add `docker_assets/certs/cert.pem` to your local key chain and trust it.
-
-WordPress install wizard is now available at `https://surmblog.dev:8080`. Once installed, make sure to [enable the theme](https://surmblog.dev:8080/wp-admin/themes.php) and [set the permalink style](https://surmblog.dev:8080/wp-admin/options-permalink.php) to “Post name”.
+WordPress install wizard is now available at `https://localhost:8080`. Once installed, make sure to [enable the theme](https://localhost:8080/wp-admin/themes.php) and [set the permalink style](https://localhost:8080/wp-admin/options-permalink.php) to “Post name”.
 
 ---
 Apache 2.0

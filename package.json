@@ -1,6 +1,6 @@
 {
   "name": "ProgressiveWordPress",
-  "version": "0.0.3179",
+  "version": "0.0.3195",
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {

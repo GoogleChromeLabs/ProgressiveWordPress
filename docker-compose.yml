@@ -8,10 +8,13 @@ services:
     volumes:
       - ./tmp/mysql:/var/lib/mysql
   pwp:
-    build: .
+    build:
+      context: .
+      args:
+        ENABLE_SSL:
     image: "surma/progressivewordpress"
     ports:
-      - 8080:80
+      - 8080:8080
     environment:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
     links:

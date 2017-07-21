@@ -19,10 +19,14 @@ RUN apt-get update
 RUN apt-get install -o Dpkg::Options::="--force-confdef" -y -t testing apache2
 RUN ln -sf /etc/apache2/mods-available/http2.* /etc/apache2/mods-enabled/
 COPY docker_assets/http2.conf /etc/apache2/conf-available/
+RUN sed -i 's!Listen 80!Listen 8080!' /etc/apache2/ports.conf
 RUN ln -sf /etc/apache2/conf-available/http2.* /etc/apache2/conf-enabled/
 COPY docker_assets/certs /etc/apache2/certs
 COPY docker_assets/000-default.conf /etc/apache2/sites-available/
 RUN mkdir -p /var/www/html/wp-content/themes/surmblog /var/www/html/wp-content/plugins/pwp-lazy-image
+ARG ENABLE_SSL
+ENV ENABLE_SSL "$ENABLE_SSL"
+RUN if [ -n "$ENABLE_SSL" ]; then sed -i 's!SSLEngine Off!SSLEngine On!' /etc/apache2/sites-available/000-default.conf; fi
 COPY dist/theme /var/www/html/wp-content/themes/surmblog
 COPY dist/pwp-lazy-image-plugin /var/www/html/wp-content/plugins/pwp-lazy-image/
 VOLUME /var/www/html/wp-content/themes/surmblog
