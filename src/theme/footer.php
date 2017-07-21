@@ -32,7 +32,7 @@
         <img src="<?=get_bloginfo('template_url');?>/images/rss.svg">
       </a>
     </div>
-    <? wp_nav_menu(array('theme_location' => 'footer-nav')); ?>
+    <? wp_nav_menu(array('theme_location' => 'footer-nav', 'fallback_cb' => false)); ?>
   </footer>
   <script>
     window._wordpressConfig = {
