@@ -102,7 +102,6 @@ class Router {
     await newView.ready;
     globalSpinner.ready.then(_ => globalSpinner.hide());
     oldView.parentNode.replaceChild(newView, oldView);
-    document.scrollingElement.scrollTop = 0;
     await Promise.all([this._animateIn(newView), continueAnimation()]);
     _pubsubhub.dispatch('navigation', {address: link});
   }

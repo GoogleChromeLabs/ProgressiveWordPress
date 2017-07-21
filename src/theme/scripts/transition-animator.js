@@ -147,6 +147,8 @@ class TransitionAnimator {
       await requestAnimationFramePromise();
     }
     return async _ => {
+      if(!headerInViewAtFadeIn)
+        document.scrollingElement.scrollTop = 0;
       // Footer up
       (async _ => {
         this._footer.style.transform = 'translateY(0)';
