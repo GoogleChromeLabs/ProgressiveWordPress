@@ -8,13 +8,8 @@ services:
     volumes:
       - ./tmp/mysql:/var/lib/mysql
   pwp:
-    build:
-      context: .
-      args:
-        ENABLE_SSL:
+    build: .
     image: "surma/progressivewordpress"
-    ports:
-      - 8080:8080
     environment:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
     links:
@@ -23,3 +18,14 @@ services:
       - ./dist/theme:/var/www/html/wp-content/themes/surmblog
       - ./dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin
       - ./tmp/uploads:/var/www/html/wp-content/uploads
+  caddy:
+    image: "abiosoft/caddy"
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile
+      - ./tmp/caddy:/root/.caddy
+    ports:
+      - localhost:8080:8080
+      - 80:80
+      - 443:443
+    links:
+      - pwp
