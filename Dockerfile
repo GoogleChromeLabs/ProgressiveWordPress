@@ -8,7 +8,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM wordpress:4.7-php7.0-apache
+FROM wordpress:4.8-php7.0-apache
 
 # Gotta fix HTTPS >.>
 RUN echo "<? if (!empty(\$_SERVER['HTTP_X_FORWARDED_FOR'])) { \$_SERVER['HTTPS'] = 'on'; } ?>" >> /tmp/file && \
