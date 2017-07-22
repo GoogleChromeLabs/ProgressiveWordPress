@@ -1,0 +1,6 @@
+pwp.dassur.ma {
+  proxy / pwp:80 {
+    header_upstream X-Forwarded-For {remote}
+    header_upstream Host pwp.dassur.ma
+  }
+}
