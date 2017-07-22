@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   mysql:
@@ -21,11 +21,9 @@ services:
   caddy:
     build: ./caddy
     volumes:
-      - ./caddy/Caddyfile:/etc/Caddyfile
+      - ./caddy/Caddyfile-dev:/etc/Caddyfile
       - ./tmp/caddy:/root/.caddy
     ports:
-      - localhost:8080:8080
+      - 127.0.0.1:8080:8080
       #- 80:80
       #- 443:443
-    links:
-      - pwp
