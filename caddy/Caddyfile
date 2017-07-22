@@ -1,0 +1,7 @@
+surmblog.dev:8080 {
+  proxy / pwp:80 {
+    header_upstream X-Forwarded-For {remote}
+    header_upstream Host surmblog.dev:8080
+  }
+  tls /root/certs/cert.pem /root/certs/key.pem
+}

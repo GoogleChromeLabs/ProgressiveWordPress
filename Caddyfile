@@ -1,3 +1,0 @@
-:8080   # Your site's address
-
-proxy / pwp:8080
