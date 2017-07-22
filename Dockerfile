@@ -15,6 +15,7 @@ RUN echo "<? if (!empty(\$_SERVER['HTTP_X_FORWARDED_FOR'])) { \$_SERVER['HTTPS']
     cat /usr/src/wordpress/wp-config-sample.php >> /tmp/file && \
     cp /tmp/file /usr/src/wordpress/wp-config-sample.php
 COPY dist/theme /var/www/html/wp-content/themes/surmblog
+RUN mkdir /var/www/html/wp-content/themes/surmblog_dev
 COPY dist/pwp-lazy-image-plugin /var/www/html/wp-content/plugins/pwp-lazy-image
-VOLUME /var/www/html/wp-content/themes/surmblog
+VOLUME /var/www/html/wp-content/themes/surmblog_dev
 VOLUME /var/www/html/wp-content/plugins/pwp-lazy-image-plugin

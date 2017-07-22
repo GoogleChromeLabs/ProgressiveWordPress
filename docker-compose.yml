@@ -13,7 +13,7 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./dist/theme:/var/www/html/wp-content/themes/surmblog
+      - ./dist/theme:/var/www/html/wp-content/themes/surmblog_dev
       - ./dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin
       - ./tmp/uploads:/var/www/html/wp-content/uploads
   caddy:
