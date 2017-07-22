@@ -11,6 +11,8 @@
  * limitations under the License.
  */
 
+performance.mark = performance.mark || (_ => {});
+
 class Router {
   constructor() {
     this._bindHandlers();
@@ -98,7 +100,6 @@ class Router {
     const globalSpinner = await this._globalSpinner;
     if(await Promise.race([newView.ready, timeoutPromise(500)]) === 'timeout')
       globalSpinner.ready.then(_ => {
-        console.log('showing spinner');
         globalSpinner.show()
       });
     await newView.ready;
