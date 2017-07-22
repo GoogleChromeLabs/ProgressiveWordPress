@@ -13,7 +13,10 @@
    */
 ?>
 <article class="preview">
-  <? include('fragment-post-header.php'); ?>
+  <header>
+    <div class="ribbon ribbon--ttb ribbon--blue"><?=get_the_date('M d');?><br><?=get_the_date('Y'); ?></div>
+    <a href="<? the_permalink(); ?>" class="headline"><? the_title(); ?></a>
+  </header>
   <main class="excerpt"><? the_excerpt(); ?></main>
   <? include('fragment-post-footer.php'); ?>
 </article>

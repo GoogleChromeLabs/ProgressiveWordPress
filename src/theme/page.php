@@ -12,7 +12,23 @@
    * limitations under the License.
    */
 ?>
-<article class="full">
-  <? include('fragment-post-header.php'); ?>
-  <main><? the_content(); ?></main>
-</article>
+<?
+  etag_start();
+  if(!is_fragment()) get_template_part('header');
+?>
+<? if(have_posts()): ?>
+  <? while(have_posts()): the_post() ?>
+    <article class="full">
+      <header>
+        <a href="<? the_permalink(); ?>" class="headline"><? the_title(); ?></a>
+      </header>
+      <main><? the_content(); ?></main>
+    </article>
+  <? endwhile; ?>
+<? else: ?>
+  Nothing here :(
+<? endif; ?>
+<?
+  if(!is_fragment()) get_template_part('footer');
+  etag_end();
+?>

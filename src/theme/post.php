@@ -18,7 +18,13 @@
 ?>
 <? if(have_posts()): ?>
   <? while(have_posts()): the_post() ?>
-    <? include('fragment-post-full.php'); ?>
+    <article class="full">
+      <header>
+        <div class="ribbon ribbon--ttb ribbon--blue"><?=get_the_date('M d');?><br><?=get_the_date('Y'); ?></div>
+        <a href="<? the_permalink(); ?>" class="headline"><? the_title(); ?></a>
+      </header>
+      <main><? the_content(); ?></main>
+    </article>
     <aside class="commentsection">
       <h2>Comments</h2>
       <button class="btn commentformexpand">Leave a comment</button>
