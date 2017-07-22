@@ -14,8 +14,7 @@ FROM wordpress:4.7-php7.0-apache
 RUN echo "<? if (!empty(\$_SERVER['HTTP_X_FORWARDED_FOR'])) { \$_SERVER['HTTPS'] = 'on'; } ?>" >> /tmp/file && \
     cat /usr/src/wordpress/wp-config-sample.php >> /tmp/file && \
     cp /tmp/file /usr/src/wordpress/wp-config-sample.php
-RUN mkdir -p /var/www/html/wp-content/themes/surmblog /var/www/html/wp-content/plugins/pwp-lazy-image
 COPY dist/theme /var/www/html/wp-content/themes/surmblog
-COPY dist/pwp-lazy-image-plugin /var/www/html/wp-content/plugins/pwp-lazy-image/
+COPY dist/pwp-lazy-image-plugin /var/www/html/wp-content/plugins/pwp-lazy-image
 VOLUME /var/www/html/wp-content/themes/surmblog
 VOLUME /var/www/html/wp-content/plugins/pwp-lazy-image-plugin

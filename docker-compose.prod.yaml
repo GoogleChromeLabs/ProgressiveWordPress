@@ -13,13 +13,12 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./dist/theme:/var/www/html/wp-content/themes/surmblog
-      - ./dist/pwp-lazy-image-plugin:/var/www/html/wp-content/plugins/pwp-lazy-image-plugin
       - ./tmp/uploads:/var/www/html/wp-content/uploads
   caddy:
     build: ./caddy
     volumes:
-      - ./caddy/Caddyfile-dev:/etc/Caddyfile
+      - ./caddy/Caddyfile-prod:/etc/Caddyfile
       - ./tmp/caddy:/root/.caddy
     ports:
-      - 127.0.0.1:8080:8080
+      - 80:80
+      - 443:443
