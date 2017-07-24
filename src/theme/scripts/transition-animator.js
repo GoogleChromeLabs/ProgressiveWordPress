@@ -44,12 +44,12 @@ class TransitionAnimator {
     this._header.classList.add('single');
 
     // Footer down
-    const a1 = (async _ => {
+    const a1 = (async function() {
       this._footer.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
       this._footer.style.transform = 'translateY(100%)';
-    })();
+    }.bind(this))();
     // Text out
-    const a2 = (async _ => {
+    const a2 = (async function() {
       text.style.opacity = 1;
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
@@ -57,24 +57,24 @@ class TransitionAnimator {
       text.style.opacity = 0;
       await transitionEndPromise(text);
       text.style.transition = '';
-    })();
+    }.bind(this))();
 
     await Promise.all([a1, a2]);
 
-    return async _ => {
+    return async function() {
       this._header.classList.remove('single');
       // Ribbon right
-      const a1 = (async _ => {
+      const a1 = (async function() {
         this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
         this._header.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
         this._header.style.transform =  '';
         await transitionEndPromise(this._header);
-      })();
+      }.bind(this))();
 
       // Header down
-      const a2 = (async _ => {
+      const a2 = (async function() {
         text.style.opacity = '';
         ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
         await requestAnimationFramePromise();
@@ -82,21 +82,21 @@ class TransitionAnimator {
         ribbon.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F} 0.1s`;
         ribbon.style.transform =  '';
         await transitionEndPromise(ribbon);
-      })();
+      }.bind(this))();
 
       // Footer up
-      const a3 = (async _ => {
+      const a3 = (async function() {
         this._footer.style.transform = 'translateY(0)';
         await transitionEndPromise(this._footer);
         this._footer.style.transition = this._footer.style.transform = '';
-      })();
+      }.bind(this))();
 
       await Promise.all([a1, a2, a3])
       this._header.style.transition = '';
       this._header.style.transform = '';
       ribbon.style.transition = '';
       ribbon.style.transform = '';
-    };
+    }.bind(this);
   }
 
   async toSingle(switchContent) {
@@ -113,29 +113,29 @@ class TransitionAnimator {
     const headerInViewAtFadeIn = singleRect.bottom > 0;
 
     // Footer down
-    (async _ => {
+    (async function() {
       this._footer.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
       this._footer.style.transform = 'translateY(100%)';
-    })();
+    }.bind(this))();
 
     if(headerInViewAtStart) {
       // Ribbon left
-      const a1 = (async _ => {
+      const a1 = (async function() {
         ribbon.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F}`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
         ribbon.style.transform = `translateX(-${ribbonRect.right+32}px)`;
         await transitionEndPromise(ribbon);
-      })();
+      }.bind(this))();
 
       // Header up
-      const a2 = (async _ => {
+      const a2 = (async function() {
         this._header.style.transition = `transform ${TransitionAnimator.TRANSITION_DURATION} ${TransitionAnimator.TRANSITION_F} 0.2s`;
         await requestAnimationFramePromise();
         await requestAnimationFramePromise();
         this._header.style.transform = `translateY(calc(-100% + ${singleRect.height}px))`;
         await transitionEndPromise(this._header);
-      })();
+      }.bind(this))();
 
       await Promise.all([a1, a2]);
     }
@@ -146,13 +146,13 @@ class TransitionAnimator {
       await requestAnimationFramePromise();
       await requestAnimationFramePromise();
     }
-    return async _ => {
+    return async function() {
       // Footer up
-      (async _ => {
+      (async function() {
         this._footer.style.transform = 'translateY(0)';
         await transitionEndPromise(this._footer);
         this._footer.style.transition = this._footer.style.transform = '';
-      })();
+      }.bind(this))();
 
       this._header.classList.add('single');
       ribbon.style.transform = '';
@@ -174,7 +174,7 @@ class TransitionAnimator {
       await transitionEndPromise(text);
       text.style.transition = '';
       text.style.opacity = '';
-    }
+    }.bind(this);
   }
 }
 

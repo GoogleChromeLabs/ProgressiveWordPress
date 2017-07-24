@@ -47,7 +47,8 @@ class Router {
     }
 
     event.preventDefault();
-    this.navigate(link.toString());
+    this.navigate(link.toString())
+      .catch(err => console.error(err.stack));
   }
 
   static get TRANSITION_DURATION() {

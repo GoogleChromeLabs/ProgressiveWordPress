@@ -40,6 +40,9 @@
       baseUrl: new URL('<?=home_url();?>').toString(),
     };
   </script>
+  <script>
+    <? include(dirname(__FILE__).'/scripts/nomodule-safari.js'); ?>
+  </script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/system.js" nomodule></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/custom-elements.js" defer></script>
   <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
