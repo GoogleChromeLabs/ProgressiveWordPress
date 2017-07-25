@@ -10,26 +10,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@font-face {
-  font-family: 'Catamaran Light';
-  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Light.woff') format('woff');
-  font-display: optional;
-}
-@font-face {
-  font-family: 'Catamaran Medium';
-  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Medium.woff') format('woff');
-  font-display: optional;
-}
-@font-face {
-  font-family: 'Catamaran Bold';
-  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Bold.woff') format('woff');
-  font-display: optional;
-}
-@font-face {
-  font-family: 'Catamaran Black';
-  src: url('<?=get_bloginfo("template_url");?>/fonts/Catamaran-Black.woff') format('woff');
-  font-display: optional;
-}
 :root {
   --base-unit: 8px;
   --light-pink: #FFF8F7;

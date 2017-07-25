@@ -34,6 +34,7 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-view.js`,
       `${_wordpressConfig.templateUrl}/scripts/pwp-spinner.js`,
+      `${_wordpressConfig.templateUrl}/components/fonts.css`,
       `${_wordpressConfig.templateUrl}/fonts/Catamaran-Black.woff`,
       `${_wordpressConfig.templateUrl}/fonts/Catamaran-Bold.woff`,
       `${_wordpressConfig.templateUrl}/fonts/Catamaran-Medium.woff`,
