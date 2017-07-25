@@ -15,6 +15,7 @@ importScripts(`${_wordpressConfig.templateUrl}/scripts/transformstream.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/idb.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/pubsubhub.js`);
 importScripts(`${_wordpressConfig.templateUrl}/scripts/bg-sync-manager.js`);
+importScripts(`${_wordpressConfig.templateUrl}/scripts/analytics-sw.js`);
 
 const VERSION = '{%VERSION%}';
 
@@ -56,6 +57,8 @@ self.onactivate = event => {
 }
 
 self.onfetch = event => {
+  if(isAnalyticsRequest(event))
+    return analytics(event);
   if(isCommentRequest(event)) return postComment(event);
   if(isCustomizerRequest(event) || isWpRequest(event))
     return; // A return passes handling to the network
@@ -95,6 +98,7 @@ self.onsync = event => {
   switch(event.tag) {
     case 'test-tag-from-devtools':
     case 'comment-sync':
+    case 'ga-sync':
       _bgSyncManager.process(event);
     break;
     default:

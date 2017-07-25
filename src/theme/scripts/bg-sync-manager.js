@@ -12,14 +12,20 @@
  */
 
 (function () {
+  const TAG_TO_STORE = {
+    'comment-sync': 'requests',
+    'ga-sync': 'ga-requests',
+  };
+
   async function serializeRequest(request) {
-    const body = await request.arrayBuffer();
+    const body = (request.method === 'POST') ? await request.arrayBuffer() : null;
     return {
       url: request.url,
       headers: Array.from(request.headers),
       method: request.method,
       credentials: request.credentials,
       referrer: request.referrer,
+      mode: request.mode,
       body,
     };
   }
@@ -30,10 +36,12 @@
 
   class BgSyncManager {
     constructor() {
-      this._dbPromise = idb.open('bgsyncs', 1, upgradeDB => {
+      this._dbPromise = idb.open('bgsyncs', 2, upgradeDB => {
         switch (upgradeDB.oldVersion) {
           case 0:
             upgradeDB.createObjectStore('requests', {keyPath: 'id'});
+          case 1:
+            upgradeDB.createObjectStore('ga-requests', {keyPath: 'id'});
         }
       });
     }
@@ -56,22 +64,22 @@
       return registration.sync;
     }
 
-    async trigger() {
-      return (await this.syncManager()).register('comment-sync');
+    async trigger(tagName = 'comment-sync') {
+      return (await this.syncManager()).register(tagName);
     }
 
-    async isSyncing() {
+    async isSyncing(tagName = 'comment-sync') {
       const manager = await this.syncManager();
       const tags = await manager.getTags();
-      return tags.includes('comment-sync');
+      return tags.includes(tagName);
     }
 
-    async enqueue(request) {
+    async enqueue(request, {dbName = 'requests'} = {}) {
       const db = await this._dbPromise;
       const obj = await serializeRequest(request);
       await db
-        .transaction('requests', 'readwrite')
-        .objectStore('requests')
+        .transaction(dbName, 'readwrite')
+        .objectStore(dbName)
         .put(Object.assign(
           obj,
           {id: this.generateUID()}
@@ -80,46 +88,49 @@
       return;
     }
 
-    async getAll() {
+    async getAll({dbName = 'requests'} = {}) {
       const db = await this._dbPromise;
       const objs = await db
-        .transaction('requests')
-        .objectStore('requests')
+        .transaction(dbName)
+        .objectStore(dbName)
         .getAll();
       return Promise.all(objs.map(async obj => ({request: await deserializeRequest(obj), id: obj.id})));
     }
 
-    async delete(id) {
+    async delete(id, {dbName = 'requests'} = {}) {
       const db = await this._dbPromise;
       await db
-        .transaction('requests', 'readwrite')
-        .objectStore('requests')
+        .transaction(dbName, 'readwrite')
+        .objectStore(dbName)
         .delete(id)
         .complete;
       return;
     }
 
-    async numPending() {
+    async numPending({dbName = 'requests'} = {}) {
       const db = await this._dbPromise;
       return db
-        .transaction('requests')
-        .objectStore('requests')
+        .transaction(dbName)
+        .objectStore(dbName)
         .count();
     }
 
     process(event) {
       event.waitUntil((async _ => {
-        const pending = await this.getAll();
+        if(!(event.tag in TAG_TO_STORE)) return;
+        const dbName = TAG_TO_STORE[event.tag];
+        const pending = await this.getAll({dbName});
         await Promise.all(
           pending.map(async request => {
             try {
               await fetch(request.request);
-              await _bgSyncManager.delete(request.id);
+              await _bgSyncManager.delete(request.id, {dbName});
             } catch(e) {}
           })
         );
-        const numPending = await _bgSyncManager.numPending();
-        _pubsubhub.dispatch('comment_update');
+        const numPending = await _bgSyncManager.numPending({dbName});
+        if(event.tag === 'comment-sync')
+          _pubsubhub.dispatch('comment_update');
         if(numPending > 0) return Promise.reject();
         return;
       })());
