@@ -71,7 +71,7 @@
     <script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
     <script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
       <?
-        $modules = array('install-sw.js', 'pending-comments.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js', 'commentform-expander.js');
+        $modules = array('analytics.js', 'install-sw.js', 'pending-comments.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js', 'commentform-expander.js');
         foreach($modules as $module):
       ?>
         <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/<?=$module;?>"></script>

@@ -11,7 +11,7 @@
 FROM wordpress:4.8-php7.0-apache
 
 # Gotta fix HTTPS >.>
-RUN echo "<? if (!empty(\$_SERVER['HTTP_X_FORWARDED_FOR'])) { \$_SERVER['HTTPS'] = 'on'; } ?>" >> /tmp/file && \
+RUN echo "<? if (\$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') { \$_SERVER['HTTPS'] = 'on'; } ?>" >> /tmp/file && \
     cat /usr/src/wordpress/wp-config-sample.php >> /tmp/file && \
     cp /tmp/file /usr/src/wordpress/wp-config-sample.php
 COPY dist/theme /var/www/html/wp-content/themes/surmblog

@@ -27,6 +27,7 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/footer.php?fragment=true`,
       `${_wordpressConfig.templateUrl}/lazy.css`,
       `${_wordpressConfig.templateUrl}/scripts/import-polyfill.js`,
+      `${_wordpressConfig.templateUrl}/scripts/analytics.js`,
       `${_wordpressConfig.templateUrl}/scripts/ric-polyfill.js`,
       `${_wordpressConfig.templateUrl}/scripts/pubsubhub.js`,
       `${_wordpressConfig.templateUrl}/scripts/router.js`,
@@ -38,6 +39,13 @@ self.oninstall = event => {
       `${_wordpressConfig.templateUrl}/fonts/Catamaran-Light.woff`,
     ]
       .map(url => new Request(url, {credentials: "include"})));
+
+    await Promise.all([
+      'https://www.google-analytics.com/analytics.js',
+    ]
+      .map(url => new Request(url, {mode: 'no-cors'}))
+      .map(async req => await cache.put(req, await fetch(req)))
+    );
     // TODO Need to broadcast changes here
     return self.skipWaiting();
   }());
