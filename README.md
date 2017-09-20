@@ -31,7 +31,7 @@ $ npm run watch
 The Docker setup is a network consisting of Caddy, Apache2/PHP7 and a MySQL container. The image for the Apache2/PHP7 container is based on the [official Wordpress Docker image](https://hub.docker.com/_/wordpress/). It is also published to the [Docker Hub](https://hub.docker.com/r/surma/progressivewordpress/) if you don’t want to build locally. WordPress also needs a MySQL server for which the [official MySQL Docker image](https://hub.docker.com/_/mysql/) is used. [Caddy](https://hub.docker.com/r/abiosoft/caddy/) is added to the mix for easy local HTTP/2 development.
 
 ```
-$ docker pull surma/wordpress # if you don’t want to build locally
+$ docker pull surma/progressivewordpress # if you don’t want to build locally
 $ docker-compose up -d
 ```
 
