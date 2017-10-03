@@ -41,7 +41,7 @@ The WordPress install wizard is now available at `http://localhost:8080`. If you
 * trust the certficiate in [caddy/certs](https://github.com/GoogleChromeLabs/ProgressiveWordPress/tree/master/caddy/certs)
 * navigate to `https://surmblog.dev:8443` instead
 
-Once installed, make sure to [enable the theme](https://localhost:8080/wp-admin/themes.php) and [set the permalink style](https://localhost:8080/wp-admin/options-permalink.php) to “Post name”.
+Once installed, make sure to [enable the theme “surmblog”](http://localhost:8080/wp-admin/themes.php) and [set the permalink style](http://localhost:8080/wp-admin/options-permalink.php) to “Post name”.
 
 ---
 Apache 2.0
