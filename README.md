@@ -35,7 +35,13 @@ $ docker pull surma/progressivewordpress # if you don’t want to build locally
 $ docker-compose up -d
 ```
 
-WordPress install wizard is now available at `https://localhost:8080`. Once installed, make sure to [enable the theme](https://localhost:8080/wp-admin/themes.php) and [set the permalink style](https://localhost:8080/wp-admin/options-permalink.php) to “Post name”.
+The WordPress install wizard is now available at `http://localhost:8080`. If you want to use HTTP/2 during development, you have to:
+
+* point `surmblog.dev` to `127.0.0.1` using `/etc/hosts`
+* trust the certficiate in [caddy/certs](https://github.com/GoogleChromeLabs/ProgressiveWordPress/tree/master/caddy/certs)
+* navigate to `https://surmblog.dev:8443` instead
+
+Once installed, make sure to [enable the theme](https://localhost:8080/wp-admin/themes.php) and [set the permalink style](https://localhost:8080/wp-admin/options-permalink.php) to “Post name”.
 
 ---
 Apache 2.0
