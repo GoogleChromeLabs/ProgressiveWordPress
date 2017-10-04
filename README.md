@@ -8,7 +8,7 @@ A Sample WordPress-based Progressive Web App.
 
 #### Theme
 
-Install all the dependencies
+Install all the dependencies (use Node 8 or newer)
 
 ```
 $ npm install
