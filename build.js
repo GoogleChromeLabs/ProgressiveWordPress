@@ -11,8 +11,8 @@ Promise.all([
   copySystemJS(),
   copyCustomElements(),
   minifyCss(),
-  minifyJs(),
 ])
+  .then(_ => minifyJs())
   .then(_ => console.log('Done'))
   .catch(err => console.log(err.stack));
 
@@ -39,6 +39,7 @@ async function copySystemJS() {
   const file = await fs.readFile('./node_modules/systemjs/dist/system-production.js');
   const contents = file.toString('utf-8');
   const {code} = babel.transform(contents, babelConfig);
+  await mkdirAll('dist/theme/scripts');
   await fs.writeFile('dist/theme/scripts/system.js', code);
 }
 
@@ -46,6 +47,7 @@ async function copyCustomElements() {
   const file = await fs.readFile('./node_modules/@webcomponents/custom-elements/custom-elements.min.js');
   const contents = file.toString('utf-8');
   const {code} = babel.transform(contents, babelConfig);
+  await mkdirAll('./dist/theme/scripts');
   await fs.writeFile('dist/theme/scripts/custom-elements.js', code);
 }
 
@@ -132,7 +134,7 @@ async function copy(from, to) {
 }
 
 async function mkdirAll(dir) {
-  const elems = dir.split(path.delimiter);
+  const elems = dir.split('/');
   await elems.reduce(async (p, newPath) => {
     const oldPath = await p;
     const newDir = path.join(oldPath, newPath);
