@@ -23,13 +23,13 @@
     </div>
     <div class="footer__social">
       <a href="https://github.com/GoogleChrome/ProgressiveWordPress">
-        <img src="<?=get_bloginfo('template_url');?>/images/github.svg">
+        <img src="<?=get_bloginfo('template_url');?>/images/github.svg" alt="github">
       </a>
       <a href="https://twitter.com/DasSurma">
-        <img src="<?=get_bloginfo('template_url');?>/images/twitter.svg">
+        <img src="<?=get_bloginfo('template_url');?>/images/twitter.svg" alt="twitter">
       </a>
       <a href="#">
-        <img src="<?=get_bloginfo('template_url');?>/images/rss.svg">
+        <img src="<?=get_bloginfo('template_url');?>/images/rss.svg" alt="rss">
       </a>
     </div>
     <? wp_nav_menu(array('theme_location' => 'footer-nav', 'fallback_cb' => false)); ?>
