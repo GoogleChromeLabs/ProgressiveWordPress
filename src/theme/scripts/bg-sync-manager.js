@@ -25,7 +25,7 @@
       method: request.method,
       credentials: request.credentials,
       referrer: request.referrer,
-      mode: request.mode,
+      mode: (request.mode === 'navigate') ? 'same-origin' : request.mode,
       body,
     };
   }
