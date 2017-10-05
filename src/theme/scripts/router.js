@@ -87,6 +87,9 @@ class Router {
   }
 
   async navigate(link, scrollTop = 0, pushState = true) {
+    // Manually handle the scroll restoration.
+    history.scrollRestoration = 'manual';
+
     if(pushState) {
       history.replaceState({scrollTop: document.scrollingElement.scrollTop}, '');
       history.pushState({scrollTop}, '', link);
@@ -106,6 +109,9 @@ class Router {
     await newView.ready;
     globalSpinner.ready.then(_ => globalSpinner.hide());
     oldView.parentNode.replaceChild(newView, oldView);
+    document.scrollingElement.scrollTop = scrollTop;
+    // Set to auto in case user hits page refresh.
+    history.scrollRestoration = 'auto';
     await Promise.all([this._animateIn(newView), continueAnimation()]);
     _pubsubhub.dispatch('navigation', {address: link});
   }
