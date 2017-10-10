@@ -15,6 +15,14 @@
 <?php
   etag_start();
   if(!is_fragment()) get_template_part('header');
+  if ( is_user_logged_in() ) {
+    $user = wp_get_current_user();
+    $comment_author = $user->display_name;
+    $comment_author_email = $user->user_email;
+  } else {
+    $comment_author = '';
+    $comment_author_email = '';
+  }
 ?>
 <?php if(have_posts()): ?>
   <?php while(have_posts()): the_post() ?>
@@ -33,8 +41,8 @@
           'comment_notes_before' => '',
           'comment_notes_after' => '',
           'fields' => array(
-              'author' => '<input name="author" placeholder="Name" type="text" value="' . esc_attr($commenter['comment_author']) . '" required>',
-              'email' => '<input name="email" placeholder="Email" type="text" value="' . esc_attr($commenter['comment_author_email']) . '" required>',
+              'author' => '<input name="author" placeholder="Name" type="text" value="' . esc_attr($comment_author) . '" required>',
+              'email' => '<input name="email" placeholder="Email" type="text" value="' . esc_attr($comment_author_email) . '" required>',
           ),
           'comment_field' => '<textarea name="comment" placeholder="Comment" cols="45" rows="8" required></textarea>',
           'label_submit' => 'Post comment',
