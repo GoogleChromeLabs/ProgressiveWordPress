@@ -1,4 +1,4 @@
-<?
+<?php
   /**
    * Copyright 2017 Google Inc. All Rights Reserved.
    * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 ?>
 <footer>
   <div class="credit">
-    <p>Authored by <a href="#"><? the_author(); ?></a></p>
-    <p><a href="#"><?=comments_number('No comments', '1 comment', '% comments');?></a></p>
+    <p>Authored by <a href="#"><?php the_author(); ?></a></p>
+    <p><a href="#"><?php=comments_number('No comments', '1 comment', '% comments');?></a></p>
   </div>
   <button class="download"><pwp-spinner></pwp-spinner>Save for offline reading</button>
-  <? the_category(); ?>
+  <?php the_category(); ?>
 </footer>

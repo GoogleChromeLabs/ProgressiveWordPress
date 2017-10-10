@@ -1,4 +1,4 @@
-<?
+<?php
   /**
    * Copyright 2017 Google Inc. All Rights Reserved.
    * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +12,18 @@
    * limitations under the License.
    */
 ?>
-<?
+<?php
   etag_start();
   if(!is_fragment()) get_template_part('header');
 ?>
-<? if(have_posts()): ?>
-  <? while(have_posts()): the_post() ?>
-    <? include('fragment-post-preview.php'); ?>
-  <? endwhile; ?>
-<? else: ?>
+<?php if(have_posts()): ?>
+  <?php while(have_posts()): the_post() ?>
+    <?php include('fragment-post-preview.php'); ?>
+  <?php endwhile; ?>
+<?php else: ?>
   Nothing here :(
-<? endif; ?>
-<?
+<?php endif; ?>
+<?php
   if(!is_fragment()) get_template_part('footer');
   etag_end();
 ?>

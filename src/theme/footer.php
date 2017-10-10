@@ -1,4 +1,4 @@
-<?
+<?php
   /**
    * Copyright 2017 Google Inc. All Rights Reserved.
    * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +12,9 @@
    * limitations under the License.
    */
 ?>
-<?
-  require_once(dirname(__FILE__).'/../../../wp-load.php');
+<?php
+  if ( defined( 'ABSPATH' ) )
+    require_once( ABSPATH . '/wp-load.php' );
   etag_start();
 ?>
   </pwp-view>
@@ -23,66 +24,66 @@
     </div>
     <div class="footer__social">
       <a href="https://github.com/GoogleChrome/ProgressiveWordPress">
-        <img src="<?=get_bloginfo('template_url');?>/images/github.svg" alt="github">
+        <img src="<?php echo get_bloginfo('template_url');?>/images/github.svg" alt="github">
       </a>
       <a href="https://twitter.com/DasSurma">
-        <img src="<?=get_bloginfo('template_url');?>/images/twitter.svg" alt="twitter">
+        <img src="<?php echo get_bloginfo('template_url');?>/images/twitter.svg" alt="twitter">
       </a>
       <a href="#">
-        <img src="<?=get_bloginfo('template_url');?>/images/rss.svg" alt="rss">
+        <img src="<?php echo get_bloginfo('template_url');?>/images/rss.svg" alt="rss">
       </a>
     </div>
-    <? wp_nav_menu(array('theme_location' => 'footer-nav', 'fallback_cb' => false)); ?>
+    <?php wp_nav_menu(array('theme_location' => 'footer-nav', 'fallback_cb' => false)); ?>
   </footer>
   <script>
     window._wordpressConfig = {
-      templateUrl: new URL('<?=get_bloginfo('template_url');?>').toString(),
-      baseUrl: new URL('<?=home_url();?>').toString(),
+      templateUrl: new URL('<?php echo get_bloginfo('template_url');?>').toString(),
+      baseUrl: new URL('<?php echo home_url();?>').toString(),
     };
   </script>
   <script>
-    <? include(dirname(__FILE__).'/scripts/nomodule-safari.js'); ?>
+    <?php include(dirname(__FILE__).'/scripts/nomodule-safari.js'); ?>
   </script>
-  <script src="<?=get_bloginfo('template_url');?>/scripts/system.js" nomodule></script>
-  <script src="<?=get_bloginfo('template_url');?>/scripts/custom-elements.js" defer></script>
-  <script src="<?=get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
-  <script src="<?=get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
-  <script src="<?=get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
-  <?
+  <script src="<?php echo get_bloginfo('template_url');?>/scripts/system.js" nomodule></script>
+  <script src="<?php echo get_bloginfo('template_url');?>/scripts/custom-elements.js" defer></script>
+  <script src="<?php echo get_bloginfo('template_url');?>/scripts/import-polyfill.js" defer></script>
+  <script src="<?php echo get_bloginfo('template_url');?>/scripts/ric-polyfill.js" defer></script>
+  <script src="<?php echo get_bloginfo('template_url');?>/scripts/pubsubhub.js" defer></script>
+  <?php
     $modules = array('pwp-view.js', 'router.js', 'lazyload.js');
     foreach($modules as $module):
   ?>
-    <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/<?=$module;?>"></script>
-  <?
+    <script type="module" src="<?php echo get_bloginfo('template_url');?>/scripts/<?php echo $module;?>"></script>
+  <?php
     endforeach;
   ?>
   <script nomodule>
-    <?=json_encode($modules);?>.reduce(
+    <?php echo json_encode($modules);?>.reduce(
       async (chain, module) => {
         await chain;
-        return SystemJS.import(`<?=get_bloginfo('template_url');?>/scripts/systemjs/${module}`);
+        return SystemJS.import(`<?php echo get_bloginfo('template_url');?>/scripts/systemjs/${module}`);
       },
       Promise.resolve()
     )
   </script>
-  <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/router.js"></script>
-  <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
+  <script type="module" src="<?php echo get_bloginfo('template_url');?>/scripts/router.js"></script>
+  <script type="module" src="<?php echo get_bloginfo('template_url');?>/scripts/lazyload.js"></script>
   <template class="lazyload">
-    <script src="<?=get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
-    <script src="<?=get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
-      <?
+    <script src="<?php echo get_bloginfo('template_url');?>/scripts/idb.js" defer></script>
+    <script src="<?php echo get_bloginfo('template_url');?>/scripts/bg-sync-manager.js" defer></script>
+      <?php
         $modules = array('analytics.js', 'install-sw.js', 'pending-comments.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js', 'commentform-expander.js');
         foreach($modules as $module):
       ?>
-        <script type="module" src="<?=get_bloginfo('template_url');?>/scripts/<?=$module;?>"></script>
-      <?
+        <script type="module" src="<?php echo get_bloginfo('template_url');?>/scripts/<?php echo $module;?>"></script>
+      <?php
         endforeach;
       ?>
     <script nomodule>
-      <?=json_encode($modules);?>.reduce(
+      <?php echo json_encode($modules);?>.reduce(
         async (chain, module) => {
           await chain;
-          return SystemJS.import(`<?=get_bloginfo('template_url');?>/scripts/systemjs/${module}`);
+          return SystemJS.import(`<?php echo get_bloginfo('template_url');?>/scripts/systemjs/${module}`);
         },
         Promise.resolve()
       )
@@ -90,6 +91,6 @@
 
   </template>
 </body>
-<?
+<?php
   etag_end();
 ?>

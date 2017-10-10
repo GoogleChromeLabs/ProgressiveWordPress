@@ -1,4 +1,4 @@
-<?
+<?php
   /**
    * Copyright 2017 Google Inc. All Rights Reserved.
    * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,17 @@
    * limitations under the License.
    */
 ?>
-<? if(have_comments()): ?>
+<?php if(have_comments()): ?>
   <ul class="comments">
-    <? while(have_comments()): the_comment(); ?>
+    <?php while(have_comments()): the_comment(); ?>
       <li class="comment">
-        <?=get_avatar(get_comment_author_email(), 250); ?>
-        <div class="comment__author"><?=get_comment_author();?></div>
-        <div class="comment__date"><?=get_comment_date('D, M m Y, H:i');?></div>
-        <div class="comment__text"><?=get_comment_text();?></div>
+        <?php=get_avatar(get_comment_author_email(), 250); ?>
+        <div class="comment__author"><?php=get_comment_author();?></div>
+        <div class="comment__date"><?php=get_comment_date('D, M m Y, H:i');?></div>
+        <div class="comment__text"><?php=get_comment_text();?></div>
       </li>
-    <? endwhile; ?>
+    <?php endwhile; ?>
   </ul>
-<? else: ?>
+<?php else: ?>
   <div class="comments">No comments.</div>
-<? endif; ?>
+<?php endif; ?>
