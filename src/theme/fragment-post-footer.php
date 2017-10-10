@@ -15,7 +15,7 @@
 <footer>
   <div class="credit">
     <p>Authored by <a href="#"><?php the_author(); ?></a></p>
-    <p><a href="#"><?php=comments_number('No comments', '1 comment', '% comments');?></a></p>
+    <p><a href="#"><?php echo comments_number('No comments', '1 comment', '% comments');?></a></p>
   </div>
   <button class="download"><pwp-spinner></pwp-spinner>Save for offline reading</button>
   <?php the_category(); ?>

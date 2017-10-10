@@ -16,10 +16,10 @@
   <ul class="comments">
     <?php while(have_comments()): the_comment(); ?>
       <li class="comment">
-        <?php=get_avatar(get_comment_author_email(), 250); ?>
-        <div class="comment__author"><?php=get_comment_author();?></div>
-        <div class="comment__date"><?php=get_comment_date('D, M m Y, H:i');?></div>
-        <div class="comment__text"><?php=get_comment_text();?></div>
+        <?php echo get_avatar(get_comment_author_email(), 250); ?>
+        <div class="comment__author"><?php echo get_comment_author();?></div>
+        <div class="comment__date"><?php echo get_comment_date('D, M m Y, H:i');?></div>
+        <div class="comment__text"><?php echo get_comment_text();?></div>
       </li>
     <?php endwhile; ?>
   </ul>

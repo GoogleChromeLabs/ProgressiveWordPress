@@ -20,7 +20,7 @@
   <?php while(have_posts()): the_post() ?>
     <article class="full">
       <header>
-        <div class="ribbon ribbon--ttb ribbon--blue"><?php=get_the_date('M d');?><br><?php=get_the_date('Y'); ?></div>
+        <div class="ribbon ribbon--ttb ribbon--blue"><?php echo get_the_date('M d');?><br><?php echo get_the_date('Y'); ?></div>
         <a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
       </header>
       <main><?php the_content(); ?></main>
