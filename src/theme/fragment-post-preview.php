@@ -1,4 +1,4 @@
-<?
+<?php
   /**
    * Copyright 2017 Google Inc. All Rights Reserved.
    * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 ?>
 <article class="preview">
   <header>
-    <div class="ribbon ribbon--ttb ribbon--blue"><?=get_the_date('M d');?><br><?=get_the_date('Y'); ?></div>
-    <a href="<? the_permalink(); ?>" class="headline"><? the_title(); ?></a>
+    <div class="ribbon ribbon--ttb ribbon--blue"><?php echo get_the_date('M d');?><br><?php echo get_the_date('Y'); ?></div>
+    <a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
   </header>
-  <main class="excerpt"><? the_excerpt(); ?></main>
-  <? include('fragment-post-footer.php'); ?>
+  <main class="excerpt"><?php the_excerpt(); ?></main>
+  <?php include('fragment-post-footer.php'); ?>
 </article>

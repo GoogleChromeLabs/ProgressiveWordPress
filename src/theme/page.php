@@ -1,4 +1,4 @@
-<?
+<?php
   /**
    * Copyright 2017 Google Inc. All Rights Reserved.
    * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,23 @@
    * limitations under the License.
    */
 ?>
-<?
+<?php
   etag_start();
   if(!is_fragment()) get_template_part('header');
 ?>
-<? if(have_posts()): ?>
-  <? while(have_posts()): the_post() ?>
+<?php if(have_posts()): ?>
+  <?php while(have_posts()): the_post() ?>
     <article class="full">
       <header>
-        <a href="<? the_permalink(); ?>" class="headline"><? the_title(); ?></a>
+        <a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
       </header>
-      <main><? the_content(); ?></main>
+      <main><?php the_content(); ?></main>
     </article>
-  <? endwhile; ?>
-<? else: ?>
+  <?php endwhile; ?>
+<?php else: ?>
   Nothing here :(
-<? endif; ?>
-<?
+<?php endif; ?>
+<?php
   if(!is_fragment()) get_template_part('footer');
   etag_end();
 ?>
