@@ -143,15 +143,9 @@ define( 'PWA_THEME_MANIFEST_ARG', 'jetpack_app_manifest' );
   }
 
   function pwa_site_icon_url( $size ) {
-    $url = get_site_icon_url( $size );
-
+    $url =  get_site_icon_url( $size );
     if ( ! $url ) {
-      if ( ! function_exists( 'jetpack_site_icon_url' ) ) {
-        require_once( JETPACK__PLUGIN_DIR . 'modules/site-icon/site-icon-functions.php' );
-      }
-      $url = jetpack_site_icon_url( null, $size );
+      return sprintf('%s/images/icon.png', get_template_directory_uri());
     }
-
-    return $url;
   }
 ?>

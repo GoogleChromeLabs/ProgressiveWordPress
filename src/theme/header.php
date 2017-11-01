@@ -13,8 +13,7 @@
    */
 ?>
 <?php
-  if ( defined( 'ABSPATH' ) )
-    require_once( ABSPATH . '/wp-load.php' );
+  require_once(dirname(__FILE__).'/../../../wp-load.php');
   etag_start();
 ?>
 <!doctype html>
