@@ -13,31 +13,32 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 }
 
 etag_start();
 
 if ( ! is_fragment() ) {
-  get_template_part( 'header' );
+	get_template_part( 'header' );
 }
 
 if ( have_posts() ) : ?>
-  <?php while( have_posts() ): the_post(); ?>
-    <article class="full">
-      <header>
-        <a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
-      </header>
-      <main><?php the_content(); ?></main>
-    </article>
-  <?php endwhile; ?>
-<?php else: ?>
-  <?php esc_html_e( 'Nothing here :(' ); ?>
+	<?php while ( have_posts() ) : ?>
+		<?php the_post(); ?>
+		<article class="full">
+			<header>
+				<a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
+			</header>
+			<main><?php the_content(); ?></main>
+		</article>
+	<?php endwhile; ?>
+<?php else : ?>
+	<?php esc_html_e( 'Nothing here :(', 'surmablog' ); ?>
 <?php endif; ?>
 
 <?php
 if ( ! is_fragment() ) {
-  get_template_part( 'footer' );
+	get_template_part( 'footer' );
 }
 
 etag_end();

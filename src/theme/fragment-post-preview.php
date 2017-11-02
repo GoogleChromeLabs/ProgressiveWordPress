@@ -13,13 +13,13 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 } ?>
 <article class="preview">
-  <header>
-    <div class="ribbon ribbon--ttb ribbon--blue"><?php echo get_the_date( 'M d' ); ?><br><?php echo get_the_date( 'Y' ); ?></div>
-    <a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
-  </header>
-  <main class="excerpt"><?php the_excerpt(); ?></main>
-  <?php include dirname( __FILE__ ) . '/fragment-post-footer.php'; ?>
+	<header>
+		<div class="ribbon ribbon--ttb ribbon--blue"><?php echo get_the_date( 'M d' ); ?><br><?php echo get_the_date( 'Y' ); ?></div>
+		<a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
+	</header>
+	<main class="excerpt"><?php the_excerpt(); ?></main>
+	<?php include dirname( __FILE__ ) . '/fragment-post-footer.php'; ?>
 </article>

@@ -13,20 +13,21 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 }
 
 if ( have_comments() ) : ?>
-  <ul class="comments">
-    <?php while( have_comments() ) : the_comment(); ?>
-      <li class="comment">
-        <?php echo get_avatar( get_comment_author_email(), 250 ); ?>
-        <div class="comment__author"><?php echo get_comment_author();?></div>
-        <div class="comment__date"><?php echo get_comment_date( 'D, M m Y, H:i' );?></div>
-        <div class="comment__text"><?php echo get_comment_text();?></div>
-      </li>
-    <?php endwhile; ?>
-  </ul>
-<?php else: ?>
-  <div class="comments">No comments.</div>
+	<ul class="comments">
+		<?php while ( have_comments() ) : ?>
+			<?php the_comment(); ?>
+			<li class="comment">
+				<?php echo get_avatar( get_comment_author_email(), 250 ); ?>
+				<div class="comment__author"><?php echo esc_html( get_comment_author() ); ?></div>
+				<div class="comment__date"><?php echo get_comment_date( 'D, M m Y, H:i' ); ?></div>
+				<div class="comment__text"><?php echo esc_html( get_comment_text() ); ?></div>
+			</li>
+		<?php endwhile; ?>
+	</ul>
+<?php else : ?>
+	<div class="comments">No comments.</div>
 <?php endif; ?>

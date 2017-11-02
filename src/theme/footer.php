@@ -13,85 +13,87 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 }
 
 require_once ABSPATH . '/wp-load.php';
 
-$template_url = get_bloginfo( 'template_url' );
+$template_url = get_template_directory_uri();
 
 etag_start(); ?>
-  </pwp-view>
-  <footer class="footer">
-    <div class="footer__signoff">
-      Made with 💻 by Surma
-    </div>
-    <div class="footer__social">
-      <a href="https://github.com/GoogleChrome/ProgressiveWordPress">
-        <img src="<?php echo $template_url; ?>/images/github.svg" alt="github">
-      </a>
-      <a href="https://twitter.com/DasSurma">
-        <img src="<?php echo $template_url; ?>/images/twitter.svg" alt="twitter">
-      </a>
-      <a href="#">
-        <img src="<?php echo $template_url; ?>/images/rss.svg" alt="rss">
-      </a>
-    </div>
-    <?php 
-      wp_nav_menu( array( 
-        'theme_location' => 'footer-nav', 
-        'fallback_cb'    => false
-      ) ); 
-    ?>
-  </footer>
-  <script>
-    window._wordpressConfig = {
-      templateUrl: new URL('<?php echo $template_url; ?>').toString(),
-      baseUrl: new URL('<?php echo home_url(); ?>').toString(),
-    };
-  </script>
-  <script>
-    <?php include_once dirname( __FILE__ ) . '/scripts/nomodule-safari.js'; ?>
-  </script>
-  <script src="<?php echo $template_url; ?>/scripts/system.js" nomodule></script>
-  <script src="<?php echo $template_url; ?>/scripts/custom-elements.js" defer></script>
-  <script src="<?php echo $template_url; ?>/scripts/import-polyfill.js" defer></script>
-  <script src="<?php echo $template_url; ?>/scripts/ric-polyfill.js" defer></script>
-  <script src="<?php echo $template_url; ?>/scripts/pubsubhub.js" defer></script>
-  <?php
-    $modules = array( 'pwp-view.js', 'router.js', 'lazyload.js' );
-    foreach( $modules as $module ) : ?>
-    <script type="module" src="<?php echo $template_url; ?>/scripts/<?php echo $module; ?>"></script>
-  <?php endforeach; ?>
-  <script nomodule>
-    <?php echo json_encode( $modules ); ?>.reduce(
-      async( chain, module ) => {
-        await chain;
-        return SystemJS.import( `<?php echo $template_url; ?>/scripts/systemjs/${module}` );
-      },
-      Promise.resolve()
-    )
-  </script>
-  <script type="module" src="<?php echo $template_url; ?>/scripts/router.js"></script>
-  <script type="module" src="<?php echo $template_url; ?>/scripts/lazyload.js"></script>
-  <template class="lazyload">
-    <script src="<?php echo $template_url; ?>/scripts/idb.js" defer></script>
-    <script src="<?php echo $template_url; ?>/scripts/bg-sync-manager.js" defer></script>
-      <?php
-        $modules = array( 'analytics.js', 'install-sw.js', 'pending-comments.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js', 'commentform-expander.js' );
-        foreach( $modules as $module ) : ?>
-        <script type="module" src="<?php echo $template_url; ?>/scripts/<?php echo $module; ?>"></script>
-      <?php endforeach; ?>
-    <script nomodule>
-      <?php echo json_encode( $modules ); ?>.reduce(
-        async( chain, module ) => {
-          await chain;
-          return SystemJS.import( `<?php echo $template_url; ?>/scripts/systemjs/${module}` );
-        },
-        Promise.resolve()
-      )
-    </script>
-  </template>
+	</pwp-view>
+	<footer class="footer">
+		<div class="footer__signoff">
+			Made with 💻 by Surma
+		</div>
+		<div class="footer__social">
+			<a href="https://github.com/GoogleChrome/ProgressiveWordPress">
+				<img src="<?php echo esc_url( $template_url ); ?>/images/github.svg" alt="github">
+			</a>
+			<a href="https://twitter.com/DasSurma">
+				<img src="<?php echo esc_url( $template_url ); ?>/images/twitter.svg" alt="twitter">
+			</a>
+			<a href="#">
+				<img src="<?php echo esc_url( $template_url ); ?>/images/rss.svg" alt="rss">
+			</a>
+		</div>
+		<?php
+			wp_nav_menu( array(
+				'theme_location' => 'footer-nav',
+				'fallback_cb'    => false,
+			) );
+		?>
+	</footer>
+	<script>
+		window._wordpressConfig = {
+			templateUrl: new URL('<?php echo esc_url( $template_url ); ?>').toString(),
+			baseUrl: new URL('<?php echo esc_url( home_url() ); ?>').toString(),
+		};
+	</script>
+	<script>
+		<?php include_once dirname( __FILE__ ) . '/scripts/nomodule-safari.js'; ?>
+	</script>
+	<script src="<?php echo esc_url( $template_url ); ?>/scripts/system.js" nomodule></script>
+	<script src="<?php echo esc_url( $template_url ); ?>/scripts/custom-elements.js" defer></script>
+	<script src="<?php echo esc_url( $template_url ); ?>/scripts/import-polyfill.js" defer></script>
+	<script src="<?php echo esc_url( $template_url ); ?>/scripts/ric-polyfill.js" defer></script>
+	<script src="<?php echo esc_url( $template_url ); ?>/scripts/pubsubhub.js" defer></script>
+	<?php
+	$modules = array( 'pwp-view.js', 'router.js', 'lazyload.js' );
+	foreach ( $modules as $module ) :
+	?>
+		<script type="module" src="<?php echo esc_url( $template_url ); ?>/scripts/<?php echo esc_attr( $module ); ?>"></script>
+	<?php endforeach; ?>
+	<script nomodule>
+		<?php echo wp_json_encode( $modules ); ?>.reduce(
+			async( chain, module ) => {
+				await chain;
+				return SystemJS.import( `<?php echo esc_url( $template_url ); ?>/scripts/systemjs/${module}` );
+			},
+			Promise.resolve()
+		)
+	</script>
+	<script type="module" src="<?php echo esc_url( $template_url ); ?>/scripts/router.js"></script>
+	<script type="module" src="<?php echo esc_url( $template_url ); ?>/scripts/lazyload.js"></script>
+	<template class="lazyload">
+		<script src="<?php echo esc_url( $template_url ); ?>/scripts/idb.js" defer></script>
+		<script src="<?php echo esc_url( $template_url ); ?>/scripts/bg-sync-manager.js" defer></script>
+			<?php
+			$modules = array( 'analytics.js', 'install-sw.js', 'pending-comments.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js', 'commentform-expander.js' );
+			foreach ( $modules as $module ) :
+			?>
+				<script type="module" src="<?php echo esc_url( $template_url ); ?>/scripts/<?php echo esc_attr( $module ); ?>"></script>
+			<?php endforeach; ?>
+		<script nomodule>
+			<?php echo wp_json_encode( $modules ); ?>.reduce(
+				async( chain, module ) => {
+					await chain;
+					return SystemJS.import( `<?php echo esc_url( $template_url ); ?>/scripts/systemjs/${module}` );
+				},
+				Promise.resolve()
+			)
+		</script>
+	</template>
 </body>
 
 <?php

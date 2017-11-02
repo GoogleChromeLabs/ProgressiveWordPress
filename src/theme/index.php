@@ -13,26 +13,26 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-  exit;
+	exit;
 }
 
 etag_start();
 
 if ( ! is_fragment() ) {
-  get_template_part( 'header' );
-} 
+	get_template_part( 'header' );
+}
 
 if ( have_posts() ) {
-  while( have_posts() ) {
-    the_post();
-    include dirname( __FILE__ ) . '/fragment-post-preview.php';    
-  }
+	while ( have_posts() ) {
+		the_post();
+		require dirname( __FILE__ ) . '/fragment-post-preview.php';
+	}
 } else {
-  esc_html_e( 'Nothing here :(' );
+	esc_html_e( 'Nothing here :(', 'surmablog' );
 }
 
 if ( ! is_fragment() ) {
-  get_template_part('footer');
+	get_template_part( 'footer' );
 }
 
 etag_end();
