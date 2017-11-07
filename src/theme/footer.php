@@ -12,11 +12,7 @@
  * limitations under the License.
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
-require_once ABSPATH . '/wp-load.php';
+require_once dirname( __FILE__ ) . '/../../../wp-load.php';
 
 $template_url = get_template_directory_uri();
 
@@ -97,4 +93,4 @@ etag_start(); ?>
 </body>
 
 <?php
-etag_end();
+  etag_end();

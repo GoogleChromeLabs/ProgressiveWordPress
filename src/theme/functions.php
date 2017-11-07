@@ -135,20 +135,20 @@ function pwa_theme_render_custom_assets() {
 		$icon_48 = pwa_site_icon_url( 48 );
 
 		if ( $icon_48 ) {
-				$manifest['icons'] = array(
-					array(
-						'src'   => $icon_48,
-						'sizes' => '48x48',
-					),
-					array(
-						'src'   => pwa_site_icon_url( 192 ),
-						'sizes' => '192x192',
-					),
-					array(
-						'src'   => pwa_site_icon_url( 512 ),
-						'sizes' => '512x512',
-					),
-				);
+			$manifest['icons'] = array(
+				array(
+					'src'   => $icon_48,
+					'sizes' => '48x48',
+				),
+				array(
+					'src'   => pwa_site_icon_url( 192 ),
+					'sizes' => '192x192',
+				),
+				array(
+					'src'   => pwa_site_icon_url( 512 ),
+					'sizes' => '512x512',
+				),
+			);
 		}
 
 		wp_send_json( $manifest );
@@ -168,13 +168,10 @@ function pwa_theme_get_theme_color() {
 }
 
 function pwa_site_icon_url( $size ) {
-	$url = get_site_icon_url( $size );
-
+	$url =  get_site_icon_url( $size );
+	
 	if ( ! $url ) {
-		if ( ! function_exists( 'jetpack_site_icon_url' ) && defined( 'JETPACK__PLUGIN_DIR' ) ) {
-			require_once JETPACK__PLUGIN_DIR . 'modules/site-icon/site-icon-functions.php';
-		}
-		$url = jetpack_site_icon_url( null, $size );
+		$url = sprintf( '%s/images/icon.png', esc_url( get_template_directory_uri() ) );
 	}
 
 	return $url;
