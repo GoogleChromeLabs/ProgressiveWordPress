@@ -74,5 +74,5 @@
       return '<pwp-lazy-image src="' . $img_path . '" width="'. $thumb['width'] . '" height="' . $thumb['height'] .'" style="padding-top: '.$thumb['ratio'].'%; background-image: url(data:image/png;base64,' . $thumb['base64'] . ');"></pwp-lazy-image>';
     }, $content);
   }
-  add_filter('content_save_pre' , 'lazify_images', 0, 1);
+  add_filter('the_content' , 'lazify_images', 0, 1);
 ?>
