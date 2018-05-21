@@ -14,7 +14,7 @@
 
 ?>
 <?php
-	require_once( dirname( __FILE__ ) . '/../../../wp-load.php' );
+	require_once dirname( __FILE__ ) . '/../../../wp-load.php';
 	etag_start();
 ?>
 	</pwp-view>
@@ -47,7 +47,7 @@
 		};
 	</script>
 	<script>
-		<?php include( dirname( __FILE__ ) . '/scripts/nomodule-safari.js' ); ?>
+		<?php include dirname( __FILE__ ) . '/scripts/nomodule-safari.js'; ?>
 	</script>
 	<script src="<?php echo get_bloginfo( 'template_url' ); ?>/scripts/system.js" nomodule></script>
 	<script src="<?php echo get_bloginfo( 'template_url' ); ?>/scripts/custom-elements.js" defer></script>

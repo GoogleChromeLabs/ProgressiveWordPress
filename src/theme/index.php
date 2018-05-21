@@ -22,7 +22,7 @@
 	while ( have_posts() ) :
 		the_post();
 	?>
-		<?php include( 'fragment-post-preview.php' ); ?>
+		<?php include 'fragment-post-preview.php'; ?>
 	<?php endwhile; ?>
 <?php else : ?>
 	Nothing here :(

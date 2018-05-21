@@ -14,7 +14,7 @@
 
 ?>
 <?php
-	require_once( dirname( __FILE__ ) . '/../../../wp-load.php' );
+	require_once dirname( __FILE__ ) . '/../../../wp-load.php';
 	etag_start();
 ?>
 <!doctype html>
@@ -38,12 +38,12 @@
 	<title>Aimless Stack Pointers</title>
 	<style>
 	<?php
-		include( dirname( __FILE__ ) . '/critical.css' );
-		include( dirname( __FILE__ ) . '/components/header_critical.css' );
-		include( dirname( __FILE__ ) . '/components/footer_critical.css' );
-		include( dirname( __FILE__ ) . '/components/article_critical.css' );
-		include( dirname( __FILE__ ) . '/components/ribbon_critical.css' );
-		include( dirname( __FILE__ ) . '/components/comments_critical.css' );
+		include dirname( __FILE__ ) . '/critical.css';
+		include dirname( __FILE__ ) . '/components/header_critical.css';
+		include dirname( __FILE__ ) . '/components/footer_critical.css';
+		include dirname( __FILE__ ) . '/components/article_critical.css';
+		include dirname( __FILE__ ) . '/components/ribbon_critical.css';
+		include dirname( __FILE__ ) . '/components/comments_critical.css';
 	?>
 	</style>
 	<noscript class="lazyload">

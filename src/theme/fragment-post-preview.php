@@ -19,5 +19,5 @@
 		<a href="<?php the_permalink(); ?>" class="headline"><?php the_title(); ?></a>
 	</header>
 	<main class="excerpt"><?php the_excerpt(); ?></main>
-	<?php include( 'fragment-post-footer.php' ); ?>
+	<?php include 'fragment-post-footer.php'; ?>
 </article>
