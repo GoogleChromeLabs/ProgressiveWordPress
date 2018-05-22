@@ -15,7 +15,9 @@
 ?>
 <?php
 etag_start();
-if ( ! is_fragment() ) get_template_part( 'header' );
+if ( ! is_fragment() ) {
+	get_template_part( 'header' );
+}
 if ( is_user_logged_in() ) {
 	$user                 = wp_get_current_user();
 	$comment_author       = $user->display_name;
@@ -61,6 +63,8 @@ if ( is_user_logged_in() ) {
 	Nothing here :(
 <?php endif; ?>
 <?php
-	if ( ! is_fragment() ) get_template_part( 'footer' );
+	if ( ! is_fragment() ) {
+		get_template_part( 'footer' );
+	}
 	etag_end();
 ?>

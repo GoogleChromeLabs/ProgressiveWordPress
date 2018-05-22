@@ -15,7 +15,9 @@
 ?>
 <?php
 	etag_start();
-	if ( ! is_fragment() ) get_template_part( 'header' );
+	if ( ! is_fragment() ) {
+		get_template_part( 'header' );
+	}
 ?>
 <?php if ( have_posts() ) : ?>
 	<?php
@@ -33,6 +35,8 @@
 	Nothing here :(
 <?php endif; ?>
 <?php
-	if ( ! is_fragment() ) get_template_part( 'footer' );
+	if ( ! is_fragment() ) {
+		get_template_part( 'footer' );
+	}
 	etag_end();
 ?>
