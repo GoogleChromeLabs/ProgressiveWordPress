@@ -1,11 +1,12 @@
 {
   "name": "ProgressiveWordPress",
-  "version": "0.0.3411",
+  "version": "0.0.3436",
   "description": "A Sample WordPress-based Progressive Web App.",
   "main": "index.js",
   "scripts": {
-    "build": "npm version --no-git-tag-version -f patch && mkdir -p dist; node build.js",
+    "build": "npm version --no-git-tag-version -f patch && mkdir -p dist; node build.js && npm run link",
     "copy-static": "cp -r src/*.php dist/",
+    "link": "ln -sf \"$(pwd)/dist/theme\" ../PWAWP-theme",
     "minify-css": "for file in src/*.css; do csso src/*.css dist/ -m file",
     "watch": "npm-watch"
   },

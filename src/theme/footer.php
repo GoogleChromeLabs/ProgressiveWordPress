@@ -13,7 +13,8 @@
    */
 ?>
 <?php
-  require_once(dirname(__FILE__).'/../../../wp-load.php');
+  require('paths.php');
+  require_once($WP_LOADER_PATH);
   etag_start();
 ?>
   </pwp-view>
