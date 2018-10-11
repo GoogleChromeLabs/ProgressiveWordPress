@@ -34,8 +34,11 @@ class Router {
   }
 
   async _onLinkClick(event) {
-    if(event.target.tagName !== 'A') return;
-    const link = new URL(event.target.href);
+    // See if what is clicked has an anchor as parent or is a link itself. If so create URL otherwise return.
+    const linkElement = event.target.closest('a');
+    if (!linkElement) return;
+    const link = new URL(linkElement.href);
+
     // If it’s an external link, just navigate.
     if(link.host !== this._hostname) {
       return;
