@@ -13,7 +13,8 @@
    */
 ?>
 <?
-  require('../../../../wp-load.php');
+  require('paths.php');
+  require_once($WP_LOADER_PATH);
   etag_start();
   header('Service-Worker-Allowed: /');
   header('Content-Type: application/javascript');
